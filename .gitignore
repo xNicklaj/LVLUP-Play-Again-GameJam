@@ -1,0 +1,13 @@
+Library/
+Temp/
+Logs/
+MemoryCaptures/
+obj/
+.vs/
+UserSettings/
+SwitchIL2CPPCache/
+SwitchIL2CPPStats/
+*.csproj
+*.sln
+*.vsconfig
+Build/
