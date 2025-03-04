@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 287789616}
   - component: {fileID: 287789615}
   - component: {fileID: 287789614}
+  - component: {fileID: 287789617}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -182,7 +183,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 287789614}
-    PlayerPrefab: {fileID: 3363042218499496334, guid: c755badebcd26224fae8ddc4b75205b7, type: 3}
+    PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 3ee17014e8ec7bc43853d2e548806d4d, type: 2}
@@ -224,6 +225,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &287789617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287789613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b880b77345b8e146a98a32fe7e52310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _kingPrefab: {fileID: 3363042218499496334, guid: c755badebcd26224fae8ddc4b75205b7, type: 3}
+  _clientPrefab: {fileID: 8965908437795382714, guid: 547dc07be2ab32a47ab2697ed325637e, type: 3}
+  _attackPrefab: {fileID: 3363042218499496334, guid: 1034878e995536143a360d03f149d9bd, type: 3}
+  _shieldPrefab: {fileID: 3363042218499496334, guid: 0a15a20b2caf7cf459764bf5f11080a8, type: 3}
 --- !u!1 &1082735304
 GameObject:
   m_ObjectHideFlags: 0
