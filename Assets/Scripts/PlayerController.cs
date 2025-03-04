@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Vector2 moveInput;
-    private Vector2 lookInput;
+    private Vector2 directionInput;
     private Rigidbody2D rb;
     public float MoveSpeed = 5f;
     public float RotationSpeed = 10f;
@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
-    public void OnLook(InputValue value)
+    public void OnDirection(InputValue value)
     {
-        lookInput = value.Get<Vector2>();
+        directionInput = value.Get<Vector2>();
     }
 
     private void FixedUpdate()
@@ -30,14 +30,14 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = moveInput * MoveSpeed;
         
         // rotation
-        if (Gamepad.current != null && lookInput.sqrMagnitude > 0.01f) // controller
+        if (Gamepad.current != null && directionInput.sqrMagnitude > 0.01f) // controller
         {
-            float targetAngle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, targetAngle);
         }
-        else if (Mouse.current != null && lookInput.sqrMagnitude > 0.01f) // mouse
+        else if (Mouse.current != null && directionInput.sqrMagnitude > 0.01f) // mouse
         {
-            Vector3 diff = Camera.main.ScreenToWorldPoint(lookInput)- transform.position;
+            Vector3 diff = Camera.main.ScreenToWorldPoint(directionInput)- transform.position;
             diff.Normalize();
             if (diff.sqrMagnitude > 0.01f)
             {
