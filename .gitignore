@@ -11,3 +11,4 @@ SwitchIL2CPPStats/
 *.sln
 *.vsconfig
 Build/
+.idea/
