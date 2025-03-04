@@ -264,7 +264,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": "";Keyboard&Mouse;Touch"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
