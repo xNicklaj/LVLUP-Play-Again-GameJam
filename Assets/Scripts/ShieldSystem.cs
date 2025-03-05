@@ -4,10 +4,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class ShieldSystem : MonoBehaviour
 {
-    [SerializeField] private float shieldRange = 2f;  // Distanza dello scudo dal giocatore
-    [SerializeField] private float shieldWidth = 3f;  // Larghezza dello scudo
-    [SerializeField] private float shieldHeight = 1.5f; // Altezza dello scudo
-    [SerializeField] private float shieldAngle = 0f; // Angolazione dello scudo
+    [SerializeField] private float shieldRange = 2f;
+    [SerializeField] private float shieldWidth = 3f;
+    [SerializeField] private float shieldHeight = 1.5f;
+    [SerializeField] private float shieldAngle = 0f;
     [SerializeField] private Color shieldColor = Color.green;
 
 
@@ -45,32 +45,45 @@ public class ShieldSystem : MonoBehaviour
     
     private void ToggleShieldPosition()
     {
-        isFront = !isFront; // Cambia posizione tra lato e fronte
+        isFront = !isFront; 
 
         if (isFront)
         {
-            shieldAngle += 90f; // Ruota di 90°
+            shieldAngle += 90f;
         }
         else
         {
-            shieldAngle -= 90f; // Torna nella posizione originale
+            shieldAngle -= 90f;
         }
         UpdateShieldMesh();
     }
     
+    /// <summary>
+    /// Change the shield distance from the player
+    /// </summary>
+    /// <param name="range"></param>
     public void SetShieldRange(float range)
     {
         shieldRange = range;
         UpdateShieldMesh();
     }
-
+    
+    /// <summary>
+    /// Change the shield size
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
     public void SetShieldSize(float width, float height)
     {
         shieldWidth = width;
         shieldHeight = height;
         UpdateShieldMesh();
     }
-
+    
+    /// <summary>
+    /// Change the shield rotation
+    /// </summary>
+    /// <param name="angle"></param>
     public void SetShieldAngle(float angle)
     {
         shieldAngle = angle;

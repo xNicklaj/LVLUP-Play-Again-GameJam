@@ -35,7 +35,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, targetAngle);
+        // rotation
+        if (directionInput != Vector2.zero)
+        {
+            float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, targetAngle);
+        }
     }
 }

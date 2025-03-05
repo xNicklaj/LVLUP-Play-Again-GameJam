@@ -51,6 +51,7 @@ public class TorchSystem : MonoBehaviour
         torchRange = range;
         UpdateTorchMesh();
     }
+    
     /// <summary>
     /// Change the torch angle
     /// </summary>
