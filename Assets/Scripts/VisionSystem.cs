@@ -33,7 +33,7 @@ public class VisionSystem : MonoBehaviour
 
     private void Update()
     {
-        DetectedPlayer = GetClosestInLayer(new LayerMask[] { defaults.playerLayer });
+        DetectedPlayer = GetClosestInSight(new LayerMask[] { defaults.playerLayer });
         SeesPlayer = DetectedPlayer != null;
     }
 
@@ -64,13 +64,13 @@ public class VisionSystem : MonoBehaviour
     /// <example>
     /// <code>
     /// // Detect closest enemy or item
-    /// GameObject target = GetClosestInLayer(new LayerMask[] { enemyLayer, itemLayer });
+    /// GameObject target = GetClosestInSight(new LayerMask[] { enemyLayer, itemLayer });
     /// </code>
     /// </example>
     /// <exception cref="System.ArgumentNullException">
     /// Thrown if the input layers array is null.
     /// </exception>
-    public GameObject GetClosestInLayer(LayerMask[] layers)
+    public GameObject GetClosestInSight(LayerMask[] layers)
     {
         if (isBlind)
             return null;

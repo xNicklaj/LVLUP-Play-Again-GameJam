@@ -4,7 +4,7 @@ using UnityEngine.Timeline;
 public class Bullet : MonoBehaviour
 {
     #region References
-    private VisionSystem vision;
+    private VisionSystem vision; // TODO: should be disabled or non-existent when non homing, moreover, only one ray is fine for this. And a reduced radius. Add an override
     public BulletDefaults defaults; // to be set in the Inspector
     #endregion
 
@@ -42,6 +42,7 @@ public class Bullet : MonoBehaviour
 
         // Handling homing behaviour: should follow the player by changing its direction matching the player's position 
         if (isHoming)
+            // TODO: homing seems broken... YES BECAUSE ALL OF THEM IMMEDIATELY GO TO ME. CHANGE SOMEHOW...
             handleHoming();
 
         // Handling: bullet disappears after "timeBeforeDestroy" seconds after it stopped moving.
@@ -73,6 +74,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // Debug.Log("IMPACT!");
         ContactPoint2D contact = collision.GetContact(0);
 
@@ -89,11 +96,29 @@ public class Bullet : MonoBehaviour
 
     private void handleHoming()
     {
-        GameObject playerNearby = vision.GetClosestInLayer(new LayerMask[] { vision.GetComponent<VisionSystemDefaults>().playerLayer });
+        // TODO: generalize for player. Also seems broken per se (SEE ABOVE)
+        GameObject playerNearby = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer });
         if (playerNearby != null)
         {
-            direction = transform.position - playerNearby.transform.position;
+            Vector2 targetDirection = (playerNearby.transform.position - transform.position).normalized;
+            direction = SmoothSteerTowards(direction, targetDirection);
+            direction = playerNearby.transform.position - transform.position;
             color = Color.cyan;
         }
+    }
+
+    private Vector2 SmoothSteerTowards(Vector2 currentDir, Vector2 targetDir)
+    {
+        // Calculate the angle between current and target direction
+        float angle = Vector2.SignedAngle(currentDir, targetDir);
+
+        // Limit the turn speed
+        float maxTurnThisFrame = 120f * Time.deltaTime;
+        float turnAmount = Mathf.Clamp(angle, -maxTurnThisFrame, maxTurnThisFrame);
+
+        // Rotate the current direction
+        Vector2 newDirection = Quaternion.Euler(0, 0, turnAmount) * currentDir;
+
+        return newDirection.normalized;
     }
 }
