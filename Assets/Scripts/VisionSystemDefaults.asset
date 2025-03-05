@@ -21,3 +21,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   debugEverything: 1
+  numberOfRays: 3
+  angleBetweenRays: 15

@@ -28,6 +28,8 @@ public class MovingSystem : MonoBehaviour
     {
         mainCamera = Camera.main;
         playerInput = GetComponent<PlayerInput>();
+
+        Debug.Assert(playerInput != null, "PlayerInput component missing");
     }
 
     // Update is called once per frame
@@ -101,7 +103,7 @@ public class MovingSystem : MonoBehaviour
             }
         }
         // WARN: keep the two IFs separate so that looking has priority over movement
-        // TODO: add a debounce...
+        // TODO: this does not work, add a debounce?...
         if (movementInput.magnitude > 0.01f)
         {
             if ((movementInput.x < 0 && scale.x > 0) || (movementInput.x > 0 && scale.x < 0))
