@@ -5,7 +5,6 @@ using System;
 public class NetworkPlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _kingPrefab;
-    [SerializeField] private GameObject _clientPrefab;
     [SerializeField] private GameObject _attackPrefab;
     [SerializeField] private GameObject _shieldPrefab;
 
@@ -14,7 +13,6 @@ public class NetworkPlayerSpawner : MonoBehaviour
     void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        
     }
 
     // Update is called once per frame
@@ -27,46 +25,40 @@ public class NetworkPlayerSpawner : MonoBehaviour
     {
         if(NetworkManager.Singleton.IsServer)
         {
-            SpawnClient(clientId, NetworkManager.Singleton.ConnectedClientsList.Count - 1);
+            if(clientId == 0)
+            {
+                SpawnClient(clientId, (int)PlayerType.King);
+            }
+            
+            if(clientId == 1)
+            {
+                SpawnClient(clientId, (int)PlayerType.Attack);
+                SpawnClient(clientId, (int)PlayerType.Shielder);
+            }
+
+            if (clientId >= 2) return;
         }
     }
 
     private void SpawnClient(ulong clientId,int prefabId) {
         GameObject newPlayer = null;
 
-        switch (clientId)
+        switch (prefabId)
         {
-            case 0:
+            case (int)PlayerType.King:
                 newPlayer = (GameObject)Instantiate(_kingPrefab);
                 break;
-            case 1:
-                newPlayer = (GameObject)Instantiate(_clientPrefab);
-                break;
-        }
-
-        if (newPlayer == null) return;
-        newPlayer.SetActive(true);
-        newPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SpawnSinglePlayerServerRpc(ulong clientId, int prefabId)
-    {
-        GameObject newPlayer = null;
-        switch (clientId)
-        {
-            case 0:
+            case (int)PlayerType.Attack:
                 newPlayer = (GameObject)Instantiate(_attackPrefab);
                 break;
-            case 1:
+            case (int)PlayerType.Shielder:
                 newPlayer = (GameObject)Instantiate(_shieldPrefab);
                 break;
         }
 
         if (newPlayer == null) return;
         newPlayer.SetActive(true);
-        newPlayer.GetComponent<NetworkObject>().Spawn(true);
-        newPlayer.GetComponent<NetworkObject>().ChangeOwnership(clientId);
+        newPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
     }
 }
 

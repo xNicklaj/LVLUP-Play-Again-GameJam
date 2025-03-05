@@ -13,8 +13,17 @@ public class NetworkDebugScript : MonoBehaviour
         _hostButton = GetComponent<UIDocument>().rootVisualElement.Q<Button>("HostButton");
         _clientButton = GetComponent<UIDocument>().rootVisualElement.Q<Button>("ClientButton");
 
-        _hostButton.RegisterCallback<ClickEvent>(ev => NetworkManager.Singleton.StartHost());
-        _clientButton.RegisterCallback<ClickEvent>(ev => NetworkManager.Singleton.StartClient());
+        _hostButton.RegisterCallback<ClickEvent>(ev => {
+            _hostButton.SetEnabled(false);
+            _clientButton.SetEnabled(false);
+            NetworkManager.Singleton.StartHost();
+        });
+        _clientButton.RegisterCallback<ClickEvent>(ev => {
+            _hostButton.SetEnabled(false);
+            _clientButton.SetEnabled(false);
+            NetworkManager.Singleton.StartClient();
+        });
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

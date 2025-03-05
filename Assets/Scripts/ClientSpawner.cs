@@ -11,10 +11,8 @@ public class ClientSpawner : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return;
         base.OnNetworkSpawn();
-        NetworkManager.Singleton.GetComponent<NetworkPlayerSpawner>().SpawnSinglePlayerServerRpc(NetworkManager.Singleton.LocalClientId, 0);
-        NetworkManager.Singleton.GetComponent<NetworkPlayerSpawner>().SpawnSinglePlayerServerRpc(NetworkManager.Singleton.LocalClientId, 1);
+        if (!IsOwner) return;
     }
 
     // Update is called once per frame

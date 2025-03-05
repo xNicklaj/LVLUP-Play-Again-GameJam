@@ -5,6 +5,7 @@
     <engine:VisualElement name="BaseContainer" class="main-menu-container active" style="margin-top: 100px;">
         <engine:Button text="Host Game" name="HostGameButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
         <engine:Button text="Join Game" name="JoinGameButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
+        <engine:Button text="Quit" name="QuitButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
     </engine:VisualElement>
     <engine:VisualElement name="JoinContainer" class="main-menu-container disabled" style="flex-grow: 1; margin-top: 100px; justify-content: flex-start; align-self: center;">
         <engine:VisualElement>

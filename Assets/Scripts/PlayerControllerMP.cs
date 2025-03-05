@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using UnityEngine.InputSystem.Users;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(NetworkObject))]
@@ -26,18 +28,18 @@ public class PlayerControllerMP : NetworkBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void SetControllerDevice(PlayerInput _playerInput, InputDevice device)
+    public void SetControllerDevice(PlayerInput playerInput, InputDevice device)
     {
-        _playerInput = _playerInput;
+        _playerInput = playerInput;
         _device = device;
     }
 
     private void Update()
     {
-        if (!IsOwner || _playerInput == null || _device == null) return;
+        if (!IsOwner) return;
         Vector2 axis = _movement.ReadValue<Vector2>();
         Vector3 newPos = this.transform.position;
-        Debug.Log(axis);
+        //Debug.Log(axis);
         newPos.x += axis.x * MoveSpeed * Time.deltaTime;
         newPos.y += axis.y * MoveSpeed * Time.deltaTime;
         this.transform.position = newPos;
@@ -45,7 +47,7 @@ public class PlayerControllerMP : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsOwner || _playerInput == null || _device == null) return;
+        if (!IsOwner) return;
         // rotation
         if (Gamepad.current != null && directionInput.sqrMagnitude > 0.01f) // controller
         {
@@ -54,6 +56,9 @@ public class PlayerControllerMP : NetworkBehaviour
         }
         else if (Mouse.current != null && directionInput.sqrMagnitude > 0.01f) // mouse
         {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(directionInput);
+
             Vector3 diff = Camera.main.ScreenToWorldPoint(directionInput)- _playerRenderer.transform.position;
             diff.Normalize();
             if (diff.sqrMagnitude > 0.01f)
@@ -67,7 +72,23 @@ public class PlayerControllerMP : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        if (IsOwner) _playerInput.enabled = true;
+        if (IsOwner)
+        {
+            GameObject playerInputManagerGameObject = GameObject.FindGameObjectWithTag("PlayerInputManager");
+            Debug.Log(playerInputManagerGameObject);
+            PlayerInputManager playerInputManager = playerInputManagerGameObject.GetComponent<PlayerInputManager>();
+            if (NetworkManager.Singleton.LocalClientId == 0)
+            {
+                playerInputManager.splitScreen = false;
+            } else
+            {
+                // Client code
+                playerInputManager.splitScreen = true;
+            }
+                
+            _playerInput.enabled = true;
+            //GameObject.FindGameObjectWithTag("PlayerInputManager").GetComponent<PlayerInputManager>().JoinPlayer();
+        }
     }
 
     public void OnDirection(InputValue value)
