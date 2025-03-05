@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Unity.Netcode;
 using UnityEngine.InputSystem.Users;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.UI;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(NetworkObject))]
@@ -49,24 +50,9 @@ public class PlayerControllerMP : NetworkBehaviour
     {
         if (!IsOwner) return;
         // rotation
-        if (Gamepad.current != null && directionInput.sqrMagnitude > 0.01f) // controller
-        {
-            float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
-            _playerRenderer.transform.rotation = Quaternion.Euler(0, 0, targetAngle);
-        }
-        else if (Mouse.current != null && directionInput.sqrMagnitude > 0.01f) // mouse
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(directionInput);
 
-            Vector3 diff = Camera.main.ScreenToWorldPoint(directionInput)- _playerRenderer.transform.position;
-            diff.Normalize();
-            if (diff.sqrMagnitude > 0.01f)
-            {
-                float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-                _playerRenderer.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-            }
-        }
+        float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
+        _playerRenderer.transform.rotation = Quaternion.Euler(0, 0, targetAngle);
     }
 
     public override void OnNetworkSpawn()
@@ -74,20 +60,8 @@ public class PlayerControllerMP : NetworkBehaviour
         base.OnNetworkSpawn();
         if (IsOwner)
         {
-            GameObject playerInputManagerGameObject = GameObject.FindGameObjectWithTag("PlayerInputManager");
-            Debug.Log(playerInputManagerGameObject);
-            PlayerInputManager playerInputManager = playerInputManagerGameObject.GetComponent<PlayerInputManager>();
-            if (NetworkManager.Singleton.LocalClientId == 0)
-            {
-                playerInputManager.splitScreen = false;
-            } else
-            {
-                // Client code
-                playerInputManager.splitScreen = true;
-            }
-                
             _playerInput.enabled = true;
-            //GameObject.FindGameObjectWithTag("PlayerInputManager").GetComponent<PlayerInputManager>().JoinPlayer();
+            //_playerInput.uiInputModule = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputSystemUIInputModule>();
         }
     }
 

@@ -6,6 +6,7 @@ using Unity.Netcode;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
+[Obsolete("Do not use unless you know what you're doing.")]
 class ClientInputManager : Singleton<ClientInputManager>
 {
     private Dictionary<InputDevice, bool> _deviceSemaphoreArray = new Dictionary<InputDevice, bool>();

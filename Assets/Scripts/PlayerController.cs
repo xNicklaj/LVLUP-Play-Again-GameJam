@@ -30,21 +30,12 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = new Vector3(moveInput.x, moveInput.y, 0) * (playerStats.MoveSpeed * Time.deltaTime);
         controller.Move(moveDirection);
 
-        // rotation
-        if (Gamepad.current != null && directionInput.sqrMagnitude > 0.01f) // controller
-        {
-            float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), playerStats.RotationSpeed * Time.deltaTime);
-        }
-        else if (Mouse.current != null && directionInput.sqrMagnitude > 0.01f) // mouse
-        {
-            Vector3 diff = Camera.main.ScreenToWorldPoint(directionInput) - transform.position;
-            diff.Normalize();
-            if (diff.sqrMagnitude > 0.01f)
-            {
-                float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rot_z), playerStats.RotationSpeed * Time.deltaTime);
-            }
-        }
+        
+    }
+
+    private void FixedUpdate()
+    {
+        float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, targetAngle);
     }
 }

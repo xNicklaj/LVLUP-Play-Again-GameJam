@@ -17,7 +17,7 @@ public class MainMenuHandler : MonoBehaviour
     private Button _quitButton;
     private TextField _ipField;
 
-    [SerializeField] private Scene playScene;
+    [SerializeField] private GameManager _gameManager;
 
     void Awake()
     {
@@ -73,14 +73,14 @@ public class MainMenuHandler : MonoBehaviour
 
     private void HostGameButtonClicked(ClickEvent evt)
     {
-        NetworkManager.Singleton.SceneManager.LoadScene(playScene.name, LoadSceneMode.Single);
-        NetworkManager.Singleton.StartServer();
+        _gameManager.IsHostClient = true;
+        NetworkManager.Singleton.StartHost();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = true;
+        
     }
 
     // Update is called once per frame
