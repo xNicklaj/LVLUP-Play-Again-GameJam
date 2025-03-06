@@ -12,22 +12,39 @@ public class Bullet : MonoBehaviour
     public float maxFlyTimeMult = 1.0f;
     public float initialVelocityMult = 1.0f;
     public bool isHoming = false;
-    public bool isFromEnemy = true;
+    public float damageMult = 1.0f;
+    public bool isFromEnemy;
+
     public Vector2 direction = new Vector2(1, 1); // modifiable for Homing, visible in Inspector for traps
     public Color color = Color.white; // we won't really modify the colors of all bullets together so no need to put this in defaults
     #endregion
 
     #region PrivateVariables
     private float currentTime = 0.0f;
+
     #endregion
 
-    private void Awake()
+    private void Start()
     {
-        vision = GetComponent<VisionSystem>();
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
-        Debug.Assert(vision != null, "vision component missing");
         Debug.Assert(spriteRenderer != null, "spriteRenderer component missing");
+
+        // Add VisionComponent only if the bullet is homing
+        if (isHoming)
+        {
+            vision = gameObject.AddComponent<VisionSystem>();
+            vision.defaults = Resources.Load<VisionSystemDefaults>("Scriptables/VisionSystemDefaults");
+            Debug.Assert(vision.defaults != null, "Failed to load VisionSystemDefaults from Resources");
+
+            vision.debug = true; // TODO: remove this i guess
+            vision.sightRadiusMult = defaults.homingRadiusMult; // override, so bullet has a different FOV than enemies
+            vision.numberOfRaysOverride = 1; // one is fine for a bullet, it's stupid
+
+
+            Debug.Assert(vision != null, "Failed to add VisionSystem component");
+            Debug.Assert(defaults != null, "Failed to add VisionSystemDefaults");
+        }
 
         // Set initial color
         spriteRenderer.color = color;
@@ -39,11 +56,6 @@ public class Bullet : MonoBehaviour
         AnimationCurve velocityOverTime = defaults.velocityOverTime;
         float maxFlyTime = defaults.maxFlyTime * maxFlyTimeMult;
         float initialVelocity = defaults.initialVelocity * initialVelocityMult;
-
-        // Handling homing behaviour: should follow the player by changing its direction matching the player's position 
-        if (isHoming)
-            // TODO: homing seems broken... YES BECAUSE ALL OF THEM IMMEDIATELY GO TO ME. CHANGE SOMEHOW...
-            handleHoming();
 
         // Handling: bullet disappears after "timeBeforeDestroy" seconds after it stopped moving.
         if (currentTime >= maxFlyTime + defaults.timeBeforeDestroy)
@@ -69,16 +81,29 @@ public class Bullet : MonoBehaviour
         Vector3 movement = (Vector3)direction.normalized * velocity * Time.deltaTime;
         transform.position += movement;
 
+        // Handling homing behaviour: should follow the player by changing its direction matching the player's position 
+        if (isHoming)
+        {
+            Debug.Assert(vision != null, "VisionSystem seems broken in Update");
+            Debug.Assert(defaults != null, "VisionSystemDefaults seems broken in Update");
+            // TODO: homing seems broken... YES BECAUSE ALL OF THEM IMMEDIATELY GO TO ME. CHANGE SOMEHOW...
+            handleHoming();
+        }
+
         // Debug.Log(currentTime / maxFlyTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        LayerMask toCollideWith = (isFromEnemy ? LayerMask.GetMask("Player") : LayerMask.GetMask("Enemies")) | LayerMask.GetMask("Obstacles");
+
+        if ((toCollideWith & (1 << collision.gameObject.layer)) != 0)
         {
             Destroy(gameObject);
             return;
         }
+
+        isHoming = false; // so the bullet won't follow the player after it collided with something
 
         // Debug.Log("IMPACT!");
         ContactPoint2D contact = collision.GetContact(0);
@@ -96,13 +121,14 @@ public class Bullet : MonoBehaviour
 
     private void handleHoming()
     {
-        // TODO: generalize for player. Also seems broken per se (SEE ABOVE)
-        GameObject playerNearby = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer });
-        if (playerNearby != null)
+        LayerMask[] layersToSearchIn = isFromEnemy ? new LayerMask[] { vision.defaults.playerLayer } : new LayerMask[] { vision.defaults.enemyLayer };
+        GameObject nearbyTarget = vision.GetClosestInSight(layersToSearchIn);
+
+        if (nearbyTarget != null)
         {
-            Vector2 targetDirection = (playerNearby.transform.position - transform.position).normalized;
+            Vector2 targetDirection = (nearbyTarget.transform.position - transform.position).normalized;
             direction = SmoothSteerTowards(direction, targetDirection);
-            direction = playerNearby.transform.position - transform.position;
+
             color = Color.cyan;
         }
     }
@@ -113,7 +139,7 @@ public class Bullet : MonoBehaviour
         float angle = Vector2.SignedAngle(currentDir, targetDir);
 
         // Limit the turn speed
-        float maxTurnThisFrame = 120f * Time.deltaTime;
+        float maxTurnThisFrame = defaults.homingTurnSpeed * Time.deltaTime;
         float turnAmount = Mathf.Clamp(angle, -maxTurnThisFrame, maxTurnThisFrame);
 
         // Rotate the current direction

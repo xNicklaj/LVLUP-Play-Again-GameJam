@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8405241268402312257}
   - component: {fileID: 1848544609699106091}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BulletEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,8 @@ MonoBehaviour:
   maxFlyTimeMult: 1
   initialVelocityMult: 1
   isHoming: 0
-  isFromEnemy: 1
+  damageMult: 1
+  isFromEnemy: 0
   direction: {x: 1, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &8405241268402312257
@@ -126,6 +127,7 @@ MonoBehaviour:
   sightAngleMult: 1
   debug: 0
   isBlind: 0
+  numberOfRaysOverride: 3
   seesThroughWalls: 0
 --- !u!58 &1848544609699106091
 CircleCollider2D:
@@ -143,7 +145,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

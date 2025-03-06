@@ -1,9 +1,3 @@
-using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class VisionSystem : MonoBehaviour
@@ -17,14 +11,16 @@ public class VisionSystem : MonoBehaviour
     public float sightAngleMult = 1.0f;
     public bool debug = false;  // Visualize rays
     public bool isBlind = false;
+    private GameObject trackedObject = null;
+    public int numberOfRaysOverride = 3;
     public bool seesThroughWalls = false;
     #endregion
 
     #region DetectionVariables
-    private bool _seesPlayer = false;
-    private GameObject _detectedPlayer = null;
-    public bool SeesPlayer { get => _seesPlayer; private set => _seesPlayer = value; } // not modifiable from outside
-    public GameObject DetectedPlayer { get => _detectedPlayer; private set => _detectedPlayer = value; } // not modifiable from outside
+    private RaycastHit2D hit;
+    private bool _seesObject = false;
+    public bool SeesObject { get => _seesObject; private set => _seesObject = value; } // not modifiable from outside
+    public GameObject TrackedObject { get => trackedObject; private set => trackedObject = value; }
     #endregion
 
     private void Start()
@@ -33,8 +29,15 @@ public class VisionSystem : MonoBehaviour
 
     private void Update()
     {
-        DetectedPlayer = GetClosestInSight(new LayerMask[] { defaults.playerLayer });
-        SeesPlayer = DetectedPlayer != null;
+    }
+
+    private void drawDebugRays()
+    {
+        if (SeesObject)
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+        else if (hit.collider != null)
+            Debug.DrawRay(transform.position, (hit.transform.position - transform.position).normalized * hit.distance, Color.green);
+        DrawFovBoundaries();
     }
 
     /// <summary>
@@ -87,37 +90,37 @@ public class VisionSystem : MonoBehaviour
         LayerMask layerMasks = 0;
         foreach (LayerMask layer in layers) layerMasks |= layer;
 
-        bool didWeCatchIt = false;
-        for (int i = 0; i < defaults.numberOfRays; i++)
+        int numberOfRays = numberOfRaysOverride != defaults.numberOfRays ? numberOfRaysOverride : defaults.numberOfRays;
+        for (int i = 0; i < numberOfRays; i++)
         {
             // Calculate ray direction with slight spread
-            float angleOffset = Mathf.Lerp(-defaults.angleBetweenRays, defaults.angleBetweenRays, (float)i / (defaults.numberOfRays - 1));
-            Vector2 rayDirection = Quaternion.Euler(0, 0, angleOffset) * vectorToObject.normalized;
+            Vector2 rayDirection;
+            if (numberOfRays > 1)
+            {
+                float angleOffset = Mathf.Lerp(-defaults.angleBetweenRays, defaults.angleBetweenRays, (float)i / (numberOfRays - 1));
+                rayDirection = Quaternion.Euler(0, 0, angleOffset) * vectorToObject.normalized;
+            } else {
+                rayDirection = vectorToObject.normalized;
+            }
 
             // cast the ray
-            RaycastHit2D hit = Physics2D.Raycast(
+            hit = Physics2D.Raycast(
                 transform.position,
                 rayDirection,
                 vectorToObject.magnitude,
                 defaults.obstacleLayer | layerMasks
             );
 
+
             // we hit something && it's in the right layer
-            didWeCatchIt = (hit.collider != null) && (layerMasks & (1 << hit.collider.gameObject.layer)) != 0;
+            SeesObject = (hit.collider != null) && (layerMasks & (1 << hit.collider.gameObject.layer)) != 0;
 
-            // Debug rays in Scene view
-            if (defaults.debugEverything || (!defaults.debugEverything && debug))
+            if (debug || defaults.debugEverything)
             {
-                if (didWeCatchIt)
-                    Debug.DrawLine(transform.position, hit.point, Color.red);
-                else
-                    Debug.DrawRay(transform.position, rayDirection * hit.distance, Color.green);
-
-                DrawFovBoundaries();
+                drawDebugRays();
             }
-
-            if (didWeCatchIt)
-                return hit.collider.gameObject; // no need to cast other rays
+            if (SeesObject)
+                return hit.collider.gameObject; // no need to cast other rays, we already saw the target
         }
 
         // None of the rays hit the target layer
@@ -168,7 +171,7 @@ public class VisionSystem : MonoBehaviour
         Collider2D[] collidersInArea = Physics2D.OverlapCircleAll(
             transform.position,
             defaults.sightRadius * sightRadiusMult,
-            defaults.playerLayer
+            layerMasks
         );
 
         // Loop through all colliders found and check which one is the closest
