@@ -1,0 +1,21 @@
+.in-game-ui-text {
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-vaV7.ttf?fileID=12800000&guid=09f558d51b9e8cb658227c64530a3d64&type=3#PressStart2P-vaV7");
+    font-size: 30px;
+    -unity-text-align: middle-center;
+}
+
+.in-game-text-color-yellow {
+    color: rgb(255, 242, 0);
+}
+
+.in-game-text-color-green {
+    color: rgb(0, 255, 23);
+}
+
+.in-game-text-color-red {
+    color: rgb(255, 40, 8);
+}
+
+.in-game-text-shadow {
+    text-shadow: 2px 5px 0 rgb(0, 0, 0);
+}
