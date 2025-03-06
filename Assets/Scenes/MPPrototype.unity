@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1082735305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 9885015fc9507c2439bc8da055587d8c, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 948dfd453eec6474c8462a60dc4b8aa8, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: a83caff33f00ee94bbde9a65ac71a9be, type: 3}
+  sourceAsset: {fileID: 0}
   m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -180,9 +180,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1082735304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b41479697efe6242ae9d8d6d4363b56, type: 3}
+  m_Script: {fileID: 11500000, guid: 50366d5b55e43654c92a3fe5fa73b889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HostDocument: {fileID: 9197481963319205126, guid: a7b83305f154c9246886111decebd50d, type: 3}
+  ClientDocument: {fileID: 9197481963319205126, guid: 58137dd9ff4d8fb43853c7e6fbff8d19, type: 3}
 --- !u!1 &1369027142
 GameObject:
   m_ObjectHideFlags: 0

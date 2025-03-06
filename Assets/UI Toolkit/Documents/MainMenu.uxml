@@ -1,0 +1,17 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenu.uss?fileID=7433441132597879392&amp;guid=632cf1355d546a0778963ccc8d24a350&amp;type=3#MainMenu" />
+    <engine:VisualElement name="Background" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgb(0, 0, 0);" />
+    <engine:Label text="Casino Survivors" name="GameTitle" style="color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Fonts/KarmaticArcade-6Yrp1.ttf?fileID=12800000&amp;guid=a60b719c75e798d79aca140263e25692&amp;type=3#KarmaticArcade-6Yrp1&quot;); -unity-text-align: upper-center; font-size: 80px; margin-top: 184px; opacity: 1;" />
+    <engine:VisualElement name="BaseContainer" focusable="false" class="main-menu-container active" style="margin-top: 100px;">
+        <engine:Button text="Host Game" name="HostGameButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
+        <engine:Button text="Join Game" name="JoinGameButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
+        <engine:Button text="Quit" name="QuitButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="JoinContainer" class="main-menu-container disabled" style="flex-grow: 1; margin-top: 100px; justify-content: flex-start; align-self: center;">
+        <engine:VisualElement>
+            <engine:TextField placeholder-text="127.0.0.1" name="IPField" class="main-menu-input" />
+        </engine:VisualElement>
+        <engine:Button text="Join" name="JoinButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
+        <engine:Button text="Back" name="BackButton" class="main-menu-btn" style="margin-top: 4px; font-size: 36px;" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -1,5 +1,4 @@
-
-
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,12 +7,15 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerInputManager))]
 class GameManager : NetworkSingleton<GameManager>
 {
+    public string PlayScene = "PlayScene";
+    public bool IsHostClient = false;
+
     [SerializeField] private GameObject _kingPrefab;
     [SerializeField] private GameObject _attackPrefab;
     [SerializeField] private GameObject _shieldPrefab;
+    [SerializeField] private SpawnPointsScriptable _spawnPointsScriptable;
+    private Vector3 _sessionSpawnPoint;
     private PlayerInputManager _playerInputManager;
-    public string PlayScene = "PlayScene";
-    public bool IsHostClient = false;
 
     public void Awake()
     {
@@ -25,6 +27,7 @@ class GameManager : NetworkSingleton<GameManager>
     public void Start()
     {
         NetworkManager.Singleton.OnServerStarted += OnServerStarted;
+        _sessionSpawnPoint = _spawnPointsScriptable.list[Random.Range(0, _spawnPointsScriptable.list.Count)];
     }
 
     private void SpawnClient(ulong clientId, int prefabId)
@@ -34,13 +37,13 @@ class GameManager : NetworkSingleton<GameManager>
         switch (prefabId)
         {
             case (int)PlayerType.King:
-                newPlayer = (GameObject)Instantiate(_kingPrefab);
+                newPlayer = (GameObject)Instantiate(_kingPrefab, GetRandomPointAround(_sessionSpawnPoint, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
                 break;
             case (int)PlayerType.Attack:
-                newPlayer = (GameObject)Instantiate(_attackPrefab);
+                newPlayer = (GameObject)Instantiate(_attackPrefab, GetRandomPointAround(_sessionSpawnPoint, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
                 break;
             case (int)PlayerType.Shielder:
-                newPlayer = (GameObject)Instantiate(_shieldPrefab);
+                newPlayer = (GameObject)Instantiate(_shieldPrefab, GetRandomPointAround(_sessionSpawnPoint, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
                 break;
         }
 
@@ -84,6 +87,16 @@ class GameManager : NetworkSingleton<GameManager>
             // Client code
             _playerInputManager.splitScreen = true;
         }
+    }
+
+    public static Vector3 GetRandomPointAround(Vector3 origin, float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere.normalized;
+
+        float randomDistance = Random.Range(0f, radius);
+        Vector3 offset = randomDirection * randomDistance;
+        if (Random.Range(0, 1) == 0) return origin + offset;
+        else return origin - offset;
     }
 }
 public enum PlayerType

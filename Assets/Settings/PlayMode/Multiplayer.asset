@@ -15,11 +15,11 @@ MonoBehaviour:
   m_Description: 
   m_EnableEditors: 1
   m_MainEditorInstance:
-    Name: Editor
+    Name: Main Editor
     <CorrespondingNodeId>k__BackingField: 
     m_Nodes: []
     m_PlayerTag: 
-    m_InitialScene: {fileID: 0}
+    m_InitialScene: {fileID: 102900000, guid: b565ed0d27e3cc7e78310c98718f1d7f, type: 3}
   m_EditorInstances: []
   m_LocalInstances: []
   m_RemoteInstances: []

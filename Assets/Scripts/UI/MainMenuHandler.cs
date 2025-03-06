@@ -2,7 +2,10 @@ using System;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -32,13 +35,12 @@ public class MainMenuHandler : MonoBehaviour
         _quitButton = root.Q<Button>("QuitButton");
         _ipField = root.Q<TextField>("IPField");
 
-        _hostGameButton.RegisterCallback<ClickEvent>(HostGameButtonClicked);
-        _joinGameButton.RegisterCallback<ClickEvent>(JoinGameButtonClicked);
-        _backButton.RegisterCallback<ClickEvent>(BackButtonClicked);
-        _joinButton.RegisterCallback<ClickEvent>(JoinButtonClicked);
-        _quitButton.RegisterCallback<ClickEvent>(QuitButtonClicked);
+        _hostGameButton.clicked += HostGameButtonClicked;
+        _joinGameButton.clicked += JoinGameButtonClicked;
+        _backButton.clicked += BackButtonClicked;
+        _joinButton.clicked += JoinButtonClicked;
+        _quitButton.clicked += QuitButtonClicked;
         _ipField.RegisterCallback<ChangeEvent<string>>(IPFieldFocusOut);
-
     }
 
     private void IPFieldFocusOut(ChangeEvent<string> evt)
@@ -47,31 +49,32 @@ public class MainMenuHandler : MonoBehaviour
         NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = evt.newValue;
     }
 
-    private void QuitButtonClicked(ClickEvent evt)
+    private void QuitButtonClicked()
     {
         Application.Quit();
     }
 
-    private void JoinButtonClicked(ClickEvent evt)
+    private void JoinButtonClicked()
     {
         NetworkManager.Singleton.StartClient();
     }
 
-    private void BackButtonClicked(ClickEvent evt)
+    private void BackButtonClicked()
     {
         _baseContainer.RemoveFromClassList("disabled");
         _joinContainer.RemoveFromClassList("active");
         _joinContainer.AddToClassList("disabled");
     }
 
-    private void JoinGameButtonClicked(ClickEvent evt)
+    private void JoinGameButtonClicked()
     {
         _baseContainer.AddToClassList("disabled");
         _joinContainer.AddToClassList("active");
         _joinContainer.RemoveFromClassList("disabled");
+        _joinButton.Focus();
     }
 
-    private void HostGameButtonClicked(ClickEvent evt)
+    private void HostGameButtonClicked()
     {
         _gameManager.IsHostClient = true;
         NetworkManager.Singleton.StartHost();
@@ -80,7 +83,8 @@ public class MainMenuHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        EventSystem.current.SetSelectedGameObject(this.gameObject);
+        _hostGameButton.Focus();
     }
 
     // Update is called once per frame
