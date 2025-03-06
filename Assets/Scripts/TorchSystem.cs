@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+[RequireComponent(typeof(PolygonCollider2D),typeof(Rigidbody2D))]
 public class TorchSystem : MonoBehaviour
 {
     [Range(0,100)][SerializeField] private float torchRange = 5f;
@@ -11,11 +12,18 @@ public class TorchSystem : MonoBehaviour
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private Mesh torchMesh;
+    private PolygonCollider2D polygonCollider;
+    private Rigidbody2D rb2d;
 
     private void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
+        rb2d = GetComponent<Rigidbody2D>();
+
+        rb2d.bodyType = RigidbodyType2D.Kinematic;
+        polygonCollider.isTrigger = true;
 
         torchMesh = new Mesh();
         meshFilter.mesh = torchMesh;
@@ -29,6 +37,7 @@ public class TorchSystem : MonoBehaviour
     private void Update()
     {
             UpdateTorchMesh();
+            UpdateTorchCollider();
     }
     
     /// <summary>
@@ -93,4 +102,40 @@ public class TorchSystem : MonoBehaviour
         torchMesh.triangles = triangles;
         torchMesh.RecalculateNormals();
     }
+    
+    private void UpdateTorchCollider()
+    {
+        Vector2[] colliderPoints = new Vector2[10];
+
+        Vector3[] meshVertices = torchMesh.vertices;
+        for (int i = 0; i < meshVertices.Length; i++)
+        {
+            colliderPoints[i] = new Vector2(meshVertices[i].x, meshVertices[i].y);
+        }
+
+        polygonCollider.pathCount = 1;
+        polygonCollider.SetPath(0, colliderPoints);
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //Debug.Log("Oggetto entrato nel cono di luce: " + other.name);
+        var obj = other.GetComponent<VisibilityController>();
+        if (obj)
+        {
+            obj.SetLayer(true);
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        //Debug.Log("Oggetto uscito dal cono di luce: " + other.name);
+        var obj = other.GetComponent<VisibilityController>();
+        if (obj)
+        {
+            obj.SetLayer(false);
+        }
+    }
+    
 }
