@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(PlayerInputManager))]
 class GameManager : NetworkSingleton<GameManager>
 {
     public string PlayScene = "PlayScene";
@@ -15,13 +14,10 @@ class GameManager : NetworkSingleton<GameManager>
     [SerializeField] private GameObject _shieldPrefab;
     [SerializeField] private SpawnPointsScriptable _spawnPointsScriptable;
     private Vector3 _sessionSpawnPoint;
-    private PlayerInputManager _playerInputManager;
 
     public void Awake()
     {
         DontDestroyOnLoad(gameObject);
-
-        _playerInputManager = GetComponent<PlayerInputManager>();
     }
 
     public void Start()
@@ -61,7 +57,7 @@ class GameManager : NetworkSingleton<GameManager>
 
     private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
     {
-        if(sceneName != SceneManager.GetSceneByBuildIndex(1).name) return;
+        if(sceneName != PlayScene) return;
         if (NetworkManager.Singleton.IsServer)
         {
             if (clientId == 0)
@@ -76,16 +72,6 @@ class GameManager : NetworkSingleton<GameManager>
             }
 
             if (clientId >= 2) return;
-        }
-
-        if (NetworkManager.Singleton.LocalClientId == 0)
-        {
-            _playerInputManager.splitScreen = false;
-        }
-        else
-        {
-            // Client code
-            _playerInputManager.splitScreen = true;
         }
     }
 

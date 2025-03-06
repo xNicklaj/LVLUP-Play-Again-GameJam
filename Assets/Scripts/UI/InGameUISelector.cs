@@ -3,14 +3,19 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
-public class InGameUISelector : MonoBehaviour
+public class InGameUISelector : NetworkBehaviour
 {
     [SerializeField] private VisualTreeAsset HostDocument;
     [SerializeField] private VisualTreeAsset ClientDocument;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void OnNetworkSpawn()
     {
+        NetworkManager.OnClientConnectedCallback += (ulong e) => { SelectUI(); };
+    }
+
+    void SelectUI()
+    {
+        if (!this.IsClient) return;
         if(NetworkManager.Singleton.LocalClientId == 0)
         {
             this.GetComponent<UIDocument>().visualTreeAsset = HostDocument;

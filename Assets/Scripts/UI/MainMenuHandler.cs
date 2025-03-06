@@ -5,6 +5,7 @@ using Unity.Netcode.Transports.UTP;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -20,7 +21,8 @@ public class MainMenuHandler : MonoBehaviour
     private Button _quitButton;
     private TextField _ipField;
 
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private PlayerInputManager _playerInputManager;
+    [SerializeField] private PlaySceneSettings _playSceneSettings;
 
     void Awake()
     {
@@ -56,7 +58,9 @@ public class MainMenuHandler : MonoBehaviour
 
     private void JoinButtonClicked()
     {
+        _playerInputManager.splitScreen = true;
         NetworkManager.Singleton.StartClient();
+        GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
     private void BackButtonClicked()
@@ -76,8 +80,9 @@ public class MainMenuHandler : MonoBehaviour
 
     private void HostGameButtonClicked()
     {
-        _gameManager.IsHostClient = true;
+        _playerInputManager.splitScreen = false;
         NetworkManager.Singleton.StartHost();
+        GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

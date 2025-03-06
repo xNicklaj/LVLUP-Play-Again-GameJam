@@ -73,11 +73,10 @@ public class PlayerControllerMP : NetworkBehaviour
 
     public override void OnDestroy()
     {
-        Debug.Log("Aiutooo");
-        System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
-        Debug.Log(t.ToString());
         if (!IsOwner) return;
-        this.GetComponent<NetworkObject>().Despawn();
+        NetworkObject no = this.GetComponent<NetworkObject>();
+        print(no);
+        if(no && no.IsSpawned) no.Despawn();
         base.OnDestroy();
     }
 
