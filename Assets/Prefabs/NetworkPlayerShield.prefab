@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061630649
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061630649
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0.62352943, b: 0.062401347, a: 1}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 4987780808202608399}
   - component: {fileID: -3955033230505757482}
   - component: {fileID: 6435898534555200188}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NetworkPlayerShield
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -313,6 +313,7 @@ MonoBehaviour:
   RotationSpeed: 10
   _playerInput: {fileID: 2374953380649715109}
   _playerRenderer: {fileID: 454178334523922261}
+  _rigidbody: {fileID: 0}
   _networkObject: {fileID: 0}
 --- !u!114 &-3955033230505757482
 MonoBehaviour:

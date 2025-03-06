@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     #region References
     private VisionSystem vision; // TODO: should be disabled or non-existent when non homing, moreover, only one ray is fine for this. And a reduced radius. Add an override
@@ -52,6 +53,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner || !IsServer) return;
         currentTime += Time.deltaTime;
         AnimationCurve velocityOverTime = defaults.velocityOverTime;
         float maxFlyTime = defaults.maxFlyTime * maxFlyTimeMult;
@@ -61,6 +63,7 @@ public class Bullet : MonoBehaviour
         if (currentTime >= maxFlyTime + defaults.timeBeforeDestroy)
         {
             // Debug.Log("Destroying bullet after Timeout!");
+            this.GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
             return;
         }
@@ -95,10 +98,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!IsOwner || !IsServer) return;
         LayerMask toCollideWith = (isFromEnemy ? LayerMask.GetMask("Player") : LayerMask.GetMask("Enemies")) | LayerMask.GetMask("Obstacles");
 
         if ((toCollideWith & (1 << collision.gameObject.layer)) != 0)
         {
+            this.GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
             return;
         }

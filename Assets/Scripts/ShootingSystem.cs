@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class ShootingSystem : MonoBehaviour
+public class ShootingSystem : NetworkBehaviour
 {
     [System.Serializable]
     public struct ShootingModifiers
@@ -44,6 +45,8 @@ public class ShootingSystem : MonoBehaviour
 
     private void Start()
     {
+        if (!IsOwner) return;
+
         amIenemy = !gameObject.CompareTag("Player");
         nextSlot = Time.time;
         shooter = gameObject.transform;
@@ -59,6 +62,8 @@ public class ShootingSystem : MonoBehaviour
 
     private void Update()
     {   
+        if(!IsOwner) return;
+
         /* TODO: this was just to see the raycasts. The movement script will be the one calling repeatedly the VisionComponent. */
         if (amIenemy)
             vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer });
@@ -67,7 +72,7 @@ public class ShootingSystem : MonoBehaviour
 
         if (Time.time >= nextSubslot)
         {
-            Debug.Log(amIenemy);
+            //Debug.Log(amIenemy);
             // Debug.Log("Subslot started");
 
             if (pauseCounter >= timeslotsConfig.shotsPerSlot)
@@ -111,7 +116,7 @@ public class ShootingSystem : MonoBehaviour
                 if (IsShooting)
                 {
                     Vector2 targetDirection = gameObject.GetComponent<PlayerInput>().actions.FindAction("Direction").ReadValue<Vector2>().normalized;
-                    Debug.Log(targetDirection);
+                    //Debug.Log(targetDirection);
                     ExecuteSubslot(targetDirection, modifiers);
                 }
             }
@@ -143,8 +148,9 @@ public class ShootingSystem : MonoBehaviour
 
     private void FireBullet(Vector2 targetDirection, ShootingModifiers modifiers)
     {
-        Debug.Log(amIenemy);
+        //Debug.Log(amIenemy);
         GameObject bulletInstance = Instantiate(bulletPrefab, shooter.position, shooter.rotation);
+        bulletInstance.GetComponent<NetworkObject>().Spawn();
 
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
         if (bullet != null)

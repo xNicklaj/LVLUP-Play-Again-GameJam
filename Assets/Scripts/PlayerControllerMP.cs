@@ -71,6 +71,16 @@ public class PlayerControllerMP : NetworkBehaviour
         }
     }
 
+    public override void OnDestroy()
+    {
+        Debug.Log("Aiutooo");
+        System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+        Debug.Log(t.ToString());
+        if (!IsOwner) return;
+        this.GetComponent<NetworkObject>().Despawn();
+        base.OnDestroy();
+    }
+
     public void OnDirection(InputValue value)
     {
         directionInput = value.Get<Vector2>();
