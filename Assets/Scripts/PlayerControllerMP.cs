@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem.UI;
 
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerControllerMP : NetworkBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerControllerMP : NetworkBehaviour
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private InputDevice _device;
     [SerializeField] private GameObject _playerRenderer;
+    [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private NetworkObject _networkObject;
     private InputAction _movement;
     private Vector2 directionInput;
@@ -24,7 +26,8 @@ public class PlayerControllerMP : NetworkBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         _networkObject = GetComponent<NetworkObject>();
-        
+        _rigidbody = GetComponent<Rigidbody2D>();
+
         _movement = _playerInput.actions.FindAction("Move");
         rb = GetComponent<Rigidbody2D>();
     }
@@ -43,14 +46,17 @@ public class PlayerControllerMP : NetworkBehaviour
         //Debug.Log(axis);
         newPos.x += axis.x * MoveSpeed * Time.deltaTime;
         newPos.y += axis.y * MoveSpeed * Time.deltaTime;
-        this.transform.position = newPos;
+        //this.transform.position = newPos;
+
     }
 
     private void FixedUpdate()
     {
         if (!IsOwner) return;
-        // rotation
+        
+        _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * Time.fixedDeltaTime *  _movement.ReadValue<Vector2>()));
 
+        // rotation
         float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
         _playerRenderer.transform.rotation = Quaternion.Euler(0, 0, targetAngle);
     }
