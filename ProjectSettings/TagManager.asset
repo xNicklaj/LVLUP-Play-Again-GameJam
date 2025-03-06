@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameManager
   - InputSystem
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Foreground
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - LitEnemy
   - UnlitEnemy
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 863892993
+    locked: 0
+  - name: Walls
+    uniqueID: 2723540003
     locked: 0
   - name: Entities
     uniqueID: 2061630649

@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class VisionSystem : MonoBehaviour
+public class VisionSystem : NetworkBehaviour
 {
     #region References
     public VisionSystemDefaults defaults; // to be set in the Inspector

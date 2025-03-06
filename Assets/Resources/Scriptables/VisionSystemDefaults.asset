@@ -16,10 +16,13 @@ MonoBehaviour:
   sightAngle: 360
   playerLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 64
   debugEverything: 1
   numberOfRays: 3
   angleBetweenRays: 15
