@@ -4,6 +4,7 @@ using Unity.Netcode;
 
 public class ShootingSystem : NetworkBehaviour
 {
+    #region CustomTypes
     [System.Serializable]
     public struct ShootingModifiers
     {
@@ -21,6 +22,7 @@ public class ShootingSystem : NetworkBehaviour
         public int shotsPerSlot;
         public int pauseSlotsNumber;
     }
+    #endregion
 
     #region References
     public ShootingSystemDefaults defaults;
@@ -31,16 +33,25 @@ public class ShootingSystem : NetworkBehaviour
 
     #region ShootingVariables
     private bool _isShooting = true;
-    public ShootingModifiers modifiers;
-    public SlotsConfig timeslotsConfig;
+
+    // ---------------
+    // TODO: just as in the spawner system, the default values for these structs are never used, 
+    // the inspector starts with everything set to 0. How do I know if those zeros were put by the user
+    // or by Unity?
+    public ShootingModifiers modifiers; // to be set in the inspector
+    public SlotsConfig timeslotsConfig; // to be set in the inspector
+    // ---------------
+
     public Color bulletColor = Color.white;
     private float nextSlot;
     private float nextSubslot;
-    private int pauseCounter = 0;
+    private int slotCounter;
+    private int subslotCounter;
+    private bool isThisPause = false;
     private bool amIenemy;
 
     public bool IsShooting { get => _isShooting; private set => _isShooting = value; }
-    
+
     #endregion
 
     private void Start()
@@ -53,7 +64,6 @@ public class ShootingSystem : NetworkBehaviour
         if (amIenemy)
         {
             vision = gameObject.GetComponent<VisionSystem>();
-            vision.debug = true; // TODO: remove this i guess
             Debug.Assert(vision != null, "vision component is null");
         }
 
@@ -61,76 +71,104 @@ public class ShootingSystem : NetworkBehaviour
     }
 
     private void Update()
-    {   
-        if(!IsOwner) return;
+    {
+        int subslotsInSlot = (int)(timeslotsConfig.slotDuration / (timeslotsConfig.slotDuration / timeslotsConfig.shotsPerSlot));
+        int totalSlotsInCycle = 1 + timeslotsConfig.pauseSlotsNumber;
+
+        // update IsShooting and get shooting direction 
+        Vector2 targetDirection;
+        if (amIenemy)
+        {
+            GameObject target = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer }); // should flash a raycast if debug on
+            IsShooting = target != null; // if sees target, shoots target.
+                                         // Debug.Log("i see you, i'm shooting!");
+            targetDirection = (target.transform.position - transform.position).normalized;
+        }
+        else
+        {
+            PlayerInput input = gameObject.GetComponent<PlayerInput>();
+            IsShooting = input.actions.FindAction("ClassAction").ReadValue<float>() > 0;
+            targetDirection = input.actions.FindAction("Direction").ReadValue<Vector2>().normalized;
+        }
 
         /* TODO: this was just to see the raycasts. The movement script will be the one calling repeatedly the VisionComponent. */
         if (amIenemy)
             vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer });
 
-
-
         if (Time.time >= nextSubslot)
         {
-            //Debug.Log(amIenemy);
+            // Debug.Log(amIenemy);
             // Debug.Log("Subslot started");
 
-            if (pauseCounter >= timeslotsConfig.shotsPerSlot)
+            if (isThisPause)
             {
-                // it's a pause slot
-                // Debug.Log("Pause subslot..." + pauseCounter.ToString());
-                pauseCounter++;
-                pauseCounter %= timeslotsConfig.shotsPerSlot + timeslotsConfig.pauseSlotsNumber * timeslotsConfig.shotsPerSlot + 1;
+                subslotCounter++;
+                subslotCounter %= subslotsInSlot;
 
+                // is slot finished?
+                if (subslotCounter == 0)
+                {
+                    // yes, slot is finished. Update nextSlot
+                    nextSlot = Time.time + (timeslotsConfig.slotDuration * modifiers.timeslotDurationMult);
+
+                    // is cycle finished?
+                    slotCounter++;
+                    slotCounter %= totalSlotsInCycle;
+                    if (slotCounter == 0)
+                    {
+                        // yes, cycle is finished. Next subslot will be fire
+                        isThisPause = false;
+                    }
+                }
+
+                // anyway, update nextSubslot
                 nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
                 return;
             }
 
+            // ------ non-pause slot -------
+
             if (Time.time >= nextSlot)
             {
-                // Debug.Log("Slot started");
-                // we changed slot.
+                slotCounter++;
+                slotCounter %= totalSlotsInCycle;
+                if (slotCounter == 0)
+                {
+                    // cycle is finished. 
+                    // okay, but nothing happens when the cycle finishes, ahah
+                    isThisPause = false;
+                }
+
                 nextSlot = Time.time + (timeslotsConfig.slotDuration * modifiers.timeslotDurationMult);
             }
 
+            // anyway, check if we finished the slot (if it was a slot of 1 subslot only it might be even right away)
+            subslotCounter++;
+            subslotCounter %= subslotsInSlot;
+            if (subslotCounter == 0 && timeslotsConfig.pauseSlotsNumber > 0)
+            {
+                isThisPause = true; // the next subslot will be pause (if pause slots exist)
+            }
 
-            // Debug.Log("Fire subslot" + pauseCounter.ToString());
-            pauseCounter++;
+            // anyway, update nextSubslot
+            nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
 
+            if (!IsShooting) return;
 
             if (amIenemy)
             {
-                GameObject target = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer }); // should flash a raycast if debug on
-                IsShooting = target != null; // if sees target, shoots target.
-                // Debug.Log("i see you, i'm shooting!");
-                if (IsShooting)
-                {
-                    Vector2 targetDirection = (target.transform.position - transform.position).normalized;
-                    ExecuteSubslot(targetDirection, modifiers);
-                }
+                ExecuteSubslot(targetDirection, modifiers);
             }
             else
             {
-                IsShooting = true; // TODO: how does a player shoot?
-
-                if (IsShooting)
-                {
-                    Vector2 targetDirection = gameObject.GetComponent<PlayerInput>().actions.FindAction("Direction").ReadValue<Vector2>().normalized;
-                    //Debug.Log(targetDirection);
+                if (targetDirection.magnitude > 0)
                     ExecuteSubslot(targetDirection, modifiers);
-                }
             }
-
-            nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
         }
-
     }
 
     public void ExecuteSubslot(Vector2 targetDirection, ShootingModifiers modifiers)
     {
-        if (!IsShooting)
-            return;
-
         // we changed subslot and this is not pause, we should fire.  ---------------
         // Debug.Log("I SHOULD FIRE NOW!");
 

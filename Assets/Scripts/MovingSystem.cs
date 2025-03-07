@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 
 public class MovingSystem : MonoBehaviour
@@ -102,9 +101,7 @@ public class MovingSystem : MonoBehaviour
                 return;
             }
         }
-        // WARN: keep the two IFs separate so that looking has priority over movement
-        // TODO: this does not work, add a debounce?...
-        if (movementInput.magnitude > 0.01f)
+        else if (movementInput.magnitude > 0.01f)
         {
             if ((movementInput.x < 0 && scale.x > 0) || (movementInput.x > 0 && scale.x < 0))
             {
