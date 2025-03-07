@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbc8b0c455b3df49a0d616c34b456fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   defaults: {fileID: 11400000, guid: 3cac8b2adc2c3974a91929266d4b635d, type: 2}
   sightRadiusMult: 1
   sightAngleMult: 1
@@ -190,7 +189,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4918623692585558999}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0ad7e8db1fe50f4e99801c445edc2c0, type: 3}
   m_Name: 
@@ -210,6 +209,7 @@ MonoBehaviour:
     shotsPerSlot: 3
     pauseSlotsNumber: 1
   bulletColor: {r: 1, g: 1, b: 1, a: 1}
+  amIenemy: 1
 --- !u!50 &3003147968555755053
 Rigidbody2D:
   serializedVersion: 5

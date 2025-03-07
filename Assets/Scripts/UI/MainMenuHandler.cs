@@ -56,13 +56,6 @@ public class MainMenuHandler : MonoBehaviour
         Application.Quit();
     }
 
-    private void JoinButtonClicked()
-    {
-        _playerInputManager.splitScreen = true;
-        NetworkManager.Singleton.StartClient();
-        GetComponent<UIDocument>().rootVisualElement.visible = false;
-    }
-
     private void BackButtonClicked()
     {
         _baseContainer.RemoveFromClassList("disabled");
@@ -82,6 +75,17 @@ public class MainMenuHandler : MonoBehaviour
     {
         _playerInputManager.splitScreen = false;
         NetworkManager.Singleton.StartHost();
+        GameManager_v2.Instance.IsHost = true;
+        GameManager_v2.Instance.OnGameStart.Invoke();
+        GetComponent<UIDocument>().rootVisualElement.visible = false;
+    }
+
+    private void JoinButtonClicked()
+    {
+        _playerInputManager.splitScreen = true;
+        NetworkManager.Singleton.StartClient();
+        GameManager_v2.Instance.IsHost = true;
+        GameManager_v2.Instance.OnGameStart.Invoke();
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 

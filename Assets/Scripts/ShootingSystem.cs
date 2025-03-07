@@ -6,13 +6,22 @@ public class ShootingSystem : NetworkBehaviour
 {
     #region CustomTypes
     [System.Serializable]
-    public struct ShootingModifiers
+    public struct ShootingModifiers : INetworkSerializable
     {
         public bool homing;
         public int axis;
         public float timeslotDurationMult; // minimum should be 1/10 of a second
         public float rangeMult;
         public float damageMult;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue<bool>(ref homing);
+            serializer.SerializeValue<int>(ref axis);
+            serializer.SerializeValue<float>(ref timeslotDurationMult);
+            serializer.SerializeValue<float>(ref rangeMult);
+            serializer.SerializeValue<float>(ref damageMult);
+        }
     }
 
     [System.Serializable]
@@ -48,17 +57,15 @@ public class ShootingSystem : NetworkBehaviour
     private int slotCounter;
     private int subslotCounter;
     private bool isThisPause = false;
-    private bool amIenemy;
+    public bool amIenemy;
 
     public bool IsShooting { get => _isShooting; private set => _isShooting = value; }
 
     #endregion
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
-
-        amIenemy = !gameObject.CompareTag("Player");
         nextSlot = Time.time;
         shooter = gameObject.transform;
         if (amIenemy)
@@ -72,6 +79,7 @@ public class ShootingSystem : NetworkBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
         int subslotsInSlot = (int)(timeslotsConfig.slotDuration / (timeslotsConfig.slotDuration / timeslotsConfig.shotsPerSlot));
         int totalSlotsInCycle = 1 + timeslotsConfig.pauseSlotsNumber;
 
@@ -81,7 +89,7 @@ public class ShootingSystem : NetworkBehaviour
         {
             GameObject target = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer }); // should flash a raycast if debug on
             IsShooting = target != null; // if sees target, shoots target.
-                                         // Debug.Log("i see you, i'm shooting!");
+            if (target == null) return;
             targetDirection = (target.transform.position - transform.position).normalized;
         }
         else
@@ -179,9 +187,15 @@ public class ShootingSystem : NetworkBehaviour
             Vector2 direction;
             direction = Quaternion.Euler(0, 0, angle) * targetDirection;
             // Debug.Log("Fire!");
-            FireBullet(direction, modifiers);
+            FireBulletServerRpc(direction, modifiers);
         }
 
+    }
+
+    [Rpc(SendTo.Server)]
+    private void FireBulletServerRpc(Vector2 targetDirection, ShootingModifiers modifiers)
+    {
+        FireBullet(targetDirection, modifiers);
     }
 
     private void FireBullet(Vector2 targetDirection, ShootingModifiers modifiers)
