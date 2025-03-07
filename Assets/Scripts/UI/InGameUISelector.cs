@@ -24,6 +24,7 @@ public class InGameUISelector : NetworkBehaviour
         {
             this.GetComponent<UIDocument>().visualTreeAsset = ClientDocument;
         }
+        GameManager_v2.Instance.OnUISelected.Invoke();
     }
 
     // Update is called once per frame
