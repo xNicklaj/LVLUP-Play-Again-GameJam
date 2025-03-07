@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class SpawnerSystem : MonoBehaviour
+[RequireComponent(typeof(VisionSystem))]
+public class SpawnerSystem : NetworkBehaviour
 {
     #region CustomTypes
     [Flags]
@@ -73,17 +75,19 @@ public class SpawnerSystem : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        if (!IsOwner) return;
         nextSlot = Time.time;
         vision = gameObject.GetComponent<VisionSystem>();
-        Debug.Assert(vision != null, "vision component is null");
         Debug.Assert(objectPrefab != null, "objectPrefab component is null");
+        Debug.Log("Owner: " + this.OwnerClientId);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!IsHost) return;
         vision.sightRadiusMult = modifiers.rangeMult;
 
         if (vision.CountNearMe(new LayerMask[] { layerToSpawnIn }) >= modifiers.maxEntitiesInAreaOverride)
@@ -200,7 +204,9 @@ public class SpawnerSystem : MonoBehaviour
 
     private void ExecuteSubslot(Vector3 spawnPosition, GameObject objectPrefab, SpawnableIdentifier prefabId)
     {
+        if (!IsOwner) return;
         GameObject objInstance = Instantiate(objectPrefab, spawnPosition, new Quaternion(0, 0, 0, 0));
+        objInstance.GetComponent<NetworkObject>().Spawn();
 
         if (objInstance.TryGetComponent<GameObject>(out var obj))
         {
