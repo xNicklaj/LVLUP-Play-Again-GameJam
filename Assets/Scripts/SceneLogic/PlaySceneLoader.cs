@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,13 @@ public class PlaySceneLoader : NetworkBehaviour
     [SerializeField] private GameObject _shieldPrefab;
     [SerializeField] private SpawnPointsScriptable _spawnPointsScriptable;
     private Vector3 _sessionSpawnPoint;
+
+    private void Start()
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+        NetworkManager.Singleton.DisconnectClient(1);
+        NetworkManager.Singleton.Shutdown();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()
@@ -28,9 +36,16 @@ public class PlaySceneLoader : NetworkBehaviour
                 case 1:
                     SpawnClientServerRpc(localClientId, (int)PlayerType.Attack);
                     SpawnClientServerRpc(localClientId, (int)PlayerType.Shielder);
+                    StartCoroutine(StartGame());
                     break;
             }
         }
+    }
+
+    private IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(3);
+        GameManager_v2.Instance.OnGameStart.Invoke();
     }
 
     [Rpc(SendTo.Server)]

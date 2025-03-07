@@ -103,8 +103,7 @@ public class MainMenuHandler : MonoBehaviour
         _playerInputManager.splitScreen = false;
         PlaySound(StartSound);
         NetworkManager.Singleton.StartHost();
-        GameManager_v2.Instance.IsHost = true;
-        GameManager_v2.Instance.OnGameStart.Invoke();
+        GameManager_v2.Instance.IsSessionHost = true;
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
@@ -113,8 +112,7 @@ public class MainMenuHandler : MonoBehaviour
         _playerInputManager.splitScreen = true;
         PlaySound(StartSound);
         NetworkManager.Singleton.StartClient();
-        GameManager_v2.Instance.IsHost = true;
-        GameManager_v2.Instance.OnGameStart.Invoke();
+        GameManager_v2.Instance.IsSessionHost = true;
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 

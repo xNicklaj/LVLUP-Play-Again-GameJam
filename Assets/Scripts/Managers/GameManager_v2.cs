@@ -8,9 +8,9 @@ class GameManager_v2 : Singleton<GameManager_v2>
     public UnityEvent OnGameFinish = new UnityEvent();
     public UnityEvent OnGameLost = new UnityEvent();
     public UnityEvent OnUISelected = new UnityEvent();
-    public UnityEvent OnPointsUpdated = new UnityEvent();
-    public bool IsHost = false;
-    [SerializeField] public bool GameStarted { get; private set; }  = false;
+    public UnityEvent<int> OnPointsUpdated = new UnityEvent<int>();
+    public bool IsSessionHost = false;
+    [SerializeField] public bool GameStarted { get; private set; } = false;
 
     private void Awake()
     {
@@ -25,9 +25,9 @@ class GameManager_v2 : Singleton<GameManager_v2>
         Debug.Log("Game Started");
     }
 
-    private void HandlePointsUpdated()
+    private void HandlePointsUpdated(int value)
     {
-        if (GameStarted && PointManager.Instance.CurrentScore.Value == 0)
+        if (value == 0)
             OnGameLost.Invoke();
     }
 

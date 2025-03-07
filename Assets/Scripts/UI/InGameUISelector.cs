@@ -3,19 +3,19 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
-public class InGameUISelector : NetworkBehaviour
+public class InGameUISelector : MonoBehaviour
 {
     [SerializeField] private VisualTreeAsset HostDocument;
     [SerializeField] private VisualTreeAsset ClientDocument;
 
-    public override void OnNetworkSpawn()
+    private void Start()
     {
-        NetworkManager.OnClientConnectedCallback += (ulong e) => { SelectUI(); };
+        NetworkManager.Singleton.OnClientConnectedCallback += (ulong e) => { SelectUI(); };
     }
 
     void SelectUI()
     {
-        if (!this.IsClient) return;
+        if (!NetworkManager.Singleton.IsClient) return;
         if(NetworkManager.Singleton.LocalClientId == 0)
         {
             this.GetComponent<UIDocument>().visualTreeAsset = HostDocument;

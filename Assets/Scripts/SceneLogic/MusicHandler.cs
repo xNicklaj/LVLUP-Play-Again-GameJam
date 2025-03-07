@@ -15,6 +15,10 @@ public class MusicHandler : MonoBehaviour
         {
             GetComponent<AudioSource>().Stop();
         });
+        GameManager_v2.Instance.OnGameLost.AddListener(() =>
+        {
+            GetComponent<AudioSource>().Stop();
+        });
     }
 
     // Update is called once per frame

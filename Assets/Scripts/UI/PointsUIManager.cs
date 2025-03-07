@@ -27,10 +27,10 @@ public class PointsUIManager : MonoBehaviour
 
 
 
-        private void OnPointsUpdated()
+        private void OnPointsUpdated(int value)
         {
-                if(_p1Label != null) _p1Label.text = PointManager.Instance.CurrentScore.Value.ToString();
-                if(_p2Label != null) _p2Label.text = PointManager.Instance.CurrentScore.Value.ToString();
-                if(_p3Label != null) _p3Label.text = PointManager.Instance.CurrentScore.Value.ToString();
+                if(_p1Label != null) _p1Label.text = value.ToString();
+                if(_p2Label != null) _p2Label.text = value.ToString();
+                if(_p3Label != null) _p3Label.text = value.ToString();
         }
 }

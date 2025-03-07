@@ -14,7 +14,7 @@ public class PointManager : NetworkSingleton<PointManager>
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()
     {
-        if (!IsServer) return;
+        if (!IsHost) return;
         GameManager_v2.Instance.OnGameStart.AddListener(() =>
         {
             ResetScore();
@@ -37,7 +37,7 @@ public class PointManager : NetworkSingleton<PointManager>
     {
         if (score < 0) score = 0;
         CurrentScore.Value = score;
-        GameManager_v2.Instance.OnPointsUpdated.Invoke();
+        RefreshScoreClientRpc(score);
     }
 
     private float GetNextDelay()
@@ -74,5 +74,11 @@ public class PointManager : NetworkSingleton<PointManager>
             SetScore(CurrentScore.Value - GetNextPointDecrease());
         }
         
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void RefreshScoreClientRpc(int value)
+    {
+        GameManager_v2.Instance.OnPointsUpdated.Invoke(value);
     }
 }
