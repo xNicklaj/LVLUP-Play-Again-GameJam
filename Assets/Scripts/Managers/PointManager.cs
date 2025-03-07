@@ -1,0 +1,78 @@
+using System.Collections;
+using Unity.Netcode;
+using UnityEngine;
+
+public class PointManager : NetworkSingleton<PointManager>
+{
+    public int InitialScore = 1000;
+
+    public NetworkVariable<int> CurrentScore = new NetworkVariable<int>();
+
+    public NetworkVariable<int> HighScore = new NetworkVariable<int>();
+    private float Timer = 0;
+    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public override void OnNetworkSpawn()
+    {
+        if (!IsServer) return;
+        GameManager_v2.Instance.OnGameStart.AddListener(() =>
+        {
+            ResetScore();
+            StartCoroutine(DecreaseScore());
+        });
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void ResetScore()
+    {
+        SetScore(InitialScore);
+    }
+
+    public void SetScore(int score)
+    {
+        if (score < 0) score = 0;
+        CurrentScore.Value = score;
+        GameManager_v2.Instance.OnPointsUpdated.Invoke();
+    }
+
+    private float GetNextDelay()
+    {
+        return Timer switch
+        {
+            <= 60 => 10f,
+            <= 120 => 8f,
+            <= 180 => 6f,
+            _ => 10
+        };
+    }
+
+    private int GetNextPointDecrease()
+    {
+        return Timer switch
+        {
+            <= 60 => 50,
+            <= 90 => 70,
+            <= 120 => 100,
+            <= 180 => 120,
+            > 180 => 150,
+            _ => 100
+        };
+    }
+
+    private IEnumerator DecreaseScore()
+    {
+        while (GameManager_v2.Instance.GameStarted)
+        {
+            float delay = GetNextDelay();
+            yield return new WaitForSeconds(delay);
+            Timer += delay;
+            SetScore(CurrentScore.Value - GetNextPointDecrease());
+        }
+        
+    }
+}
