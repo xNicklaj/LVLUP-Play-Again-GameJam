@@ -77,7 +77,7 @@ public class SpawnerSystem : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return;
+        if (!IsHost) return;
         nextSlot = Time.time;
         vision = gameObject.GetComponent<VisionSystem>();
         Debug.Assert(objectPrefab != null, "objectPrefab component is null");

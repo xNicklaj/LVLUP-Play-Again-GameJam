@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(PlaySoundOnShoot))]
 public class ShootingSystem : NetworkBehaviour
 {
     #region CustomTypes
@@ -39,6 +41,7 @@ public class ShootingSystem : NetworkBehaviour
     public GameObject bulletPrefab;
     [HideInInspector] public VisionSystem vision;
     private Transform shooter;
+    private PlaySoundOnShoot _playSoundOnShoot;
     #endregion
 
     #region ShootingVariables
@@ -63,6 +66,11 @@ public class ShootingSystem : NetworkBehaviour
     public bool IsShooting { get => _isShooting; private set => _isShooting = value; }
 
     #endregion
+
+    public void Awake()
+    {
+        _playSoundOnShoot = GetComponent<PlaySoundOnShoot>();
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -207,6 +215,7 @@ public class ShootingSystem : NetworkBehaviour
         GameObject bulletInstance = Instantiate(bulletPrefab, originPosition, originRotation);
         bulletInstance.GetComponent<NetworkObject>().Spawn();
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
+        _playSoundOnShoot.PlayShootingClipClientRpc();
 
         if (bullet != null)
         {

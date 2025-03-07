@@ -99,7 +99,7 @@ public class Bullet : NetworkBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsOwner || !IsServer) return;
-        LayerMask toCollideWith = (isFromEnemy ? LayerMask.GetMask("Player") : LayerMask.GetMask("Enemies")) | LayerMask.GetMask("Obstacles");
+        LayerMask toCollideWith = (isFromEnemy ? LayerMask.GetMask("Player") : LayerMask.GetMask("Enemy") | LayerMask.GetMask("LitEnemy") | LayerMask.GetMask("UnlitEnemy") | LayerMask.GetMask("Foreground"));
 
         if ((toCollideWith & (1 << collision.gameObject.layer)) != 0)
         {
