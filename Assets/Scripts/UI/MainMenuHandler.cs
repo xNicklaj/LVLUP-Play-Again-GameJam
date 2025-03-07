@@ -10,6 +10,7 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(AudioSource))]
 public class MainMenuHandler : MonoBehaviour
 {
     private VisualElement _baseContainer;
@@ -21,11 +22,17 @@ public class MainMenuHandler : MonoBehaviour
     private Button _quitButton;
     private TextField _ipField;
 
+    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private PlayerInputManager _playerInputManager;
     [SerializeField] private PlaySceneSettings _playSceneSettings;
 
+    public AudioClip SelectSound;
+    public AudioClip StartSound;
+    public AudioClip FocusSound;
+
     void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         _baseContainer = root.Q<VisualElement>("BaseContainer");
         _joinContainer = root.Q<VisualElement>("JoinContainer");
@@ -43,6 +50,26 @@ public class MainMenuHandler : MonoBehaviour
         _joinButton.clicked += JoinButtonClicked;
         _quitButton.clicked += QuitButtonClicked;
         _ipField.RegisterCallback<ChangeEvent<string>>(IPFieldFocusOut);
+
+        #region Sounds
+        _joinGameButton.clicked += () => PlaySound(SelectSound);
+        _backButton.clicked += () => PlaySound(SelectSound);
+        _quitButton.clicked += () => PlaySound(SelectSound);
+
+        _hostGameButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
+        _joinGameButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
+        _backButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
+        _joinButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
+        _quitButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
+        #endregion
+
+
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        _audioSource.clip = clip;
+        _audioSource.Play();
     }
 
     private void IPFieldFocusOut(ChangeEvent<string> evt)
@@ -74,6 +101,7 @@ public class MainMenuHandler : MonoBehaviour
     private void HostGameButtonClicked()
     {
         _playerInputManager.splitScreen = false;
+        PlaySound(StartSound);
         NetworkManager.Singleton.StartHost();
         GameManager_v2.Instance.IsHost = true;
         GameManager_v2.Instance.OnGameStart.Invoke();
@@ -83,6 +111,7 @@ public class MainMenuHandler : MonoBehaviour
     private void JoinButtonClicked()
     {
         _playerInputManager.splitScreen = true;
+        PlaySound(StartSound);
         NetworkManager.Singleton.StartClient();
         GameManager_v2.Instance.IsHost = true;
         GameManager_v2.Instance.OnGameStart.Invoke();
