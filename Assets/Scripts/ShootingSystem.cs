@@ -35,6 +35,7 @@ public class ShootingSystem : NetworkBehaviour
 
     #region References
     public ShootingSystemDefaults defaults;
+    PlayerInput input;
     public GameObject bulletPrefab;
     [HideInInspector] public VisionSystem vision;
     private Transform shooter;
@@ -73,7 +74,7 @@ public class ShootingSystem : NetworkBehaviour
             vision = gameObject.GetComponent<VisionSystem>();
             Debug.Assert(vision != null, "vision component is null");
         }
-
+        input = gameObject.GetComponent<PlayerInput>();
         Debug.Assert(bulletPrefab != null, "Bullet prefab not assigned");
     }
 
@@ -94,8 +95,7 @@ public class ShootingSystem : NetworkBehaviour
         }
         else
         {
-            PlayerInput input = gameObject.GetComponent<PlayerInput>();
-            IsShooting = input.actions.FindAction("ClassAction").ReadValue<float>() > 0;
+            IsShooting = input.actions.FindAction("ClassAction").IsPressed();
             targetDirection = input.actions.FindAction("Direction").ReadValue<Vector2>().normalized;
         }
 
@@ -150,6 +150,8 @@ public class ShootingSystem : NetworkBehaviour
                 nextSlot = Time.time + (timeslotsConfig.slotDuration * modifiers.timeslotDurationMult);
             }
 
+
+
             // anyway, check if we finished the slot (if it was a slot of 1 subslot only it might be even right away)
             subslotCounter++;
             subslotCounter %= subslotsInSlot;
@@ -157,6 +159,8 @@ public class ShootingSystem : NetworkBehaviour
             {
                 isThisPause = true; // the next subslot will be pause (if pause slots exist)
             }
+
+            //Debug.Log("I am here " + IsShooting);
 
             // anyway, update nextSubslot
             nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
@@ -186,25 +190,24 @@ public class ShootingSystem : NetworkBehaviour
             float angle = 360.0f / modifiers.axis * i;
             Vector2 direction;
             direction = Quaternion.Euler(0, 0, angle) * targetDirection;
-            // Debug.Log("Fire!");
-            FireBulletServerRpc(direction, modifiers);
+            Debug.Log("Fire!");
+            FireBulletServerRpc(direction, shooter.position, shooter.rotation, modifiers);
         }
 
     }
 
     [Rpc(SendTo.Server)]
-    private void FireBulletServerRpc(Vector2 targetDirection, ShootingModifiers modifiers)
+    private void FireBulletServerRpc(Vector2 targetDirection, Vector2 originPosition, Quaternion originRotation, ShootingModifiers modifiers)
     {
-        FireBullet(targetDirection, modifiers);
+        FireBullet(targetDirection, originPosition, originRotation, modifiers);
     }
 
-    private void FireBullet(Vector2 targetDirection, ShootingModifiers modifiers)
+    private void FireBullet(Vector2 targetDirection, Vector2 originPosition, Quaternion originRotation, ShootingModifiers modifiers)
     {
-        //Debug.Log(amIenemy);
-        GameObject bulletInstance = Instantiate(bulletPrefab, shooter.position, shooter.rotation);
+        GameObject bulletInstance = Instantiate(bulletPrefab, originPosition, originRotation);
         bulletInstance.GetComponent<NetworkObject>().Spawn();
-
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
+
         if (bullet != null)
         {
             bullet.direction = targetDirection;

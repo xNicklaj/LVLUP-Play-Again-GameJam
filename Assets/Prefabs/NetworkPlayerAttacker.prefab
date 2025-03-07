@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 6688493616225401273}
   - component: {fileID: 4987780808202608399}
   - component: {fileID: -3955033230505757482}
+  - component: {fileID: -5741922547793501765}
   - component: {fileID: 3480653304242080687}
   m_Layer: 7
   m_Name: NetworkPlayerAttacker
@@ -351,6 +352,34 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-5741922547793501765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363042218499496334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ad7e8db1fe50f4e99801c445edc2c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  defaults: {fileID: 11400000, guid: 656fd973320697548b53644d470579e3, type: 2}
+  bulletPrefab: {fileID: 5720754505623613542, guid: 9988d383f0c233142920d8a4cd3748c6, type: 3}
+  vision: {fileID: 0}
+  modifiers:
+    homing: 0
+    axis: 1
+    timeslotDurationMult: 1
+    rangeMult: 1
+    damageMult: 1
+  timeslotsConfig:
+    slotDuration: 0.1
+    shotsPerSlot: 1
+    pauseSlotsNumber: 2
+  bulletColor: {r: 1, g: 1, b: 1, a: 1}
+  amIenemy: 0
 --- !u!61 &3480653304242080687
 BoxCollider2D:
   m_ObjectHideFlags: 0
