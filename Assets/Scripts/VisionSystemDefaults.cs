@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "VisionSystemDefaults", menuName = "Scriptable Objects/VisionSystemDefaults")]
@@ -8,6 +7,7 @@ public class VisionSystemDefaults : ScriptableObject
     public float sightAngle = 360f;        // Enemy's vision cone in degrees
     public LayerMask playerLayer;      // Layer where player is
     public LayerMask enemyLayer;       // Layer where enemies are
+    public LayerMask groundLayer;       // Layer of the floor
     public LayerMask obstacleLayer;    // Layers that block vision (walls, etc.)
     public bool debugEverything = false;  // Visualize rays
     public int numberOfRays = 3;

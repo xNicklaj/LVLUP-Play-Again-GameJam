@@ -1,7 +1,7 @@
+using System.Linq;
 using UnityEngine;
-using Unity.Netcode;
 
-public class VisionSystem : NetworkBehaviour
+public class VisionSystem : MonoBehaviour
 {
     #region References
     public VisionSystemDefaults defaults; // to be set in the Inspector
@@ -30,6 +30,8 @@ public class VisionSystem : NetworkBehaviour
 
     private void Update()
     {
+        if (debug || defaults.debugEverything)
+            DrawFovBoundaries();
     }
 
     private void drawDebugRays()
@@ -38,7 +40,6 @@ public class VisionSystem : NetworkBehaviour
             Debug.DrawLine(transform.position, hit.point, Color.red);
         else if (hit.collider != null)
             Debug.DrawRay(transform.position, (hit.transform.position - transform.position).normalized * hit.distance, Color.green);
-        DrawFovBoundaries();
     }
 
     /// <summary>
@@ -100,7 +101,9 @@ public class VisionSystem : NetworkBehaviour
             {
                 float angleOffset = Mathf.Lerp(-defaults.angleBetweenRays, defaults.angleBetweenRays, (float)i / (numberOfRays - 1));
                 rayDirection = Quaternion.Euler(0, 0, angleOffset) * vectorToObject.normalized;
-            } else {
+            }
+            else
+            {
                 rayDirection = vectorToObject.normalized;
             }
 
@@ -199,6 +202,57 @@ public class VisionSystem : NetworkBehaviour
 
         return closestObject;
     }
+
+    public Vector2 GetValidPointAroundMe(LayerMask mustCollideWith, LayerMask mustNotCollideWith, float radiusMult = 1.0f)
+    {
+        return GetValidPointAroundPosition(gameObject.transform.position, defaults.sightRadius * sightRadiusMult * radiusMult, mustCollideWith, mustNotCollideWith);
+    }
+
+    public static Vector2 GetValidPointAroundPosition(Vector2 origin, float radius, LayerMask mustCollideWith, LayerMask mustNotCollideWith)
+    {
+        for (int i = 0; i < 3; i++) // 3 max attempts to find a valid point
+        {
+            // Generate a random point inside the circle
+            Vector2 randomOffset = Random.insideUnitCircle * radius;
+            Vector2 randomPoint = origin + randomOffset;
+
+            // Check if it collides with the right layer
+            Collider2D groundHit = Physics2D.OverlapPoint(randomPoint, mustCollideWith);
+            // Check if it does NOT collide with any wrong layer
+            Collider2D obstacleHit = Physics2D.OverlapPoint(randomPoint, mustNotCollideWith);
+
+            if (groundHit != null && obstacleHit == null && randomPoint != origin)
+            {
+                return randomPoint;
+            }
+        }
+
+        // If no valid point is found, return the origin (or handle it differently)
+        return origin;
+    }
+
+    public int CountNearMe(LayerMask[] layers, float radiusMult = 1.0f)
+    {
+        return CountNearPosition(gameObject.transform.position, sightRadiusMult * defaults.sightRadius * radiusMult, layers);
+    }
+
+
+    public static int CountNearPosition(Vector2 origin, float radius, LayerMask[] layers)
+    {
+        // Combine all the layers into a single bitmask
+        LayerMask layerMasks = 0;
+        foreach (LayerMask layer in layers) layerMasks |= layer;
+
+        // Perform the overlap circle check, considering whether to pass obstacles or not
+        Collider2D[] collidersInArea = Physics2D.OverlapCircleAll(
+            origin,
+            radius,
+            layerMasks
+        );
+
+        return collidersInArea.Count(c => (layerMasks & (1 << c.gameObject.layer)) != 0);
+    }
+
 
     /// <summary>
     /// Determines whether a given GameObject is within the field of view (FOV).
