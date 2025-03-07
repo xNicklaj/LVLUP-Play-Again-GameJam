@@ -1,27 +1,29 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class ShieldSystem : MonoBehaviour
 {
     [SerializeField] private float shieldRange = 2f;
     [SerializeField] private float shieldWidth = 3f;
     [SerializeField] private float shieldHeight = 1.5f;
-    [SerializeField] private float shieldAngle = 0f;
+    [SerializeField] private float shieldAngle = 90f;
     [SerializeField] private Color shieldColor = Color.green;
 
 
-    private MeshFilter meshFilter;
+    /*private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
-    private Mesh shieldMesh;
+    private Mesh shieldMesh;*/
     private bool isFront = false;
+    
+    private SpriteRenderer spriteRenderer;
     
     private Vector3 sideOffset = new Vector3(0, -0.5f, 0);
     private Vector3 frontOffset;
     
     private void Awake()
     {
-        meshFilter = GetComponent<MeshFilter>();
+        /*meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
 
         shieldMesh = new Mesh();
@@ -29,6 +31,10 @@ public class ShieldSystem : MonoBehaviour
         
         meshRenderer.sortingOrder = 10; //TODO: see if used
         meshRenderer.material.color = new Color(shieldColor.r, shieldColor.g, shieldColor.b, shieldColor.a);
+        */
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = shieldColor;
+        frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
         
         UpdateShieldMesh();
     }
@@ -38,7 +44,7 @@ public class ShieldSystem : MonoBehaviour
         UpdateShieldMesh();
     }
     
-    public void OnClassAction(InputValue value)
+    /*public void OnClassAction(InputValue value)
     {
         ToggleShieldPosition();
     }
@@ -56,7 +62,7 @@ public class ShieldSystem : MonoBehaviour
             shieldAngle -= 90f;
         }
         UpdateShieldMesh();
-    }
+    }*/
     
     /// <summary>
     /// Change the shield distance from the player
@@ -92,7 +98,7 @@ public class ShieldSystem : MonoBehaviour
 
     private void UpdateShieldMesh()
     {
-        frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
+        /*frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
         Vector3 chosenOffset = isFront ? frontOffset : sideOffset;
 
         Vector3[] vertices = new Vector3[4];
@@ -109,9 +115,17 @@ public class ShieldSystem : MonoBehaviour
         shieldMesh.Clear();
         shieldMesh.vertices = vertices;
         shieldMesh.triangles = triangles;
-        shieldMesh.RecalculateNormals();
+        shieldMesh.RecalculateNormals();*/
+        
+        frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
+        //Vector3 offset = isFront ? frontOffset : sideOffset;
+        
+        transform.localPosition = frontOffset; //changed from offset
+        transform.localEulerAngles = new Vector3(0, 0, shieldAngle);
+        transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
+        
     }
-    private Vector3 RotatePoint(Vector3 point, float angleRad)
+    /*private Vector3 RotatePoint(Vector3 point, float angleRad)
     {
         float cos = Mathf.Cos(angleRad);
         float sin = Mathf.Sin(angleRad);
@@ -120,5 +134,5 @@ public class ShieldSystem : MonoBehaviour
             point.x * sin + point.y * cos,
             0
         );
-    }
+    }*/
 }
