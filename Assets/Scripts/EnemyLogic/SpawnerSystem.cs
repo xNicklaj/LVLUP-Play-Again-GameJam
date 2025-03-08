@@ -4,6 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(VisionSystem))]
+[RequireComponent(typeof(ChanceSystem))]
 public class SpawnerSystem : NetworkBehaviour
 {
     #region CustomTypes
@@ -44,6 +45,7 @@ public class SpawnerSystem : NetworkBehaviour
     public GameObject objectPrefab; // to be set in inspector
     public SpawnableIdentifier prefabId; // to be set in inspector
     public LayerMask layerToSpawnIn; // to be set in inspector
+    public ChanceSystem random;
     #endregion
 
     #region SpawnerVariables
@@ -79,6 +81,7 @@ public class SpawnerSystem : NetworkBehaviour
     {
         if (!IsHost) return;
         nextSlot = Time.time;
+        random = GetComponent<ChanceSystem>();
         vision = gameObject.GetComponent<VisionSystem>();
         Debug.Assert(objectPrefab != null, "objectPrefab component is null");
         Debug.Log("Owner: " + this.OwnerClientId);
@@ -205,6 +208,10 @@ public class SpawnerSystem : NetworkBehaviour
     private void ExecuteSubslot(Vector3 spawnPosition, GameObject objectPrefab, SpawnableIdentifier prefabId)
     {
         if (!IsOwner) return;
+
+        if (!random.Happens("Spawn"))
+            return;
+
         GameObject objInstance = Instantiate(objectPrefab, spawnPosition, new Quaternion(0, 0, 0, 0));
         objInstance.GetComponent<NetworkObject>().Spawn();
 
