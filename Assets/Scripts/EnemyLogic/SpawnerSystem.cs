@@ -214,7 +214,7 @@ public class SpawnerSystem : NetworkBehaviour
             {
                 case SpawnableIdentifier.ENEMY:
                     // set stuff internal to the prefab
-                    obj.layer = LayerMask.GetMask("Enemies");
+                    obj.layer = layerToSpawnIn;
                     break;
 
                 case SpawnableIdentifier.POWERUP:

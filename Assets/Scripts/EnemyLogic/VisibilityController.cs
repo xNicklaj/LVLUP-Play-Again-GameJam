@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class VisibilityController : MonoBehaviour
 {
     [Header("TestVisibility")]
@@ -10,35 +10,12 @@ public class VisibilityController : MonoBehaviour
     [SerializeField] private string litLayerName = "LitEnemy";
     [SerializeField] private string unlitLayerName = "UnlitEnemy";
 
-    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        UpdateVisibility();
+        
     }
 
-    private void Update()
-    {
-        UpdateVisibility();
-    }
-    
-    private void UpdateVisibility()
-    {
-        // for King Player
-        if (TestVisibility && TestVisibility.Visibility)
-        {
-            spriteRenderer.enabled = true;
-            return;
-        }
-
-        // Altrimenti, controlliamo se il layer è "Lit"
-        int currentLayer = gameObject.layer;
-        int litLayer = LayerMask.NameToLayer(litLayerName);
-
-        // Se l'oggetto è nel layer "Lit", abilitiamo lo sprite, altrimenti no
-        spriteRenderer.enabled = (currentLayer == litLayer);
-    }
 
     /// <summary>
     /// Change the layer of the object
@@ -54,7 +31,5 @@ public class VisibilityController : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer(unlitLayerName);
         }
-
-        UpdateVisibility();
     }
 }
