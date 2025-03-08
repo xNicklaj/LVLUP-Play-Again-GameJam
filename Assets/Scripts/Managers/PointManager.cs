@@ -40,6 +40,11 @@ public class PointManager : NetworkSingleton<PointManager>
         RefreshScoreClientRpc(score);
     }
 
+    public void AddScore(int score)
+    {
+        SetScore(CurrentScore.Value + score);
+    }
+
     private float GetNextDelay()
     {
         return Timer switch

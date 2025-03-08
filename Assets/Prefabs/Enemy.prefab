@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: -7316355371788943160}
   - component: {fileID: 8321123762949088387}
   - component: {fileID: 2861831010232841214}
+  - component: {fileID: 5398635116190739017}
+  - component: {fileID: -1592513661587911385}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
@@ -83,7 +85,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061630649
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 2345792030329797157, guid: d5d09dd5b9bdfa84bbe2e8ed005adf38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -199,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  random: {fileID: 0}
   defaults: {fileID: 11400000, guid: 656fd973320697548b53644d470579e3, type: 2}
   bulletPrefab: {fileID: 5720754505623613542, guid: 0920c81fb67b0194bb3f7d433760166c, type: 3}
   vision: {fileID: 0}
@@ -403,3 +406,34 @@ MonoBehaviour:
   TestVisibility: {fileID: 11400000, guid: 9d75188b57e1fcf46880c1cf3dc00bc5, type: 2}
   litLayerName: LitEnemy
   unlitLayerName: UnlitEnemy
+--- !u!114 &5398635116190739017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918623692585558999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e515dcc0da141324883ee5941b6ebeb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+  - name: Shooting
+    chance: 0.15
+    description: 
+    happenedLastTime: 0
+    previousHappeningsCounter: 0
+--- !u!114 &-1592513661587911385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918623692585558999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7716651cd67b03e45b6f2f8d76736901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: 100

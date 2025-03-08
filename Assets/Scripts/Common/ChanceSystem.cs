@@ -30,6 +30,11 @@ public class ChanceSystem : MonoBehaviour
 
     private Dictionary<string, ChanceEvent> eventsDictionary = new Dictionary<string, ChanceEvent>();
 
+    private void Awake()
+    {
+        eventsDictionary = events.ToDictionary(x => x.name, x => x);
+    }
+
     private void OnValidate()
     {
         // Ensure dictionary is rebuilt whenever list changes
