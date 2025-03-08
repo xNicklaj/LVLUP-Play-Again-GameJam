@@ -189,10 +189,11 @@ public class ShootingSystem : NetworkBehaviour
             // anyway, update nextSubslot
             nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
 
-            if (!IsShooting) {
-                pContr.MoveSpeedMult = 1.0f;
+            if (!IsShooting)
+            {
+                if (!amIenemy) pContr.MoveSpeedMult = 1.0f;
                 return;
-            };
+            }
 
             if (amIenemy)
             {
