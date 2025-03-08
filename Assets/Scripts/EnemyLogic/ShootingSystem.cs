@@ -4,8 +4,10 @@ using Unity.Netcode;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PlaySoundOnShoot))]
+[RequireComponent(typeof(ChanceSystem))]
 public class ShootingSystem : NetworkBehaviour
 {
+
     #region CustomTypes
     [System.Serializable]
     public struct ShootingModifiers : INetworkSerializable
@@ -36,6 +38,7 @@ public class ShootingSystem : NetworkBehaviour
     #endregion
 
     #region References
+    public ChanceSystem random;
     public ShootingSystemDefaults defaults;
     PlayerInput input;
     public GameObject bulletPrefab;
@@ -70,6 +73,7 @@ public class ShootingSystem : NetworkBehaviour
     public void Awake()
     {
         _playSoundOnShoot = GetComponent<PlaySoundOnShoot>();
+        random = GetComponent<ChanceSystem>();
     }
 
     public override void OnNetworkSpawn()
@@ -198,7 +202,8 @@ public class ShootingSystem : NetworkBehaviour
             float angle = 360.0f / modifiers.axis * i;
             Vector2 direction;
             direction = Quaternion.Euler(0, 0, angle) * targetDirection;
-            FireBulletServerRpc(direction, shooter.position, shooter.rotation, modifiers);
+            if (random.Happens("Shooting"))
+                FireBulletServerRpc(direction, shooter.position, shooter.rotation, modifiers);
         }
 
     }
