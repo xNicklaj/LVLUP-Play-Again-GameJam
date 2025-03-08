@@ -9,6 +9,6 @@ public class SharpshooterModifier : ModifierBase
 
     protected override void DisposeModifier()
     {
-        ModifierTarget.GetComponent<ShootingSystem>().modifiers.homing = true;
+        ModifierTarget.GetComponent<ShootingSystem>().modifiers.homing = false;
     }
 }

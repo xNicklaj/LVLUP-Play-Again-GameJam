@@ -15,6 +15,7 @@ MonoBehaviour:
   maxFlyTime: 5
   timeBeforeDestroy: 2
   initialVelocity: 10
+  damage: 1
   velocityOverTime:
     serializedVersion: 2
     m_Curve:
@@ -66,3 +67,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  homingRadiusMult: 1
+  homingTurnSpeed: 60

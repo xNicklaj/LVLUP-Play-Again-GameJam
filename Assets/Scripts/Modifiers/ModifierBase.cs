@@ -38,6 +38,14 @@ public abstract class ModifierBase : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         ModifierTarget = GameObject.Find(ModifierData.TargetName + "(Clone)");
+        if (!IsHost) return;
+        StartCoroutine(WaitForDespawn());
+    }
+
+    private IEnumerator WaitForDespawn()
+    {
+        yield return new WaitForSeconds(ModifierData.TimeBeforeDespawn);
+        StartDespawnClientRpc();
     }
 
     private void Update()
