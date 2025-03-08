@@ -198,7 +198,6 @@ public class ShootingSystem : NetworkBehaviour
             float angle = 360.0f / modifiers.axis * i;
             Vector2 direction;
             direction = Quaternion.Euler(0, 0, angle) * targetDirection;
-            Debug.Log("Fire!");
             FireBulletServerRpc(direction, shooter.position, shooter.rotation, modifiers);
         }
 

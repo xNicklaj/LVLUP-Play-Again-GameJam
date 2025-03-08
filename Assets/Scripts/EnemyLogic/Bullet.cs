@@ -103,7 +103,7 @@ public class Bullet : NetworkBehaviour
 
         if ((toCollideWith & (1 << collision.gameObject.layer)) != 0)
         {
-            this.GetComponent<NetworkObject>().Despawn();
+            if(this.GetComponent<NetworkObject>().IsSpawned) this.GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
             return;
         }
