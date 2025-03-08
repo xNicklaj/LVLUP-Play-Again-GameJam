@@ -84,12 +84,12 @@ public class SpawnerSystem : NetworkBehaviour
         random = GetComponent<ChanceSystem>();
         vision = gameObject.GetComponent<VisionSystem>();
         Debug.Assert(objectPrefab != null, "objectPrefab component is null");
-        Debug.Log("Owner: " + this.OwnerClientId);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log(deactivateIf);
         if (!IsHost) return;
         vision.sightRadiusMult = modifiers.rangeMult;
 
@@ -131,7 +131,7 @@ public class SpawnerSystem : NetworkBehaviour
                     {
                         // cycle is finished. 
                         cycleCounter++;
-                        if ((deactivateIf & SpawnerDeactivateMechanism.AFTER_N_CYCLES) == deactivateIf && cycleCounter >= cyclesBeforeDeactivation)
+                        if (deactivateIf != 0 && (deactivateIf & SpawnerDeactivateMechanism.AFTER_N_CYCLES) == deactivateIf && cycleCounter >= cyclesBeforeDeactivation)
                         {
                             // TODO: destroy or not?
                             isActive = false;
@@ -157,7 +157,7 @@ public class SpawnerSystem : NetworkBehaviour
                 {
                     // cycle is finished. 
                     cycleCounter++;
-                    if ((deactivateIf & SpawnerDeactivateMechanism.AFTER_N_CYCLES) == deactivateIf && cycleCounter >= cyclesBeforeDeactivation)
+                    if (deactivateIf != 0 && (deactivateIf & SpawnerDeactivateMechanism.AFTER_N_CYCLES) == deactivateIf && cycleCounter >= cyclesBeforeDeactivation)
                     {
                         // TODO: destroy or not?
                         isActive = false;
@@ -182,7 +182,7 @@ public class SpawnerSystem : NetworkBehaviour
             nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.spawnsPerSlot;
 
 
-            if ((activateIf & SpawnerActivateMechanism.PLAYER_PROXIMITY) == activateIf) // if proximity is the trigger
+            if (activateIf != 0 && (activateIf & SpawnerActivateMechanism.PLAYER_PROXIMITY) == activateIf) // if proximity is the trigger
             {
                 /* 
                  * TODO: check if player is nearby, also through walls though, should it be like this?
@@ -196,7 +196,7 @@ public class SpawnerSystem : NetworkBehaviour
 
             ExecuteSubslot(spawnPosition, objectPrefab, prefabId);
             spawnedCounter++;
-            if ((deactivateIf & SpawnerDeactivateMechanism.AFTER_N_SPAWNS) == deactivateIf && spawnedCounter >= spawnsBeforeDeactivation)
+            if (deactivateIf != 0 && (deactivateIf & SpawnerDeactivateMechanism.AFTER_N_SPAWNS) == deactivateIf && spawnedCounter >= spawnsBeforeDeactivation)
             {
                 // TODO: destroy or not?
                 isActive = false;
