@@ -208,7 +208,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5720754505623613542, guid: 0920c81fb67b0194bb3f7d433760166c, type: 3}
   vision: {fileID: 0}
   modifiers:
-    homing: 1
+    homing: 0
     axis: 1
     timeslotDurationMult: 1
     rangeMult: 1
