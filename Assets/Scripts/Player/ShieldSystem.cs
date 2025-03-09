@@ -17,25 +17,23 @@ public class ShieldSystem : MonoBehaviour
     private bool isFront = false;
     
     private SpriteRenderer spriteRenderer;
+    private PolygonCollider2D polygonCollider;
     
     private Vector3 sideOffset = new Vector3(0, -0.5f, 0);
     private Vector3 frontOffset;
     
     private void Awake()
     {
-        /*meshFilter = GetComponent<MeshFilter>();
-        meshRenderer = GetComponent<MeshRenderer>();
-
-        shieldMesh = new Mesh();
-        meshFilter.mesh = shieldMesh;
-        
-        meshRenderer.sortingOrder = 10; //TODO: see if used
-        meshRenderer.material.color = new Color(shieldColor.r, shieldColor.g, shieldColor.b, shieldColor.a);
-        */
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = shieldColor;
         frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
-        
+
+        polygonCollider = GetComponent<PolygonCollider2D>();
+        if (polygonCollider)
+            polygonCollider.isTrigger = true;
+
+        spriteRenderer.enabled = false;
+        if (polygonCollider) polygonCollider.enabled = false;
         UpdateShieldMesh();
     }
 
@@ -44,25 +42,24 @@ public class ShieldSystem : MonoBehaviour
         UpdateShieldMesh();
     }
     
-    /*public void OnClassAction(InputValue value)
+    public void OnClassAction(InputValue value)
     {
-        ToggleShieldPosition();
-    }
-    
-    private void ToggleShieldPosition()
-    {
-        isFront = !isFront; 
+        bool isPressed = value.isPressed;
 
-        if (isFront)
+        if (isPressed)
         {
-            shieldAngle += 90f;
+            // enable shield
+            spriteRenderer.enabled = true;
+            if (polygonCollider) polygonCollider.enabled = true;
         }
         else
         {
-            shieldAngle -= 90f;
+            // disable shield
+            spriteRenderer.enabled = false;
+            if (polygonCollider) polygonCollider.enabled = false;
         }
-        UpdateShieldMesh();
-    }*/
+        
+    }
     
     /// <summary>
     /// Change the shield distance from the player
@@ -98,25 +95,6 @@ public class ShieldSystem : MonoBehaviour
 
     private void UpdateShieldMesh()
     {
-        /*frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
-        Vector3 chosenOffset = isFront ? frontOffset : sideOffset;
-
-        Vector3[] vertices = new Vector3[4];
-        int[] triangles = new int[6] { 0, 2, 1, 2, 0, 3 };
-        
-        float rad = Mathf.Deg2Rad * shieldAngle;
-        //Vector3 shieldOffset = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0)*shieldRange;
-        
-        vertices[0] = chosenOffset + RotatePoint(new Vector3(-shieldWidth / 2, -shieldHeight / 2, 0), rad);
-        vertices[1] = chosenOffset + RotatePoint(new Vector3(shieldWidth / 2, -shieldHeight / 2, 0), rad);
-        vertices[2] = chosenOffset + RotatePoint(new Vector3(shieldWidth / 2, shieldHeight / 2, 0), rad);
-        vertices[3] = chosenOffset + RotatePoint(new Vector3(-shieldWidth / 2, shieldHeight / 2, 0), rad);
-
-        shieldMesh.Clear();
-        shieldMesh.vertices = vertices;
-        shieldMesh.triangles = triangles;
-        shieldMesh.RecalculateNormals();*/
-        
         frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
         //Vector3 offset = isFront ? frontOffset : sideOffset;
         
@@ -125,14 +103,5 @@ public class ShieldSystem : MonoBehaviour
         transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
         
     }
-    /*private Vector3 RotatePoint(Vector3 point, float angleRad)
-    {
-        float cos = Mathf.Cos(angleRad);
-        float sin = Mathf.Sin(angleRad);
-        return new Vector3(
-            point.x * cos - point.y * sin,
-            point.x * sin + point.y * cos,
-            0
-        );
-    }*/
+
 }
