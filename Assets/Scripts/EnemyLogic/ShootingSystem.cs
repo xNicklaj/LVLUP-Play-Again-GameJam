@@ -4,8 +4,10 @@ using Unity.Netcode;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(PlaySoundOnShoot))]
+[RequireComponent(typeof(ChanceSystem))]
 public class ShootingSystem : NetworkBehaviour
 {
+
     #region CustomTypes
     [System.Serializable]
     public struct ShootingModifiers : INetworkSerializable
@@ -36,12 +38,15 @@ public class ShootingSystem : NetworkBehaviour
     #endregion
 
     #region References
+    public ChanceSystem random;
     public ShootingSystemDefaults defaults;
     PlayerInput input;
     public GameObject bulletPrefab;
     [HideInInspector] public VisionSystem vision;
+    private EnemyNavigation nav;
     private Transform shooter;
     private PlaySoundOnShoot _playSoundOnShoot;
+    private PlayerControllerMP pContr;
     #endregion
 
     #region ShootingVariables
@@ -56,6 +61,7 @@ public class ShootingSystem : NetworkBehaviour
     // ---------------
 
     public Color bulletColor = Color.white;
+    public float speedWhileShootingMult = 0.20f;
     private float nextSlot;
     private float nextSubslot;
     private int slotCounter;
@@ -70,6 +76,9 @@ public class ShootingSystem : NetworkBehaviour
     public void Awake()
     {
         _playSoundOnShoot = GetComponent<PlaySoundOnShoot>();
+        random = GetComponent<ChanceSystem>();
+        if (amIenemy)
+            nav = GetComponent<EnemyNavigation>();
     }
 
     public override void OnNetworkSpawn()
@@ -83,6 +92,8 @@ public class ShootingSystem : NetworkBehaviour
             Debug.Assert(vision != null, "vision component is null");
         }
         input = gameObject.GetComponent<PlayerInput>();
+        pContr = gameObject.GetComponent<PlayerControllerMP>();
+
         Debug.Assert(bulletPrefab != null, "Bullet prefab not assigned");
     }
 
@@ -93,23 +104,28 @@ public class ShootingSystem : NetworkBehaviour
         int totalSlotsInCycle = 1 + timeslotsConfig.pauseSlotsNumber;
 
         // update IsShooting and get shooting direction 
-        Vector2 targetDirection;
+        Vector2 targetDirection = new Vector2(0, 0);
         if (amIenemy)
         {
-            GameObject target = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer }); // should flash a raycast if debug on
-            IsShooting = target != null; // if sees target, shoots target.
-            if (target == null) return;
-            targetDirection = (target.transform.position - transform.position).normalized;
+            if (nav.isMoving)
+                IsShooting = false; // never shoots while moving
+            else
+            {
+                GameObject target = vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer }); // should flash a raycast if debug on
+                IsShooting = target != null; // if sees target, shoots target.
+                if (target == null) return;
+                targetDirection = (target.transform.position - transform.position).normalized;
+            }
         }
         else
         {
-            IsShooting = input.actions.FindAction("ClassAction").IsPressed();
             targetDirection = input.actions.FindAction("Direction").ReadValue<Vector2>().normalized;
+            IsShooting = targetDirection.magnitude > 0;
         }
 
         /* TODO: this was just to see the raycasts. The movement script will be the one calling repeatedly the VisionComponent. */
-        if (amIenemy)
-            vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer });
+        // if (amIenemy)
+        //     vision.GetClosestInSight(new LayerMask[] { vision.defaults.playerLayer });
 
         if (Time.time >= nextSubslot)
         {
@@ -173,7 +189,11 @@ public class ShootingSystem : NetworkBehaviour
             // anyway, update nextSubslot
             nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
 
-            if (!IsShooting) return;
+            if (!IsShooting)
+            {
+                if (!amIenemy) pContr.MoveSpeedMult = 1.0f;
+                return;
+            }
 
             if (amIenemy)
             {
@@ -182,7 +202,10 @@ public class ShootingSystem : NetworkBehaviour
             else
             {
                 if (targetDirection.magnitude > 0)
+                {
+                    pContr.MoveSpeedMult = speedWhileShootingMult;
                     ExecuteSubslot(targetDirection, modifiers);
+                }
             }
         }
     }
@@ -198,7 +221,8 @@ public class ShootingSystem : NetworkBehaviour
             float angle = 360.0f / modifiers.axis * i;
             Vector2 direction;
             direction = Quaternion.Euler(0, 0, angle) * targetDirection;
-            FireBulletServerRpc(direction, shooter.position, shooter.rotation, modifiers);
+            if (random.Happens("Shooting"))
+                FireBulletServerRpc(direction, shooter.position, shooter.rotation, modifiers);
         }
 
     }

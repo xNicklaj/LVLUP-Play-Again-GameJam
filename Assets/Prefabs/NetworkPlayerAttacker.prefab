@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061630649
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061630649
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6226415, g: 0, b: 0, a: 1}
@@ -189,10 +189,12 @@ GameObject:
   - component: {fileID: 6688493616225401273}
   - component: {fileID: 4987780808202608399}
   - component: {fileID: -3955033230505757482}
-  - component: {fileID: -5741922547793501765}
   - component: {fileID: 3480653304242080687}
   - component: {fileID: 4823219202889726186}
   - component: {fileID: 2515731495898407995}
+  - component: {fileID: -1663670199317153622}
+  - component: {fileID: 3016233639297120466}
+  - component: {fileID: 7925609793374688971}
   m_Layer: 7
   m_Name: NetworkPlayerAttacker
   m_TagString: Player
@@ -312,7 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeed: 5
+  MoveSpeedMult: 1
   RotationSpeed: 10
   _playerInput: {fileID: 2374953380649715109}
   _playerRenderer: {fileID: 454178334523922261}
@@ -354,34 +356,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-5741922547793501765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3363042218499496334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0ad7e8db1fe50f4e99801c445edc2c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  defaults: {fileID: 11400000, guid: 656fd973320697548b53644d470579e3, type: 2}
-  bulletPrefab: {fileID: 5720754505623613542, guid: 9988d383f0c233142920d8a4cd3748c6, type: 3}
-  vision: {fileID: 0}
-  modifiers:
-    homing: 0
-    axis: 1
-    timeslotDurationMult: 1
-    rangeMult: 1
-    damageMult: 1
-  timeslotsConfig:
-    slotDuration: 0.1
-    shotsPerSlot: 1
-    pauseSlotsNumber: 2
-  bulletColor: {r: 1, g: 1, b: 1, a: 1}
-  amIenemy: 0
 --- !u!61 &3480653304242080687
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -539,6 +513,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 0}
   _shootingSystem: {fileID: 0}
+--- !u!114 &-1663670199317153622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363042218499496334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e515dcc0da141324883ee5941b6ebeb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+  - name: Shooting
+    chance: 1
+    description: 
+    happenedLastTime: 0
+    previousHappeningsCounter: 0
+--- !u!114 &3016233639297120466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363042218499496334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ad7e8db1fe50f4e99801c445edc2c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  random: {fileID: 0}
+  defaults: {fileID: 11400000, guid: 656fd973320697548b53644d470579e3, type: 2}
+  bulletPrefab: {fileID: 5720754505623613542, guid: 9988d383f0c233142920d8a4cd3748c6, type: 3}
+  vision: {fileID: 0}
+  modifiers:
+    homing: 0
+    axis: 1
+    timeslotDurationMult: 1
+    rangeMult: 1
+    damageMult: 1
+  timeslotsConfig:
+    slotDuration: 0.1
+    shotsPerSlot: 1
+    pauseSlotsNumber: 2
+  bulletColor: {r: 1, g: 1, b: 1, a: 1}
+  speedWhileShootingMult: 0.2
+  amIenemy: 0
+--- !u!114 &7925609793374688971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363042218499496334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7716651cd67b03e45b6f2f8d76736901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: -100
+  DestroyOnHit: 0
 --- !u!1 &8550134888312982908
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,7 +682,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

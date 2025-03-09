@@ -1,0 +1,681 @@
+fileFormatVersion: 2
+guid: 1c8bd7eabb07f544b8f52833bccc19dd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -477347071691519469
+    second: Rana_con_nuvola_0
+  - first:
+      213: 8534133808207784614
+    second: Rana_con_nuvola_1
+  - first:
+      213: 2215481728238077814
+    second: Rana_con_nuvola_2
+  - first:
+      213: -8390877581913749738
+    second: Rana_con_nuvola_3
+  - first:
+      213: 2749734556148166414
+    second: Rana_con_nuvola_4
+  - first:
+      213: -2453609807553165381
+    second: Rana_con_nuvola_5
+  - first:
+      213: -1701669397201881268
+    second: Rana_con_nuvola_6
+  - first:
+      213: 6426788868759981464
+    second: Rana_con_nuvola_7
+  - first:
+      213: -2838538334263888125
+    second: Rana_con_nuvola_8
+  - first:
+      213: -4808207777233324570
+    second: Rana_con_nuvola_9
+  - first:
+      213: -7410106905304520990
+    second: Rana_con_nuvola_10
+  - first:
+      213: -8177612018934837535
+    second: Rana_con_nuvola_11
+  - first:
+      213: -2847655400551969875
+    second: Rana_con_nuvola_12
+  - first:
+      213: -572894423467836498
+    second: Rana_con_nuvola_13
+  - first:
+      213: 597097380780197071
+    second: Rana_con_nuvola_14
+  - first:
+      213: 7794843834821184744
+    second: Rana_con_nuvola_15
+  - first:
+      213: -8880199593254465166
+    second: Rana_con_nuvola_16
+  - first:
+      213: -4189245289113507295
+    second: Rana_con_nuvola_17
+  - first:
+      213: -9084050073740891305
+    second: Rana_con_nuvola_18
+  - first:
+      213: -3542312392167697908
+    second: Rana_con_nuvola_19
+  - first:
+      213: 5136929094778832549
+    second: Rana_con_nuvola_20
+  - first:
+      213: -1132241460796061193
+    second: Rana_con_nuvola_21
+  - first:
+      213: -6389754580391617059
+    second: Rana_con_nuvola_22
+  - first:
+      213: 8329042579951700920
+    second: Rana_con_nuvola_23
+  - first:
+      213: 1173268755967588024
+    second: Rana_con_nuvola_24
+  - first:
+      213: 5584421470833408890
+    second: Rana_con_nuvola_25
+  - first:
+      213: -4644524600106157387
+    second: Rana_con_nuvola_26
+  - first:
+      213: 4361637949770101220
+    second: Rana_con_nuvola_27
+  - first:
+      213: 8184001960300335273
+    second: Rana_con_nuvola_28
+  - first:
+      213: -5111534238986980357
+    second: Rana_con_nuvola_29
+  - first:
+      213: -1280573785468422925
+    second: Rana_con_nuvola_30
+  - first:
+      213: 2979621160709716711
+    second: Rana_con_nuvola_31
+  - first:
+      213: 3108932794786615322
+    second: Rana_con_nuvola_32
+  - first:
+      213: -4572419932027518095
+    second: Rana_con_nuvola_33
+  - first:
+      213: 3209425601886981361
+    second: Rana_con_nuvola_34
+  - first:
+      213: -8232506410000137590
+    second: Rana_con_nuvola_35
+  - first:
+      213: -1367298094971322726
+    second: Rana_con_nuvola_36
+  - first:
+      213: 7248705018855187802
+    second: Rana_con_nuvola_37
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Rana_con_nuvola_7
+      rect:
+        serializedVersion: 2
+        x: 11299
+        y: 0
+        width: 1452
+        height: 954
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89d8fd0fc6a803950800000000000000
+      internalID: 6426788868759981464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_9
+      rect:
+        serializedVersion: 2
+        x: 16099
+        y: 0
+        width: 1402
+        height: 901
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e5bcb76080d54db0800000000000000
+      internalID: -4808207777233324570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_10
+      rect:
+        serializedVersion: 2
+        x: 17699
+        y: 0
+        width: 1402
+        height: 901
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e6a7a1b7030a2990800000000000000
+      internalID: -7410106905304520990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_11
+      rect:
+        serializedVersion: 2
+        x: 19299
+        y: 0
+        width: 1402
+        height: 951
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee8c641239438e80800000000000000
+      internalID: -8177612018934837535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_12
+      rect:
+        serializedVersion: 2
+        x: 20899
+        y: 0
+        width: 1402
+        height: 1001
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dab806f20881b78d0800000000000000
+      internalID: -2847655400551969875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_13
+      rect:
+        serializedVersion: 2
+        x: 22499
+        y: 0
+        width: 1402
+        height: 1001
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eabb563ae8bac08f0800000000000000
+      internalID: -572894423467836498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_14
+      rect:
+        serializedVersion: 2
+        x: 24099
+        y: 49
+        width: 1402
+        height: 1052
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc448bd77e0594800800000000000000
+      internalID: 597097380780197071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_15
+      rect:
+        serializedVersion: 2
+        x: 25699
+        y: 49
+        width: 1402
+        height: 1052
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec092e3b29dc2c60800000000000000
+      internalID: 7794843834821184744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_16
+      rect:
+        serializedVersion: 2
+        x: 27299
+        y: 99
+        width: 1402
+        height: 1002
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 271df7de48133c480800000000000000
+      internalID: -8880199593254465166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_17
+      rect:
+        serializedVersion: 2
+        x: 28899
+        y: 49
+        width: 1402
+        height: 952
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12a2969ea9fccd5c0800000000000000
+      internalID: -4189245289113507295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_18
+      rect:
+        serializedVersion: 2
+        x: 2199
+        y: 47
+        width: 502
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75b20d85698fee180800000000000000
+      internalID: -9084050073740891305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_19
+      rect:
+        serializedVersion: 2
+        x: 3799
+        y: 47
+        width: 552
+        height: 554
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c025165b5ad27dec0800000000000000
+      internalID: -3542312392167697908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_20
+      rect:
+        serializedVersion: 2
+        x: 5249
+        y: 56
+        width: 802
+        height: 595
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a649aa8bc90a4740800000000000000
+      internalID: 5136929094778832549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_21
+      rect:
+        serializedVersion: 2
+        x: 6799
+        y: 47
+        width: 1052
+        height: 804
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f90849e3687940f0800000000000000
+      internalID: -1132241460796061193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_23
+      rect:
+        serializedVersion: 2
+        x: 8246
+        y: 41
+        width: 1215
+        height: 863
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bbcf19e814b69370800000000000000
+      internalID: 8329042579951700920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_25
+      rect:
+        serializedVersion: 2
+        x: 9843
+        y: 194
+        width: 1260
+        height: 760
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7bf61d7db9df7d40800000000000000
+      internalID: 5584421470833408890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_26
+      rect:
+        serializedVersion: 2
+        x: 12899
+        y: 0
+        width: 1402
+        height: 851
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bafb14eb755b8fb0800000000000000
+      internalID: -4644524600106157387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_27
+      rect:
+        serializedVersion: 2
+        x: 14499
+        y: 0
+        width: 1402
+        height: 851
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e1f8ea3b96a78c30800000000000000
+      internalID: 4361637949770101220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rana_con_nuvola_28
+      rect:
+        serializedVersion: 2
+        x: 30499
+        y: 0
+        width: 1402
+        height: 851
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a05dc41c6a639170800000000000000
+      internalID: 8184001960300335273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7bfbd352961a8954d8e5dccfd4ca882a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Rana_con_nuvola_10: -7410106905304520990
+      Rana_con_nuvola_11: -8177612018934837535
+      Rana_con_nuvola_12: -2847655400551969875
+      Rana_con_nuvola_13: -572894423467836498
+      Rana_con_nuvola_14: 597097380780197071
+      Rana_con_nuvola_15: 7794843834821184744
+      Rana_con_nuvola_16: -8880199593254465166
+      Rana_con_nuvola_17: -4189245289113507295
+      Rana_con_nuvola_18: -9084050073740891305
+      Rana_con_nuvola_19: -3542312392167697908
+      Rana_con_nuvola_20: 5136929094778832549
+      Rana_con_nuvola_21: -1132241460796061193
+      Rana_con_nuvola_23: 8329042579951700920
+      Rana_con_nuvola_25: 5584421470833408890
+      Rana_con_nuvola_26: -4644524600106157387
+      Rana_con_nuvola_27: 4361637949770101220
+      Rana_con_nuvola_28: 8184001960300335273
+      Rana_con_nuvola_7: 6426788868759981464
+      Rana_con_nuvola_9: -4808207777233324570
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

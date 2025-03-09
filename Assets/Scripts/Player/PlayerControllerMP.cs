@@ -10,7 +10,8 @@ using UnityEngine.InputSystem.UI;
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerControllerMP : NetworkBehaviour
 {
-    public float MoveSpeed = 5f;
+    public float MoveSpeedMult = 1.0f;
+    public readonly float MoveSpeed = 5f;
     public float RotationSpeed = 10f;
 
     [SerializeField] private PlayerInput _playerInput;
@@ -44,8 +45,8 @@ public class PlayerControllerMP : NetworkBehaviour
         Vector2 axis = _movement.ReadValue<Vector2>();
         Vector3 newPos = this.transform.position;
         //Debug.Log(axis);
-        newPos.x += axis.x * MoveSpeed * Time.deltaTime;
-        newPos.y += axis.y * MoveSpeed * Time.deltaTime;
+        newPos.x += axis.x * MoveSpeed * MoveSpeedMult * Time.deltaTime;
+        newPos.y += axis.y * MoveSpeed * MoveSpeedMult * Time.deltaTime;
         //this.transform.position = newPos;
 
     }
@@ -54,7 +55,7 @@ public class PlayerControllerMP : NetworkBehaviour
     {
         if (!IsOwner) return;
         
-        _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * Time.fixedDeltaTime *  _movement.ReadValue<Vector2>()));
+        _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.fixedDeltaTime *  _movement.ReadValue<Vector2>()));
 
         // rotation
         float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;

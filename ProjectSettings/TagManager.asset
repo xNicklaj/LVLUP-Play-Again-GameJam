@@ -50,6 +50,9 @@ TagManager:
   - name: Walls
     uniqueID: 2723540003
     locked: 0
+  - name: TempObjects
+    uniqueID: 3048394307
+    locked: 0
   - name: Entities
     uniqueID: 2061630649
     locked: 0

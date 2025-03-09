@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayLevel.unity
     guid: 0bfacd0a1a7b29e42b70da29db8e7b63
+  - enabled: 1
+    path: Assets/Scenes/NavigationPrototypeScene.unity
+    guid: 3e9d1a7ccc1e7ff4cb15eed91df3bc02
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 28d6f5f610f5580448760512ed333cef, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
