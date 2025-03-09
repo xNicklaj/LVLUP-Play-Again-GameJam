@@ -4,10 +4,15 @@ using Unity.Netcode;
 using UnityEngine.InputSystem.Users;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.UI;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NetworkObject))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(ClientNetworkAnimator))]
+[RequireComponent(typeof(ClientNetworkTransform))]
 public class PlayerControllerMP : NetworkBehaviour
 {
     public float MoveSpeedMult = 1.0f;
@@ -16,10 +21,12 @@ public class PlayerControllerMP : NetworkBehaviour
 
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private InputDevice _device;
-    [SerializeField] private GameObject _playerRenderer;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private NetworkObject _networkObject;
+    [SerializeField] private Animator _animator;
+
     private InputAction _movement;
+    private InputAction _look;
     private Vector2 directionInput;
     private Rigidbody2D rb;
     
@@ -28,8 +35,10 @@ public class PlayerControllerMP : NetworkBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _networkObject = GetComponent<NetworkObject>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
 
         _movement = _playerInput.actions.FindAction("Move");
+        _look = _playerInput.actions.FindAction("Direction");
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -42,24 +51,14 @@ public class PlayerControllerMP : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
+
         Vector2 axis = _movement.ReadValue<Vector2>();
-        Vector3 newPos = this.transform.position;
-        //Debug.Log(axis);
-        newPos.x += axis.x * MoveSpeed * MoveSpeedMult * Time.deltaTime;
-        newPos.y += axis.y * MoveSpeed * MoveSpeedMult * Time.deltaTime;
-        //this.transform.position = newPos;
+        Vector2 lookAxis = _look.ReadValue<Vector2>();
+        _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.deltaTime * axis));
+        _animator.SetFloat("Horizontal", lookAxis.x);
+        _animator.SetFloat("Vertical", lookAxis.y);
+        _animator.SetFloat("Speed", axis.magnitude);
 
-    }
-
-    private void FixedUpdate()
-    {
-        if (!IsOwner) return;
-        
-        _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.fixedDeltaTime *  _movement.ReadValue<Vector2>()));
-
-        // rotation
-        float targetAngle = Mathf.Atan2(directionInput.y, directionInput.x) * Mathf.Rad2Deg;
-        _playerRenderer.transform.rotation = Quaternion.Euler(0, 0, targetAngle);
     }
 
     public override void OnNetworkSpawn()

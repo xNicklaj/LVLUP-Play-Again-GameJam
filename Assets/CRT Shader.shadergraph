@@ -14,6 +14,9 @@
         },
         {
             "m_Id": "c1d845e0777449dd84b51b72c65f6330"
+        },
+        {
+            "m_Id": "bf0114e48ee14c51b14342efb3909598"
         }
     ],
     "m_Keywords": [],
@@ -128,6 +131,9 @@
         },
         {
             "m_Id": "5968f90789244996a1997b2989974d67"
+        },
+        {
+            "m_Id": "c67d2a52d33a4e4d932d40e51a6b93dc"
         }
     ],
     "m_GroupDatas": [],
@@ -549,6 +555,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "2341861d01354c389ee0cbeb82921e83"
+                },
+                "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "c67d2a52d33a4e4d932d40e51a6b93dc"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "c7e8297e079649b7bf364975133b62ae"
                 },
                 "m_SlotId": 1
             }
@@ -3591,6 +3611,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "abb2e38a6da542449f0c30f7c4a10a9b",
+    "m_Id": 0,
+    "m_DisplayName": "Scan Line Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.AddNode",
     "m_ObjectId": "abf6da598ace4ea3afb6a3bdd411377e",
     "m_Group": {
@@ -3760,6 +3805,36 @@
 }
 
 {
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "bf0114e48ee14c51b14342efb3909598",
+    "m_Guid": {
+        "m_GuidSerialized": "72079962-3c48-4688-a958-1fbe87980a62"
+    },
+    "m_Name": "Scan Line Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Scan Line Color",
+    "m_DefaultReferenceName": "_Scan_Line_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "c1b53069a5d24767b4744d38f700bde1",
@@ -3800,10 +3875,10 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 200.0,
+    "m_Value": 10.0,
     "m_FloatType": 1,
     "m_RangeValues": {
-        "x": 100.0,
+        "x": 0.0,
         "y": 300.0
     }
 }
@@ -3896,8 +3971,47 @@
         },
         {
             "m_Id": "c1d845e0777449dd84b51b72c65f6330"
+        },
+        {
+            "m_Id": "bf0114e48ee14c51b14342efb3909598"
         }
     ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "c67d2a52d33a4e4d932d40e51a6b93dc",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -212.0,
+            "y": 957.0,
+            "width": 159.00001525878907,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "abb2e38a6da542449f0c30f7c4a10a9b"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "bf0114e48ee14c51b14342efb3909598"
+    }
 }
 
 {
@@ -3937,7 +4051,7 @@
     ],
     "synonyms": [],
     "m_Precision": 0,
-    "m_PreviewExpanded": false,
+    "m_PreviewExpanded": true,
     "m_DismissedVersion": 0,
     "m_PreviewMode": 0,
     "m_CustomColors": {
