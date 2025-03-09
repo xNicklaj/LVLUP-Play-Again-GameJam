@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -7,6 +8,7 @@ public class Bullet : NetworkBehaviour
     #region References
     private VisionSystem vision; // TODO: should be disabled or non-existent when non homing, moreover, only one ray is fine for this. And a reduced radius. Add an override
     public BulletDefaults defaults; // to be set in the Inspector
+    public GameObject DustPrefab;
     #endregion
 
     #region OverrideVariables
@@ -99,29 +101,32 @@ public class Bullet : NetworkBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsOwner || !IsServer) return;
-        LayerMask toCollideWith = (isFromEnemy ? LayerMask.GetMask("Player") : LayerMask.GetMask("Enemy") | LayerMask.GetMask("LitEnemy") | LayerMask.GetMask("UnlitEnemy") | LayerMask.GetMask("Foreground"));
+        GetComponent<SpriteRenderer>().enabled = false;
 
-        if ((toCollideWith & (1 << collision.gameObject.layer)) != 0)
-        {
-            if(this.GetComponent<NetworkObject>().IsSpawned) this.GetComponent<NetworkObject>().Despawn();
-            Destroy(gameObject);
-            return;
-        }
+        if (this.GetComponent<NetworkObject>().IsSpawned)
+            this.GetComponent<NetworkObject>().Despawn();
 
-        isHoming = false; // so the bullet won't follow the player after it collided with something
+        GameObject dust = Instantiate(DustPrefab, transform.position, Quaternion.identity);
+        dust.GetComponent<NetworkObject>().Spawn();
 
-        // Debug.Log("IMPACT!");
-        ContactPoint2D contact = collision.GetContact(0);
+        Destroy(gameObject);
 
-        // Calculate reflection direction
-        Vector2 incomingDirection = direction;
-        Vector2 surfaceNormal = contact.normal;
+        return;
 
-        // Reflect direction using vector reflection formula
-        direction = Vector2.Reflect(incomingDirection, surfaceNormal);
+        //isHoming = false; // so the bullet won't follow the player after it collided with something
 
-        // Immediately go to the end of the animation curve. The Update will do the rest
-        currentTime = 0.80f * defaults.maxFlyTime * maxFlyTimeMult;
+        //// Debug.Log("IMPACT!");
+        //ContactPoint2D contact = collision.GetContact(0);
+
+        //// Calculate reflection direction
+        //Vector2 incomingDirection = direction;
+        //Vector2 surfaceNormal = contact.normal;
+
+        //// Reflect direction using vector reflection formula
+        //direction = Vector2.Reflect(incomingDirection, surfaceNormal);
+
+        //// Immediately go to the end of the animation curve. The Update will do the rest
+        //currentTime = 0.80f * defaults.maxFlyTime * maxFlyTimeMult;
     }
 
     private void handleHoming()

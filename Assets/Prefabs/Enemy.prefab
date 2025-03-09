@@ -440,6 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Amount: 100
+  DestroyOnHit: 1
 --- !u!195 &8557155032160907739
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 2515731495898407995}
   - component: {fileID: -1663670199317153622}
   - component: {fileID: 3016233639297120466}
+  - component: {fileID: 7925609793374688971}
   m_Layer: 7
   m_Name: NetworkPlayerAttacker
   m_TagString: Player
@@ -313,7 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeed: 5
+  MoveSpeedMult: 1
   RotationSpeed: 10
   _playerInput: {fileID: 2374953380649715109}
   _playerRenderer: {fileID: 454178334523922261}
@@ -558,7 +559,22 @@ MonoBehaviour:
     shotsPerSlot: 1
     pauseSlotsNumber: 2
   bulletColor: {r: 1, g: 1, b: 1, a: 1}
+  speedWhileShootingMult: 0.2
   amIenemy: 0
+--- !u!114 &7925609793374688971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363042218499496334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7716651cd67b03e45b6f2f8d76736901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: -100
+  DestroyOnHit: 0
 --- !u!1 &8550134888312982908
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +682,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

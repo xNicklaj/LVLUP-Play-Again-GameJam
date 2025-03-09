@@ -30,19 +30,21 @@ public class PointManager : NetworkSingleton<PointManager>
 
     public void ResetScore()
     {
-        SetScore(InitialScore);
+        SetScoreServerRpc(InitialScore);
     }
 
-    public void SetScore(int score)
+    [Rpc(SendTo.Server)]
+    public void SetScoreServerRpc(int score)
     {
         if (score < 0) score = 0;
         CurrentScore.Value = score;
         RefreshScoreClientRpc(score);
     }
 
-    public void AddScore(int score)
+    [Rpc(SendTo.Server)]
+    public void AddScoreServerRpc(int score)
     {
-        SetScore(CurrentScore.Value + score);
+        SetScoreServerRpc(CurrentScore.Value + score);
     }
 
     private float GetNextDelay()
@@ -76,7 +78,7 @@ public class PointManager : NetworkSingleton<PointManager>
             float delay = GetNextDelay();
             yield return new WaitForSeconds(delay);
             Timer += delay;
-            SetScore(CurrentScore.Value - GetNextPointDecrease());
+            SetScoreServerRpc(CurrentScore.Value - GetNextPointDecrease());
         }
         
     }

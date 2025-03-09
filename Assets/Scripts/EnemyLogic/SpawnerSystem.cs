@@ -75,6 +75,11 @@ public class SpawnerSystem : NetworkBehaviour
     private bool isThisPause = false;
     #endregion
 
+    private void Start()
+    {
+        isActive = false;
+        GameManager_v2.Instance.OnGameStart.AddListener(() => isActive = true);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()

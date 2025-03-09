@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.75, y: 0.03, z: 0}
-  m_LocalScale: {x: 0.51, y: 0.51, z: 0.51}
+  m_LocalScale: {x: 1.6747272, y: 1.6747272, z: 1.6747272}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,9 +81,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2061630649
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6937772016669911217, guid: d5d09dd5b9bdfa84bbe2e8ed005adf38, type: 3}
+  m_Sprite: {fileID: 2208703988740019828, guid: 6e1b6cbcda902284e9dce1b5e1358a7f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   defaults: {fileID: 11400000, guid: db080913d50a57f41ae78fbff26b356a, type: 2}
+  DustPrefab: {fileID: 7202564344661159500, guid: 87c97e1711975964189e9892c3571147, type: 3}
   maxFlyTimeMult: 1
   initialVelocityMult: 1
   isHoming: 0
@@ -194,7 +195,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.82
+  m_Radius: 0.17
 --- !u!114 &4840613333492675756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +270,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.0625}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1, y: 1.0625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

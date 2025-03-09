@@ -40,5 +40,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   DespawnTimeoutDuration: 5
-  TimeBeforeDespawn: 10
-  Duration: 10
+  TimeBeforeDespawn: 5
+  Duration: 5
