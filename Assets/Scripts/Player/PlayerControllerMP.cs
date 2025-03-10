@@ -55,6 +55,7 @@ public class PlayerControllerMP : NetworkBehaviour
         Vector2 axis = _movement.ReadValue<Vector2>();
         Vector2 lookAxis = _look.ReadValue<Vector2>();
         _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.deltaTime * axis));
+        Debug.Log(_animator);
         _animator.SetFloat("Horizontal", lookAxis.x);
         _animator.SetFloat("Vertical", lookAxis.y);
         _animator.SetFloat("Speed", axis.magnitude);
