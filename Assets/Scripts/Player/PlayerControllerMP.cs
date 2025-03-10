@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.Users;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem.UI;
 using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
+using UnityEngine.Assertions.Must;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -56,9 +57,11 @@ public class PlayerControllerMP : NetworkBehaviour
         Vector2 lookAxis = _look.ReadValue<Vector2>();
         _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.deltaTime * axis));
         Debug.Log(_animator);
-        _animator.SetFloat("Horizontal", lookAxis.x);
-        _animator.SetFloat("Vertical", lookAxis.y);
-        _animator.SetFloat("Speed", axis.magnitude);
+
+        if(lookAxis.magnitude > 0.1)
+            UpdateAnimator(lookAxis.x, lookAxis.y, axis.magnitude);
+        else
+            UpdateAnimator(axis.x, axis.y, axis.magnitude);
 
     }
 
@@ -84,5 +87,12 @@ public class PlayerControllerMP : NetworkBehaviour
     public void OnDirection(InputValue value)
     {
         directionInput = value.Get<Vector2>();
+    }
+
+    private void UpdateAnimator(float horizontal, float vertical, float speed)
+    {
+        _animator.SetFloat("Horizontal", horizontal);
+        _animator.SetFloat("Vertical", vertical);
+        _animator.SetFloat("Speed", speed);
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4975211465178059199}
   - component: {fileID: 8793875000154184239}
   - component: {fileID: 7417962451699990148}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ModMultitasker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 9131380615361299461}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4493, y: 0.73852, z: -0.052586}
-  m_LocalScale: {x: 6.080962, y: 6.080962, z: 6.080962}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.65003896, y: 0.65003896, z: 0.65003896}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -70,17 +70,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0023396462, y: -0.004679203}
+  m_Offset: {x: 0.0036562085, y: -0.019668743}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.14, y: 0.17}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.14, y: 0.17}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.20922339, y: 0.26069397}
+  m_Size: {x: 0.6948824, y: 0.8782606}
   m_EdgeRadius: 0
 --- !u!212 &1708479234202674402
 SpriteRenderer:
@@ -126,7 +126,7 @@ SpriteRenderer:
   m_SortingLayerID: 2061630649
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2198111635386248919, guid: 1e6c2025f0e27424585597d1d240cf01, type: 3}
+  m_Sprite: {fileID: -1324087472, guid: 1e6c2025f0e27424585597d1d240cf01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 783347447
+  GlobalObjectIdHash: 4265262157
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -212,4 +212,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   ModifierData: {fileID: 11400000, guid: 7697cefc6a6d6004d8ecde21597f6676, type: 2}
-  ModifierTarget: {fileID: 0}
