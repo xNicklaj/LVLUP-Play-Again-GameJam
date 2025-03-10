@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -253,6 +255,21 @@ public class VisionSystem : MonoBehaviour
         return collidersInArea.Count(c => (layerMasks & (1 << c.gameObject.layer)) != 0);
     }
 
+    public static List<Collider2D> FindNearPosition(Vector2 origin, float radius, LayerMask[] layers)
+    {
+        // Combine all the layers into a single bitmask
+        LayerMask layerMasks = 0;
+        foreach (LayerMask layer in layers) layerMasks |= layer;
+
+        // Perform the overlap circle check, considering whether to pass obstacles or not
+        List<Collider2D> collidersInArea = new List<Collider2D>(Physics2D.OverlapCircleAll(
+            origin,
+            radius,
+            layerMasks
+        ));
+
+        return collidersInArea;
+    }
 
     /// <summary>
     /// Determines whether a given GameObject is within the field of view (FOV).

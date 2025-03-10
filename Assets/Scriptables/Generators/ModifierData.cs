@@ -15,6 +15,6 @@ public class ModifierData : ScriptableObject
 
     private void OnEnable()
     {
-        TargetName = TargetObject.name;
+        if(TargetObject != null) TargetName = TargetObject.name;
     }
 }

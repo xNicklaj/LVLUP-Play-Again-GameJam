@@ -88,7 +88,7 @@ public abstract class ModifierBase : NetworkBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if((ModifierData.TargetObject == null && collider.CompareTag("Player")) || collider.gameObject == ModifierTarget || collider.gameObject.name.Replace("(Clone)", "") == ModifierData.TargetObject.name)
+        if((ModifierData.TargetObject == null && collider.CompareTag("Player")) || collider.gameObject == ModifierTarget || (ModifierData.TargetObject != null && collider.gameObject.name.Replace("(Clone)", "") == ModifierData.TargetObject.name))
         {
             ModifierTarget = collider.gameObject;
             OnPickupClientRpc(RpcTarget.Single(ModifierTarget.GetComponent<NetworkObject>().OwnerClientId, RpcTargetUse.Temp));

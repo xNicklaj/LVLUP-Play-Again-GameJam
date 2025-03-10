@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Nuvola
+  m_Name: Frog_Spawn
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -22,22 +22,28 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 21300000, guid: 5b3e0c77375225e4da182c40f2acbc49, type: 3}
-    - time: 0.125
+    - time: 0.1
       value: {fileID: 21300000, guid: 5d571300a8f878341af56863b23b1ee5, type: 3}
-    - time: 0.25
+    - time: 0.2
       value: {fileID: 21300000, guid: 95d7cc659f49a1f4da5ba9f5a4a939d6, type: 3}
-    - time: 0.375
+    - time: 0.3
       value: {fileID: 21300000, guid: 6acdd8ea35b440e41bd941441a920316, type: 3}
+    - time: 0.4
+      value: {fileID: 21300000, guid: 91b9a3db87eb9a44fa6fb517512f2ae5, type: 3}
     - time: 0.5
       value: {fileID: 21300000, guid: d9d6248bf8e553e4c8a9462fb114b5f4, type: 3}
-    - time: 0.625
-      value: {fileID: 21300000, guid: 6acdd8ea35b440e41bd941441a920316, type: 3}
+    - time: 0.6
+      value: {fileID: -3269150542813418101, guid: f74227e188531c24abcdbfb40c37a957, type: 3}
+    - time: 0.7
+      value: {fileID: -7384141503730564083, guid: d3ca2e7c23a6c1a4c9a5a3223e23c009, type: 3}
+    - time: 0.8
+      value: {fileID: 110063094613122208, guid: b2e282b81cf874349848f671a5e02c18, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 8
+  m_SampleRate: 10
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -58,14 +64,17 @@ AnimationClip:
     - {fileID: 21300000, guid: 5d571300a8f878341af56863b23b1ee5, type: 3}
     - {fileID: 21300000, guid: 95d7cc659f49a1f4da5ba9f5a4a939d6, type: 3}
     - {fileID: 21300000, guid: 6acdd8ea35b440e41bd941441a920316, type: 3}
+    - {fileID: 21300000, guid: 91b9a3db87eb9a44fa6fb517512f2ae5, type: 3}
     - {fileID: 21300000, guid: d9d6248bf8e553e4c8a9462fb114b5f4, type: 3}
-    - {fileID: 21300000, guid: 6acdd8ea35b440e41bd941441a920316, type: 3}
+    - {fileID: -3269150542813418101, guid: f74227e188531c24abcdbfb40c37a957, type: 3}
+    - {fileID: -7384141503730564083, guid: d3ca2e7c23a6c1a4c9a5a3223e23c009, type: 3}
+    - {fileID: 110063094613122208, guid: b2e282b81cf874349848f671a5e02c18, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.90000004
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -84,4 +93,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.6
+    functionName: DisableGravity
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

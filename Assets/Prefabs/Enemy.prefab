@@ -426,12 +426,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - name: Shooting
-    chance: 0.15
+    chance: 0.35
     description: 
     happenedLastTime: 0
     previousHappeningsCounter: 0
   - name: Drop
-    chance: 0.35
+    chance: 0.15
     description: 
     happenedLastTime: 0
     previousHappeningsCounter: 0

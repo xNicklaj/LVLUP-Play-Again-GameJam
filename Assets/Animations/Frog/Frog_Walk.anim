@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Frog_Walk
+  serializedVersion: 7
+  m_Legacy: 0
+  m_Compressed: 0
+  m_UseHighQualityCurve: 1
+  m_RotationCurves: []
+  m_CompressedRotationCurves: []
+  m_EulerCurves: []
+  m_PositionCurves: []
+  m_ScaleCurves: []
+  m_FloatCurves: []
+  m_PPtrCurves:
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: 110063094613122208, guid: b2e282b81cf874349848f671a5e02c18, type: 3}
+    - time: 0.05
+      value: {fileID: 2057516106615078274, guid: 8bd852f012ec5c84ba7ac228ea453cb8, type: 3}
+    - time: 0.1
+      value: {fileID: -6981641179300335697, guid: 304bda350c6557243ad034922d9f1354, type: 3}
+    - time: 0.15
+      value: {fileID: 1084495889696105424, guid: 4569b88085f187a4ca01ff7adc8ad323, type: 3}
+    - time: 0.2
+      value: {fileID: 2656255634667553426, guid: 9a9dcd0daafdcb04daeef6a990ad9f25, type: 3}
+    - time: 0.25
+      value: {fileID: 8953997984617710940, guid: 54002160a68c9714c91b2a80736dec54, type: 3}
+    - time: 0.3
+      value: {fileID: 1342954271244971394, guid: bd7d8468f1e782e4096de2e9c16fb8d8, type: 3}
+    - time: 0.35
+      value: {fileID: 4571690783039372443, guid: c26327faf729c8149b3122e3a3275641, type: 3}
+    - time: 0.4
+      value: {fileID: -3861509453359391609, guid: d799dd1351238844aa469ee5c96b5343, type: 3}
+    - time: 0.45
+      value: {fileID: 1830147033117497494, guid: 8c898d727e3d4f34fa77f3afb714c5ac, type: 3}
+    - time: 0.5
+      value: {fileID: -8806758135501145626, guid: eaf6f9e1e3501644f8f6df875208ee46, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
+  m_SampleRate: 20
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_ClipBindingConstant:
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    pptrCurveMapping:
+    - {fileID: 110063094613122208, guid: b2e282b81cf874349848f671a5e02c18, type: 3}
+    - {fileID: 2057516106615078274, guid: 8bd852f012ec5c84ba7ac228ea453cb8, type: 3}
+    - {fileID: -6981641179300335697, guid: 304bda350c6557243ad034922d9f1354, type: 3}
+    - {fileID: 1084495889696105424, guid: 4569b88085f187a4ca01ff7adc8ad323, type: 3}
+    - {fileID: 2656255634667553426, guid: 9a9dcd0daafdcb04daeef6a990ad9f25, type: 3}
+    - {fileID: 8953997984617710940, guid: 54002160a68c9714c91b2a80736dec54, type: 3}
+    - {fileID: 1342954271244971394, guid: bd7d8468f1e782e4096de2e9c16fb8d8, type: 3}
+    - {fileID: 4571690783039372443, guid: c26327faf729c8149b3122e3a3275641, type: 3}
+    - {fileID: -3861509453359391609, guid: d799dd1351238844aa469ee5c96b5343, type: 3}
+    - {fileID: 1830147033117497494, guid: 8c898d727e3d4f34fa77f3afb714c5ac, type: 3}
+    - {fileID: -8806758135501145626, guid: eaf6f9e1e3501644f8f6df875208ee46, type: 3}
+  m_AnimationClipSettings:
+    serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
+    m_StartTime: 0
+    m_StopTime: 0.55
+    m_OrientationOffsetY: 0
+    m_Level: 0
+    m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
+    m_LoopTime: 1
+    m_LoopBlend: 0
+    m_LoopBlendOrientation: 0
+    m_LoopBlendPositionY: 0
+    m_LoopBlendPositionXZ: 0
+    m_KeepOriginalOrientation: 0
+    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionXZ: 0
+    m_HeightFromFeet: 0
+    m_Mirror: 0
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_Events:
+  - time: 0.25
+    functionName: StartJump
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.45
+    functionName: StopJump
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
