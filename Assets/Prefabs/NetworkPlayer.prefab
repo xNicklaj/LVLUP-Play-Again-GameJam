@@ -279,7 +279,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.005256012, y: 0.0035039634}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -289,7 +289,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.4568834, y: 0.78275335}
   m_EdgeRadius: 0
 --- !u!114 &2374953380649715109
 MonoBehaviour:
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   torchRange: 0
   torchAngle: 45
-  torchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.39215687}
+  torchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.34117648}
 --- !u!212 &362485238975546751
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -772,7 +772,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4866d0d0c69fa6344acef06d0ffa4d19, type: 3}
-  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  m_Color: {r: 1, g: 0.96718955, b: 0.015686274, a: 0.5058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
