@@ -62,9 +62,9 @@ public class MainMenuHandler : MonoBehaviour
             _hostGameButton.Focus();
             StopCoroutine(VisibilityLoop());
             
-            _hostGameButton.visible = false;
-            _joinGameButton.visible = false;
-            _quitButton.visible = false;
+            _hostGameButton.AddToClassList("disabled");
+            _joinGameButton.AddToClassList("disabled");
+            _quitButton.AddToClassList("disabled");
             StartCoroutine(ShowMainMenu());
         };
 
@@ -100,11 +100,11 @@ public class MainMenuHandler : MonoBehaviour
     private IEnumerator ShowMainMenu()
     {
         float delay = .4f;
-        _hostGameButton.visible = true;
+        _hostGameButton.RemoveFromClassList("disabled");
         yield return new WaitForSeconds(delay);
-        _joinGameButton.visible = true;
+        _joinGameButton.RemoveFromClassList("disabled");
         yield return new WaitForSeconds(delay);
-        _quitButton.visible = true;
+        _quitButton.RemoveFromClassList("disabled");
         yield return new WaitForSeconds(delay);
         _hostGameButton.Focus();
     }
