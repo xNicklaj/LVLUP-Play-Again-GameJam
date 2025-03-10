@@ -8,6 +8,7 @@ class GameManager_v2 : Singleton<GameManager_v2>
     public UnityEvent OnGameFinish = new UnityEvent();
     public UnityEvent OnGameLost = new UnityEvent();
     public UnityEvent OnUISelected = new UnityEvent();
+    public UnityEvent<int> HeartsChanged = new UnityEvent<int>();
     public UnityEvent<int> OnPointsUpdated = new UnityEvent<int>();
     public bool IsSessionHost = false;
     [SerializeField] public bool GameStarted { get; private set; } = false;
@@ -34,5 +35,13 @@ class GameManager_v2 : Singleton<GameManager_v2>
     private void HandleGameLost()
     {
         GameStarted = false;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ChangeHeartsClientRpc(int num)
+    {
+        HeartsChanged.Invoke(num);
+        if (num <= 0)
+            OnGameLost.Invoke();
     }
 }

@@ -15,6 +15,7 @@ public class PointManager : NetworkSingleton<PointManager>
     public override void OnNetworkSpawn()
     {
         if (!IsHost) return;
+        HighScore.Value = PlayerPrefs.GetInt("HighScore");
         GameManager_v2.Instance.OnGameStart.AddListener(() =>
         {
             ResetScore();

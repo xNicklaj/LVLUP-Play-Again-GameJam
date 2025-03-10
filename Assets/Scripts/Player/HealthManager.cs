@@ -21,8 +21,7 @@ public class HealthManager : NetworkSingleton<HealthManager>
     public void TakeDamageServerRpc()
     {
         health.Value -= 1;
-        if (health.Value <= 0)
-            CallGameLostClientRpc();
+        GameManager_v2.Instance.ChangeHeartsClientRpc(health.Value);
     }
 
     [Rpc(SendTo.ClientsAndHost)]
