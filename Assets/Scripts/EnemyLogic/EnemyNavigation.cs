@@ -1,7 +1,10 @@
 using System.Collections;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(NetworkAnimator))]
 public class EnemyNavigation : MonoBehaviour
 {
     #region References
@@ -21,10 +24,13 @@ public class EnemyNavigation : MonoBehaviour
     private Coroutine resetTargetCoroutine;
     private Coroutine patrolCoroutine;
 
+    private Animator _animator;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         vision = GetComponent<VisionSystem>();
+        _animator = GetComponent<Animator>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.autoRepath = true;
@@ -43,6 +49,7 @@ public class EnemyNavigation : MonoBehaviour
 
     void Update()
     {
+
         if (target == null) // Enemy does not know where to go
         {
             // Try to find a player to chase
@@ -53,6 +60,8 @@ public class EnemyNavigation : MonoBehaviour
                 agent.stoppingDistance = agent.stoppingDistance = vision.sightRadiusMult * vision.defaults.sightRadius - 1; // to reset what patrol routine does
 
                 target = newTarget;
+
+                UpdateAnimator((target.transform.position - transform.position).normalized.x, (target.transform.position - transform.position).normalized.y, agent.velocity.magnitude);
 
                 // Debounce the target reset since we found someone to chase
                 if (resetTargetCoroutine != null)
@@ -72,6 +81,7 @@ public class EnemyNavigation : MonoBehaviour
                 agent.stoppingDistance = 0f; // otherwise taking random points near the enemy sometimes is not resulting in a movement
                 patrolCoroutine = StartCoroutine(RandomDestinationAfterDelay(waitBeforeStartPatrolling, randomDirectionWhilePatrollingDelay));
             }
+            UpdateAnimator(agent.velocity.normalized.x, agent.velocity.normalized.z, agent.velocity.magnitude);
         }
 
         if (target != null)
@@ -125,5 +135,12 @@ public class EnemyNavigation : MonoBehaviour
             StopCoroutine(patrolCoroutine);
             patrolCoroutine = null;
         }
+    }
+
+    void UpdateAnimator(float horizontal, float vertical, float speed)
+    {
+        _animator.SetFloat("Horizontal", horizontal);
+        _animator.SetFloat("Vertical", vertical);
+        _animator.SetFloat("Speed", speed);
     }
 }
