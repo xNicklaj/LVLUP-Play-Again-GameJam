@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class DustParticles : NetworkBehaviour
+public class DustParticles : MonoBehaviour
 {
     public AudioClip Sound;
 
@@ -14,25 +14,17 @@ public class DustParticles : NetworkBehaviour
     {
         _source = GetComponent<AudioSource>();
         if(_source.clip == null && Sound != null) _source.clip = Sound;
+        PlaySound();
+        StartCoroutine(DespawnAtEndOfClip(_source.clip.length + .4f));
     }
-
-    public override void OnNetworkSpawn()
-    {
-        PlaySoundRpc();
-        StartCoroutine(DespawnAtEndOfClip(_source.clip.length + .5f));
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void PlaySoundRpc()
+    private void PlaySound()
     {
         _source.Play();
     }
 
     private IEnumerator DespawnAtEndOfClip(float time)
     {
-        if(!IsHost) yield break;
         yield return new WaitForSeconds(time);
-        if(GetComponent<NetworkObject>().IsSpawned) GetComponent<NetworkObject>().Despawn();
         Destroy(gameObject);
     }
 }

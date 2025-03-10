@@ -390,8 +390,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7716651cd67b03e45b6f2f8d76736901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Amount: -1
-  DestroyOnHit: 0
+  Settings: {fileID: 11400000, guid: 5935ae13455495a4096dd38ebfa8acc8, type: 2}
+  Death:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &2331710771360849228
 SpriteRenderer:
   m_ObjectHideFlags: 0
