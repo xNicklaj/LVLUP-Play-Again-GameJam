@@ -476,3 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 0
+  patrols: 1
+  resetTargetAfterLosingSightDelay: 3
+  randomDirectionWhilePatrollingDelay: 5
+  waitBeforeStartPatrolling: 5
