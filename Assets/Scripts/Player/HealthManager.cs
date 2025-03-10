@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class HealthManager : NetworkBehaviour
+public class HealthManager : NetworkSingleton<HealthManager>
 {
     public NetworkVariable<int> health = new NetworkVariable<int>(3);
 

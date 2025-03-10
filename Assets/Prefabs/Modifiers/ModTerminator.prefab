@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1952655959075265413}
   - component: {fileID: 1851326929880545290}
   - component: {fileID: 6971260663847468034}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ModTerminator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
