@@ -129,8 +129,6 @@ public class MainMenuHandler : MonoBehaviour
             yield return new WaitForSeconds(delay);
             _gameTitle.style.color = c2;
             yield return new WaitForSeconds(delay);
-            _gameTitle.style.color = c1;
-            yield return new WaitForSeconds(delay);
         }
     }
 

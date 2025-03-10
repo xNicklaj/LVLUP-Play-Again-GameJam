@@ -62,7 +62,7 @@ public class Bullet : NetworkBehaviour
     private void Update()
     {
 
-        if (hasHit && !canDestroy)
+        if (hasHit && !canDestroy) // master and slave both enter this, but only once
         {
             // client has not yet played the effects
             if (IsClient)
@@ -184,6 +184,7 @@ public class Bullet : NetworkBehaviour
 
         // show dust cloud animation (don't sync the spawns - each player sees them at the right time)
         GameObject dust = Instantiate(DustPrefab, transform.position, Quaternion.identity);
+        
         // if (IsServer)
         //     dust.GetComponent<NetworkObject>().Spawn();
 

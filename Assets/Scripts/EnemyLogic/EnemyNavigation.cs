@@ -77,7 +77,7 @@ public class EnemyNavigation : MonoBehaviour
             }
             else if (patrols && patrolCoroutine == null) // Only start patrolling if not already patrolling
             {
-                Debug.Log("Starting patrol");
+                //Debug.Log("Starting patrol");
                 agent.stoppingDistance = 0f; // otherwise taking random points near the enemy sometimes is not resulting in a movement
                 patrolCoroutine = StartCoroutine(RandomDestinationAfterDelay(waitBeforeStartPatrolling, randomDirectionWhilePatrollingDelay));
             }
@@ -101,7 +101,7 @@ public class EnemyNavigation : MonoBehaviour
             Vector2 v = vision.GetValidPointAroundMe(mustCollideWith: vision.defaults.groundLayer, mustNotCollideWith: vision.defaults.obstacleLayer);
             // go there
             agent.SetDestination(v);
-            Debug.Log("Setting patrol destination: " + v);
+            //Debug.Log("Setting patrol destination: " + v);
 
             // Wait until agent reaches destination or gets close to it
             while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)

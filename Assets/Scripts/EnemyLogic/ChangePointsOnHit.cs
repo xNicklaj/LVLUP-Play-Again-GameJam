@@ -1,19 +1,24 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(NetworkObject))]
 public class ChangePointsOnHit : MonoBehaviour
 {
-    public int Amount = 100;
-    public bool DestroyOnHit = false;
+    public ChangePointsOnHitSettings Settings;
+    public UnityEvent Death;
+
+    private void Awake()
+    {
+        Death = new UnityEvent();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.name.Contains("Bullet") || collision.gameObject.GetComponent<Bullet>() == null)
             return;
-        
-        PointManager.Instance.AddScoreServerRpc(Amount);
-        if (!DestroyOnHit) return;
+        PointManager.Instance.AddScoreServerRpc(Settings.Amount);
+        if (!Settings.DestroyOnHit) return;
         DestroyThisObjectServerRpc();
     }
 
@@ -21,6 +26,7 @@ public class ChangePointsOnHit : MonoBehaviour
     private void DestroyThisObjectServerRpc()
     {
         if (!NetworkManager.Singleton.IsHost) return;
+        Death.Invoke();
         if (GetComponent<NetworkObject>().IsSpawned) GetComponent<NetworkObject>().Despawn();
         Destroy(this);
     }
