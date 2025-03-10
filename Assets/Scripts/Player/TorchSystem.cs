@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(PolygonCollider2D))]
 public class TorchSystemSprite : MonoBehaviour
@@ -10,6 +11,9 @@ public class TorchSystemSprite : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private PolygonCollider2D polygonCollider;
+    private PlayerInput _playerInput;
+    private InputAction _look;
+    private Vector3 _startPosition;
 
     private void Awake()
     {
@@ -18,6 +22,13 @@ public class TorchSystemSprite : MonoBehaviour
         polygonCollider.isTrigger = true;
 
         spriteRenderer.color = torchColor;
+        _playerInput = GetComponentInParent<PlayerInput>();
+        if (_playerInput)
+        {
+            _look = _playerInput.actions.FindAction("Direction");
+        }
+        
+        _startPosition = transform.localPosition;
 
         UpdateTorchTransform();
     }
@@ -26,6 +37,7 @@ public class TorchSystemSprite : MonoBehaviour
     {
         UpdateTorchTransform();
             //UpdateTorchCollider();
+            
     }
     
     /// <summary>
@@ -58,45 +70,48 @@ public class TorchSystemSprite : MonoBehaviour
         torchAngle = angle;
         UpdateTorchTransform();
     }
-
-    private void UpdateTorchMesh()
-    {
-        transform.localEulerAngles = new Vector3(0,0, 0);
-
-        // Esempio di scaling:
-        // Se la sprite è disegnata come un cono di 90° a grandezza 1x1
-        // - X scale = torchAngle / 90f
-        // - Y scale = torchRange / (grandezza disegnata)
-        float angleScale = torchAngle / 90f;
-        float rangeScale = torchRange / 3f; 
-        transform.localScale = new Vector3(rangeScale, angleScale, 1);
-    }
     
-    private void UpdateTorchCollider()
-    {
-
-        Vector3[] vertices3D = new Vector3[10];
-        Vector2[] colliderPoints = new Vector2[10];
-
-        vertices3D[0] = Vector3.zero;
-        float halfAngle = torchAngle * 0.5f;
-        for (int i = 0; i < vertices3D.Length - 1; i++)
-        {
-            float angle = Mathf.Lerp(-halfAngle, halfAngle, (float)i / (vertices3D.Length - 2));
-            float rad = Mathf.Deg2Rad * angle;
-            float x = Mathf.Sin(rad) * torchRange;
-            float y = Mathf.Cos(rad) * torchRange;
-            vertices3D[i + 1] = new Vector3(y, -x, 0);
-        }
-
-        for (int i = 0; i < vertices3D.Length; i++)
-            colliderPoints[i] = new Vector2(vertices3D[i].x, vertices3D[i].y);
-
-        polygonCollider.pathCount = 1;
-        polygonCollider.SetPath(0, colliderPoints);
-    }
     private void UpdateTorchTransform()
     {
+        
+        Vector2 dir = Vector2.zero;
+        if (_look != null)
+        {
+            dir = _look.ReadValue<Vector2>();
+        }
+
+        if (dir.sqrMagnitude > 0.001f)
+        {
+            float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.localEulerAngles = new Vector3(0, 0, angleZ);
+            
+            // Caso A: 0..45 o 315..360
+            if (angleZ <= 45f || angleZ >= 315f)
+            {
+                // Sposta la X a -0.02
+                transform.localPosition = new Vector3(-0.02f, _startPosition.y, _startPosition.z);
+            }
+            // Caso B: 135..225
+            else if (angleZ >= 135f && angleZ <= 225f)
+            {
+                // Sposta la X a 0.03
+                transform.localPosition = new Vector3(0.03f, _startPosition.y, _startPosition.z);
+            }
+            // Caso C: tutti gli altri angoli
+            else
+            {
+                // Ripristiniamo la X della posizione iniziale
+                transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, _startPosition.z);
+            }
+        }        else
+        {
+            // Se non c’è input, volendo potresti lasciare l’angolo invariato
+            // o resettare la posizione:
+            transform.localPosition = _startPosition;
+        }
+        
+        
+        
         // Esempio: se la sprite è disegnata come un cono di 90° con dimensione "base"
         // e vuoi un "range" in asse y e "angle" in asse x
         // regola la formula in base a come hai creato la sprite
@@ -107,7 +122,7 @@ public class TorchSystemSprite : MonoBehaviour
         // Calcoliamo fattori di scala
         float angleScale = torchAngle / 90f;   // Se la sprite rappresenta 90° a full width = 1
         float rangeScale = torchRange / 5f;    // Se la sprite base copre un range di 5 unità a scale=1
-
+        
         transform.localScale = new Vector3(rangeScale, angleScale, 1);
     }
     private void OnTriggerEnter2D(Collider2D other)

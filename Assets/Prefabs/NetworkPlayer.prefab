@@ -668,7 +668,7 @@ PolygonCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145399ec54b86fe4091f2223cd9e43c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torchRange: 0
+  torchRange: 3
   torchAngle: 45
   torchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.34117648}
 --- !u!212 &362485238975546751
@@ -747,7 +747,7 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -770,7 +770,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 769841735
   m_SortingLayer: 5
-  m_SortingOrder: 0
+  m_SortingOrder: 44
   m_Sprite: {fileID: 21300000, guid: 4866d0d0c69fa6344acef06d0ffa4d19, type: 3}
   m_Color: {r: 1, g: 0.96718955, b: 0.015686274, a: 0.5058824}
   m_FlipX: 0
