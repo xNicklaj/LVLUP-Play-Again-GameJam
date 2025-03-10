@@ -15,10 +15,12 @@ public class ShieldSystem : MonoBehaviour
     private MeshRenderer meshRenderer;
     private Mesh shieldMesh;*/
     private bool isFront = false;
-    
+    private PlayerInput _playerInput;
+    private InputAction _look;   
     private SpriteRenderer spriteRenderer;
     private PolygonCollider2D polygonCollider;
-    
+    private Vector3 _startPosition;
+  
     private Vector3 sideOffset = new Vector3(0, -0.5f, 0);
     private Vector3 frontOffset;
     
@@ -31,29 +33,91 @@ public class ShieldSystem : MonoBehaviour
         polygonCollider = GetComponent<PolygonCollider2D>();
         if (polygonCollider)
             polygonCollider.isTrigger = true;
+        // Recuperiamo l'azione "Direction" dal PlayerInput (nel parent, ad es.)
+        _playerInput = GetComponentInParent<PlayerInput>();
+        if (_playerInput)
+        {
+            _look = _playerInput.actions.FindAction("Direction");
+        }
 
-        spriteRenderer.enabled = false;
-        if (polygonCollider) polygonCollider.enabled = false;
-        UpdateShieldMesh();
+        // Memorizziamo la posizione iniziale
+        _startPosition = transform.localPosition;
+
+        // All'avvio, possiamo disabilitare lo scudo se vogliamo
+        // spriteRenderer.enabled = false;
+        // if (polygonCollider) polygonCollider.enabled = false;
+
+        UpdateShieldTransform();
+        //spriteRenderer.enabled = false;
+        //if (polygonCollider) polygonCollider.enabled = false;
+        //UpdateShieldMesh();
+        Debug.Log("AWAKE");
     }
 
     private void Update()
     {
-        UpdateShieldMesh();
+        UpdateShieldTransform();
     }
-    
+
+    // ===========================
+    // Metodo Principale di Update
+    // ===========================
+    private void UpdateShieldTransform()
+    {
+        // 1) Leggiamo la direzione dal PlayerInput
+        Vector2 dir = Vector2.zero;
+        if (_look != null)
+        {
+            dir = _look.ReadValue<Vector2>();
+        }
+
+        // 2) Se il vettore è != (0,0), calcoliamo l'angolo
+        if (dir.sqrMagnitude > 0.001f)
+        {
+            float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            
+            // Se vuoi aggiungere un offset di angolo rispetto a direzione:
+            angleZ += shieldAngle; // Esempio: ruotare di +90° se vuoi scudo davanti al giocatore
+
+            // 3) Posizioniamo lo scudo a shieldRange di distanza, nella direzione "dir"
+            float rad = angleZ * Mathf.Deg2Rad;
+            float posX = Mathf.Sin(rad) * shieldRange;
+            float posY = -Mathf.Cos(rad) * shieldRange;
+
+            // Aggiorniamo la posizione e rotazione locali
+            transform.localPosition = new Vector3(posX, posY, _startPosition.z);
+            //transform.localEulerAngles = new Vector3(0, 0, angleZ);
+        }
+        else
+        {
+            // Se non c'è input di direzione, rimettiamo lo scudo in _startPosition
+            // o dove preferisci
+            transform.localPosition = _startPosition;
+            //transform.localEulerAngles = new Vector3(0, 0, shieldAngle);
+        }
+
+        // NB: al momento ignoriamo shieldWidth e shieldHeight (nessuna scala)
+        // Se un domani vuoi scalare lo sprite:
+        // transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
+    }
+
+    // =====================
+    // Gestione di ClassAction
+    // =====================
     public void OnClassAction(InputValue value)
     {
         bool isPressed = value.isPressed;
 
         if (isPressed)
         {
+            Debug.Log("ciao1");
             // enable shield
             spriteRenderer.enabled = true;
             if (polygonCollider) polygonCollider.enabled = true;
         }
         else
         {
+            Debug.Log("ciao2");
             // disable shield
             spriteRenderer.enabled = false;
             if (polygonCollider) polygonCollider.enabled = false;
@@ -68,7 +132,7 @@ public class ShieldSystem : MonoBehaviour
     public void SetShieldRange(float range)
     {
         shieldRange = range;
-        UpdateShieldMesh();
+        UpdateShieldTransform();
     }
     
     /// <summary>
@@ -80,7 +144,7 @@ public class ShieldSystem : MonoBehaviour
     {
         shieldWidth = width;
         shieldHeight = height;
-        UpdateShieldMesh();
+        UpdateShieldTransform();
     }
     
     /// <summary>
@@ -90,7 +154,7 @@ public class ShieldSystem : MonoBehaviour
     public void SetShieldAngle(float angle)
     {
         shieldAngle = angle;
-        UpdateShieldMesh();
+        UpdateShieldTransform();
     }
 
     private void UpdateShieldMesh()
@@ -100,7 +164,7 @@ public class ShieldSystem : MonoBehaviour
         
         transform.localPosition = frontOffset; //changed from offset
         transform.localEulerAngles = new Vector3(0, 0, shieldAngle);
-        transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
+        //transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
         
     }
 
