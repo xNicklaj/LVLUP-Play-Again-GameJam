@@ -24,8 +24,14 @@ public class Bullet : NetworkBehaviour
 
     #region PrivateVariables
     private float currentTime = 0.0f;
-
     #endregion
+
+    #region LagCompensation
+    private bool hasHit = false;
+    private bool canDestroy = false;
+    #endregion
+
+
 
     private void Start()
     {
@@ -55,7 +61,24 @@ public class Bullet : NetworkBehaviour
 
     private void Update()
     {
+
+        if (hasHit && !canDestroy)
+        {
+            // client has not yet played the effects
+            if (IsClient)
+            {
+                PlayHitEffects();
+            }
+            else if (canDestroy)
+            {
+                GetComponent<NetworkObject>().Despawn();
+                Destroy(gameObject);
+                return;
+            }
+        }
+
         if (!IsOwner || !IsServer) return;
+        // server only logic from now on
         currentTime += Time.deltaTime;
         AnimationCurve velocityOverTime = defaults.velocityOverTime;
         float maxFlyTime = defaults.maxFlyTime * maxFlyTimeMult;
@@ -100,18 +123,14 @@ public class Bullet : NetworkBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!IsOwner || !IsServer) return;
-        GetComponent<SpriteRenderer>().enabled = false;
+        if (IsServer)
+            PlayHitEffects();
 
-        if (this.GetComponent<NetworkObject>().IsSpawned)
-            this.GetComponent<NetworkObject>().Despawn();
-
-        GameObject dust = Instantiate(DustPrefab, transform.position, Quaternion.identity);
-        dust.GetComponent<NetworkObject>().Spawn();
-
-        Destroy(gameObject);
-
-        return;
+        if (IsClient)
+        {
+            hasHit = true;
+            return;
+        }
 
         //isHoming = false; // so the bullet won't follow the player after it collided with something
 
@@ -156,5 +175,19 @@ public class Bullet : NetworkBehaviour
         Vector2 newDirection = Quaternion.Euler(0, 0, turnAmount) * currentDir;
 
         return newDirection.normalized;
+    }
+
+    private void PlayHitEffects()
+    {
+        GetComponent<SpriteRenderer>().enabled = false; // hide bullet
+        GetComponent<Collider2D>().enabled = false; // disable collider so that it cannot impact on other players after hidden
+
+        // show dust cloud animation (don't sync the spawns - each player sees them at the right time)
+        GameObject dust = Instantiate(DustPrefab, transform.position, Quaternion.identity);
+        // if (IsServer)
+        //     dust.GetComponent<NetworkObject>().Spawn();
+
+        if (IsClient)
+            canDestroy = true;
     }
 }
