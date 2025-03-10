@@ -56,7 +56,6 @@ public class PlayerControllerMP : NetworkBehaviour
         Vector2 axis = _movement.ReadValue<Vector2>();
         Vector2 lookAxis = _look.ReadValue<Vector2>();
         _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.deltaTime * axis));
-        Debug.Log(_animator);
 
         if(lookAxis.magnitude > 0.1)
             UpdateAnimator(lookAxis.x, lookAxis.y, axis.magnitude);

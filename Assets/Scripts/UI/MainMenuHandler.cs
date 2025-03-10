@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -24,6 +25,7 @@ public class MainMenuHandler : MonoBehaviour
     private Button _backButton;
     private Button _quitButton;
     private TextField _ipField;
+    private Label _gameTitle;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private PlayerInputManager _playerInputManager;
@@ -37,6 +39,7 @@ public class MainMenuHandler : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        _gameTitle = root.Q<Label>("GameTitle");
         _coinContainer = root.Q<VisualElement>("CoinContainer");
         _baseContainer = root.Q<VisualElement>("BaseContainer");
         _joinContainer = root.Q<VisualElement>("JoinContainer");
@@ -82,6 +85,7 @@ public class MainMenuHandler : MonoBehaviour
 
         _coinButton.Focus();
         StartCoroutine(VisibilityLoop());
+        StartCoroutine(GameTitleOpacityHandler());
     }
 
     private IEnumerator VisibilityLoop()
@@ -107,6 +111,27 @@ public class MainMenuHandler : MonoBehaviour
         _quitButton.RemoveFromClassList("disabled");
         yield return new WaitForSeconds(delay);
         _hostGameButton.Focus();
+    }
+
+    private IEnumerator GameTitleOpacityHandler()
+    {
+        float delay = .8f;
+        StyleColor c1 = new StyleColor(new Color(1, 1, 1, 1));
+        StyleColor c2 = new StyleColor(new Color(1, 1, 1, .7f));
+        StyleColor c3 = new StyleColor(new Color(1, 1, 1, .45f));
+        while (true)
+        {
+            _gameTitle.style.color = c1;
+            yield return new WaitForSeconds(delay);
+            _gameTitle.style.color = c2;
+            yield return new WaitForSeconds(delay);
+            _gameTitle.style.color = c3;
+            yield return new WaitForSeconds(delay);
+            _gameTitle.style.color = c2;
+            yield return new WaitForSeconds(delay);
+            _gameTitle.style.color = c1;
+            yield return new WaitForSeconds(delay);
+        }
     }
 
     private void PlaySound(AudioClip clip)
@@ -147,6 +172,7 @@ public class MainMenuHandler : MonoBehaviour
         PlaySound(StartSound);
         NetworkManager.Singleton.StartHost();
         GameManager_v2.Instance.IsSessionHost = true;
+        StopCoroutine(GameTitleOpacityHandler());
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
@@ -156,6 +182,7 @@ public class MainMenuHandler : MonoBehaviour
         PlaySound(StartSound);
         NetworkManager.Singleton.StartClient();
         GameManager_v2.Instance.IsSessionHost = true;
+        StopCoroutine(GameTitleOpacityHandler());
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
