@@ -1,6 +1,13 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Style/InGameUi.uss?fileID=7433441132597879392&amp;guid=4d51e6cb9a2ea204a908f7da44e1c373&amp;type=3#InGameUi" />
-    <engine:VisualElement style="flex-grow: 1; max-height: 8%; flex-direction: row; margin-left: 16px; margin-right: 16px;">
+    <engine:VisualElement name="VisualElement" style="flex-grow: 1; max-height: 8%; flex-direction: row; margin-left: 16px; margin-right: 16px;">
+        <engine:Label text="P1" class="in-game-ui-text in-game-text-color-yellow in-game-text-shadow" />
+        <engine:VisualElement style="flex-grow: 1; flex-direction: row-reverse; align-self: center;">
+            <engine:Label text="1000" name="P1_PointLabel" class="in-game-ui-text in-game-text-shadow" style="color: rgb(255, 255, 255);" />
+            <engine:VisualElement style="flex-grow: 1; max-height: 48px; max-width: 48px; background-image: url(&quot;project://database/Assets/Textures/UI/Coin.png?fileID=2800000&amp;guid=7aa2d236d6c998c40871c1ed193fed80&amp;type=3#Coin&quot;); min-width: 48px; min-height: 48px;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="VisualElement" style="flex-grow: 1; max-height: 8%; flex-direction: row; margin-left: 16px; margin-right: 16px;">
         <engine:Label text="P1" class="in-game-ui-text in-game-text-color-yellow in-game-text-shadow" />
         <engine:VisualElement style="flex-grow: 1; flex-direction: row-reverse; align-self: center;">
             <engine:Label text="1000" name="P1_PointLabel" class="in-game-ui-text in-game-text-shadow" style="color: rgb(255, 255, 255);" />

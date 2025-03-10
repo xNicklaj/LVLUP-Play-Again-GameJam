@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -15,6 +16,8 @@ public class MainMenuHandler : MonoBehaviour
 {
     private VisualElement _baseContainer;
     private VisualElement _joinContainer;
+    private VisualElement _coinContainer;
+    private Button _coinButton;
     private Button _hostGameButton;
     private Button _joinGameButton;
     private Button _joinButton;
@@ -34,9 +37,11 @@ public class MainMenuHandler : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        _coinContainer = root.Q<VisualElement>("CoinContainer");
         _baseContainer = root.Q<VisualElement>("BaseContainer");
         _joinContainer = root.Q<VisualElement>("JoinContainer");
-        
+
+        _coinButton = root.Q<Button>("CoinButton");
         _hostGameButton = root.Q<Button>("HostGameButton");
         _joinGameButton = root.Q<Button>("JoinGameButton");
         _joinButton = root.Q<Button>("JoinButton");
@@ -50,6 +55,18 @@ public class MainMenuHandler : MonoBehaviour
         _joinButton.clicked += JoinButtonClicked;
         _quitButton.clicked += QuitButtonClicked;
         _ipField.RegisterCallback<ChangeEvent<string>>(IPFieldFocusOut);
+        _coinButton.clicked += () =>
+        {
+            _coinContainer.AddToClassList("disabled");
+            _baseContainer.RemoveFromClassList("disabled");
+            _hostGameButton.Focus();
+            StopCoroutine(VisibilityLoop());
+            
+            _hostGameButton.visible = false;
+            _joinGameButton.visible = false;
+            _quitButton.visible = false;
+            StartCoroutine(ShowMainMenu());
+        };
 
         #region Sounds
         _joinGameButton.clicked += () => PlaySound(SelectSound);
@@ -63,7 +80,33 @@ public class MainMenuHandler : MonoBehaviour
         _quitButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
         #endregion
 
+        _coinButton.Focus();
+        StartCoroutine(VisibilityLoop());
+    }
 
+    private IEnumerator VisibilityLoop()
+    {
+        bool t = false;
+        StyleColor white = new StyleColor(Color.white);
+        StyleColor black = new StyleColor(Color.black);
+        while (true)
+        {
+            yield return new WaitForSeconds(.8f);
+            t = !t;
+            _coinButton.style.color = t ? white : black;
+        }
+    }
+
+    private IEnumerator ShowMainMenu()
+    {
+        float delay = .4f;
+        _hostGameButton.visible = true;
+        yield return new WaitForSeconds(delay);
+        _joinGameButton.visible = true;
+        yield return new WaitForSeconds(delay);
+        _quitButton.visible = true;
+        yield return new WaitForSeconds(delay);
+        _hostGameButton.Focus();
     }
 
     private void PlaySound(AudioClip clip)
