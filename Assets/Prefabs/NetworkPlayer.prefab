@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7837458188839051655}
   - component: {fileID: 3334143827351454596}
   - component: {fileID: 7507603311242465298}
+  - component: {fileID: 5745209932382111420}
   m_Layer: 7
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -333,6 +334,21 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   health:
     m_InternalValue: 3
+--- !u!114 &5745209932382111420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363042218499496334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9ccec2d95107e419072e00a0208166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  rightStickAxis:
+    m_InternalValue: {x: 0, y: 0}
 --- !u!1 &8550134888312982908
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,6 +583,7 @@ MonoBehaviour:
   torchRange: 3
   torchAngle: 45
   torchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.34117648}
+  playerNetwork: {fileID: 5745209932382111420}
 --- !u!212 &362485238975546751
 SpriteRenderer:
   m_ObjectHideFlags: 0

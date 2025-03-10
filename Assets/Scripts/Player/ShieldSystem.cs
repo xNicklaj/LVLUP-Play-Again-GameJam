@@ -24,6 +24,8 @@ public class ShieldSystem : MonoBehaviour
     private Vector3 sideOffset = new Vector3(0, -0.5f, 0);
     private Vector3 frontOffset;
     
+    [SerializeField] private InstrumentNetworkController playerNetwork;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -32,92 +34,67 @@ public class ShieldSystem : MonoBehaviour
 
         polygonCollider = GetComponent<PolygonCollider2D>();
         if (polygonCollider)
+        {
             polygonCollider.isTrigger = true;
-        // Recuperiamo l'azione "Direction" dal PlayerInput (nel parent, ad es.)
+        }
         _playerInput = GetComponentInParent<PlayerInput>();
         if (_playerInput)
         {
             _look = _playerInput.actions.FindAction("Direction");
         }
 
-        // Memorizziamo la posizione iniziale
         _startPosition = transform.localPosition;
 
-        // All'avvio, possiamo disabilitare lo scudo se vogliamo
-        // spriteRenderer.enabled = false;
-        // if (polygonCollider) polygonCollider.enabled = false;
-
         UpdateShieldTransform();
-        //spriteRenderer.enabled = false;
-        //if (polygonCollider) polygonCollider.enabled = false;
-        //UpdateShieldMesh();
-        Debug.Log("AWAKE");
     }
 
     private void Update()
     {
         UpdateShieldTransform();
     }
-
-    // ===========================
-    // Metodo Principale di Update
-    // ===========================
+    
     private void UpdateShieldTransform()
     {
-        // 1) Leggiamo la direzione dal PlayerInput
         Vector2 dir = Vector2.zero;
         if (_look != null)
         {
-            dir = _look.ReadValue<Vector2>();
+            //dir = _look.ReadValue<Vector2>();
+            dir = playerNetwork.rightStickAxis.Value;
         }
 
-        // 2) Se il vettore è != (0,0), calcoliamo l'angolo
         if (dir.sqrMagnitude > 0.001f)
         {
+            
             float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             
-            // Se vuoi aggiungere un offset di angolo rispetto a direzione:
-            angleZ += shieldAngle; // Esempio: ruotare di +90° se vuoi scudo davanti al giocatore
+            angleZ += shieldAngle;
 
-            // 3) Posizioniamo lo scudo a shieldRange di distanza, nella direzione "dir"
             float rad = angleZ * Mathf.Deg2Rad;
             float posX = Mathf.Sin(rad) * shieldRange;
             float posY = -Mathf.Cos(rad) * shieldRange;
 
-            // Aggiorniamo la posizione e rotazione locali
             transform.localPosition = new Vector3(posX, posY, _startPosition.z);
-            //transform.localEulerAngles = new Vector3(0, 0, angleZ);
         }
         else
         {
-            // Se non c'è input di direzione, rimettiamo lo scudo in _startPosition
-            // o dove preferisci
             transform.localPosition = _startPosition;
-            //transform.localEulerAngles = new Vector3(0, 0, shieldAngle);
         }
-
-        // NB: al momento ignoriamo shieldWidth e shieldHeight (nessuna scala)
-        // Se un domani vuoi scalare lo sprite:
+        //transform.localEulerAngles = new Vector3(0, 0, angleZ);
         // transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
     }
 
-    // =====================
-    // Gestione di ClassAction
-    // =====================
     public void OnClassAction(InputValue value)
     {
         bool isPressed = value.isPressed;
 
         if (isPressed)
         {
-            Debug.Log("ciao1");
             // enable shield
             spriteRenderer.enabled = true;
             if (polygonCollider) polygonCollider.enabled = true;
         }
         else
         {
-            Debug.Log("ciao2");
             // disable shield
             spriteRenderer.enabled = false;
             if (polygonCollider) polygonCollider.enabled = false;

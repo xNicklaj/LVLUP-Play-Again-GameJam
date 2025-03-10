@@ -14,7 +14,9 @@ public class TorchSystemSprite : MonoBehaviour
     private PlayerInput _playerInput;
     private InputAction _look;
     private Vector3 _startPosition;
-
+    
+    [SerializeField] private InstrumentNetworkController playerNetwork;
+    
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -77,7 +79,8 @@ public class TorchSystemSprite : MonoBehaviour
         Vector2 dir = Vector2.zero;
         if (_look != null)
         {
-            dir = _look.ReadValue<Vector2>();
+            //dir = _look.ReadValue<Vector2>();
+            dir = playerNetwork.rightStickAxis.Value;
         }
 
         if (dir.sqrMagnitude > 0.001f)
