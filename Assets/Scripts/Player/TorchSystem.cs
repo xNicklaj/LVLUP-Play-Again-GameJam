@@ -88,25 +88,20 @@ public class TorchSystemSprite : MonoBehaviour
             // Caso A: 0..45 o 315..360
             if (angleZ <= 45f || angleZ >= 315f)
             {
-                // Sposta la X a -0.02
                 transform.localPosition = new Vector3(-0.02f, _startPosition.y, _startPosition.z);
             }
             // Caso B: 135..225
             else if (angleZ >= 135f && angleZ <= 225f)
             {
-                // Sposta la X a 0.03
                 transform.localPosition = new Vector3(0.03f, _startPosition.y, _startPosition.z);
             }
             // Caso C: tutti gli altri angoli
             else
             {
-                // Ripristiniamo la X della posizione iniziale
-                transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, _startPosition.z);
+                transform.localPosition = new Vector3(-0.02f, _startPosition.y, _startPosition.z);
             }
         }        else
         {
-            // Se non c’è input, volendo potresti lasciare l’angolo invariato
-            // o resettare la posizione:
             transform.localPosition = _startPosition;
         }
         
