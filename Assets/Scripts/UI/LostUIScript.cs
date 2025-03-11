@@ -32,8 +32,8 @@ public class LostUIScript : MonoBehaviour
             _audioMixer.SetFloat("MusicVolume", -90);
             _audioMixer.SetFloat("SFXVolume", -90);
             _root.visible = true;
-            _hsLabel.text = PointManager.Instance.CurrentScore.Value.ToString();
-            _csLabel.text = PointManager.Instance.HighScore.Value.ToString();
+            _hsLabel.text = PointManager.Instance.HighScore.Value.ToString();
+            _csLabel.text = PointManager.Instance.CurrentScore.Value.ToString();
 
             if(PointManager.Instance.CurrentScore.Value > PointManager.Instance.HighScore.Value)
             {
