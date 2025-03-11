@@ -4979,12 +4979,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_214
       rect:
         serializedVersion: 2
-        x: 288
+        x: 292
         y: 416
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -5004,9 +5004,9 @@ TextureImporter:
         x: 304
         y: 416
         width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.66}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -5793,12 +5793,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_251
       rect:
         serializedVersion: 2
-        x: 288
+        x: 292
         y: 400
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -6629,12 +6629,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_289
       rect:
         serializedVersion: 2
-        x: 288
+        x: 292
         y: 384
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -7487,12 +7487,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_328
       rect:
         serializedVersion: 2
-        x: 288
+        x: 292
         y: 368
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -9424,11 +9424,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 592
-        y: 336
+        y: 340
         width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -9446,11 +9446,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 608
-        y: 336
+        y: 340
         width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -10897,12 +10897,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_483
       rect:
         serializedVersion: 2
-        x: 400
+        x: 404
         y: 304
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -10943,10 +10943,10 @@ TextureImporter:
         serializedVersion: 2
         x: 432
         y: 304
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.66, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -11777,12 +11777,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_523
       rect:
         serializedVersion: 2
-        x: 400
+        x: 404
         y: 288
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -11823,10 +11823,10 @@ TextureImporter:
         serializedVersion: 2
         x: 432
         y: 288
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.66, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -12613,12 +12613,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_561
       rect:
         serializedVersion: 2
-        x: 400
+        x: 404
         y: 272
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -12659,10 +12659,10 @@ TextureImporter:
         serializedVersion: 2
         x: 432
         y: 272
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.66, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -13493,12 +13493,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_601
       rect:
         serializedVersion: 2
-        x: 400
+        x: 404
         y: 256
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -13539,10 +13539,10 @@ TextureImporter:
         serializedVersion: 2
         x: 432
         y: 256
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.66, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -20445,10 +20445,10 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_917
       rect:
         serializedVersion: 2
-        x: 352
+        x: 353
         y: 128
-        width: 16
-        height: 16
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -20467,10 +20467,10 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_918
       rect:
         serializedVersion: 2
-        x: 368
-        y: 128
-        width: 16
-        height: 16
+        x: 370
+        y: 129
+        width: 12
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -21281,10 +21281,10 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_955
       rect:
         serializedVersion: 2
-        x: 320
-        y: 112
-        width: 16
-        height: 16
+        x: 322
+        y: 113
+        width: 12
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -21325,10 +21325,10 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_957
       rect:
         serializedVersion: 2
-        x: 352
-        y: 112
-        width: 16
-        height: 16
+        x: 354
+        y: 113
+        width: 12
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -24735,12 +24735,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_1112
       rect:
         serializedVersion: 2
-        x: 496
+        x: 506
         y: 48
-        width: 16
+        width: 6
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: -0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
