@@ -36,12 +36,4 @@ class GameManager_v2 : Singleton<GameManager_v2>
     {
         GameStarted = false;
     }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    public void ChangeHeartsClientRpc(int num)
-    {
-        HeartsChanged.Invoke(num);
-        if (num <= 0)
-            OnGameLost.Invoke();
-    }
 }

@@ -21,13 +21,7 @@ public class HealthManager : NetworkSingleton<HealthManager>
     public void TakeDamageServerRpc()
     {
         health.Value -= 1;
-        GameManager_v2.Instance.ChangeHeartsClientRpc(health.Value);
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void CallGameLostClientRpc()
-    {
-        GameManager_v2.Instance.OnGameLost.Invoke();
+        ChangeHeartsClientRpc(health.Value);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,5 +32,13 @@ public class HealthManager : NetworkSingleton<HealthManager>
         {
             TakeDamageServerRpc();
         }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ChangeHeartsClientRpc(int num)
+    {
+        GameManager_v2.Instance.HeartsChanged.Invoke(num);
+        if (num <= 0)
+            GameManager_v2.Instance.OnGameLost.Invoke();
     }
 }
