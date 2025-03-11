@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,6 +35,7 @@ public class MainMenuHandler : MonoBehaviour
     public AudioClip SelectSound;
     public AudioClip StartSound;
     public AudioClip FocusSound;
+    public AudioClip CoinSound;
 
     void Awake()
     {
@@ -60,6 +62,7 @@ public class MainMenuHandler : MonoBehaviour
         _ipField.RegisterCallback<ChangeEvent<string>>(IPFieldFocusOut);
         _coinButton.clicked += () =>
         {
+            PlaySound(CoinSound);
             _coinContainer.AddToClassList("disabled");
             _baseContainer.RemoveFromClassList("disabled");
             _hostGameButton.Focus();
@@ -171,6 +174,7 @@ public class MainMenuHandler : MonoBehaviour
         NetworkManager.Singleton.StartHost();
         GameManager_v2.Instance.IsSessionHost = true;
         StopCoroutine(GameTitleOpacityHandler());
+        GameManager_v2.Instance.OnMainMenuExit.Invoke();
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
@@ -181,6 +185,7 @@ public class MainMenuHandler : MonoBehaviour
         NetworkManager.Singleton.StartClient();
         GameManager_v2.Instance.IsSessionHost = true;
         StopCoroutine(GameTitleOpacityHandler());
+        GameManager_v2.Instance.OnMainMenuExit.Invoke();
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }
 
@@ -189,12 +194,19 @@ public class MainMenuHandler : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(this.gameObject);
         _hostGameButton.Focus();
+        StartCoroutine(StartMusicSignal());
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private IEnumerator StartMusicSignal()
+    {
+        yield return new WaitForNextFrameUnit();
+        GameManager_v2.Instance.OnMainMenuStarted.Invoke();
     }
 
     public static bool ValidateIPv4(string ipString)

@@ -8,6 +8,8 @@ class GameManager_v2 : Singleton<GameManager_v2>
     public UnityEvent OnGameFinish = new UnityEvent();
     public UnityEvent OnGameLost = new UnityEvent();
     public UnityEvent OnUISelected = new UnityEvent();
+    public UnityEvent OnMainMenuStarted = new UnityEvent();
+    public UnityEvent OnMainMenuExit = new UnityEvent();
     public UnityEvent<int> HeartsChanged = new UnityEvent<int>();
     public UnityEvent<int> OnPointsUpdated = new UnityEvent<int>();
     public bool IsSessionHost = false;

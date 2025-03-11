@@ -10,6 +10,8 @@ public class ModifierData : ScriptableObject
     public float DespawnTimeoutDuration = 10f;
     public float TimeBeforeDespawn = 10f;
     public float Duration = 30;
+    public AudioClip AppliedClip;
+    public AudioClip DisposedClip;
 
     [HideInInspector] public string TargetName { get; private set; }
 

@@ -135,7 +135,7 @@ MonoBehaviour:
   defaults: {fileID: 11400000, guid: db080913d50a57f41ae78fbff26b356a, type: 2}
   DustPrefab: {fileID: 7202564344661159500, guid: 87c97e1711975964189e9892c3571147, type: 3}
   maxFlyTimeMult: 1
-  initialVelocityMult: 1
+  initialVelocityMult: 0.6
   isHoming: 0
   damageMult: 1
   isFromEnemy: 0

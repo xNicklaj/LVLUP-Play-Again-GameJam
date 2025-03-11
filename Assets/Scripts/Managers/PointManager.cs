@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PointManager : NetworkSingleton<PointManager>
 {
     public int InitialScore = 1000;
@@ -9,8 +10,10 @@ public class PointManager : NetworkSingleton<PointManager>
     public NetworkVariable<int> CurrentScore = new NetworkVariable<int>();
 
     public NetworkVariable<int> HighScore = new NetworkVariable<int>();
+    public int SoundThreshold = 1000;
     private float Timer = 0;
-    
+    private int _localHighScore;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()
     {
@@ -38,6 +41,15 @@ public class PointManager : NetworkSingleton<PointManager>
     public void SetScoreServerRpc(int score)
     {
         if (score < 0) score = 0;
+        if (score > _localHighScore)
+        {
+            if(score % SoundThreshold > _localHighScore % SoundThreshold)
+            {
+                GetComponent<AudioSource>().time = 0;
+                GetComponent<AudioSource>().Play();
+            }
+            _localHighScore = score;
+        }
         CurrentScore.Value = score;
         RefreshScoreClientRpc(score);
     }

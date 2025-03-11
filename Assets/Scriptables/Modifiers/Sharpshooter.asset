@@ -42,3 +42,5 @@ MonoBehaviour:
   DespawnTimeoutDuration: 10
   TimeBeforeDespawn: 10
   Duration: 15
+  AppliedClip: {fileID: 8300000, guid: 89a52681692d6194c806cbd40606aad8, type: 3}
+  DisposedClip: {fileID: 8300000, guid: 7e9374fa4ecd4c44998307c7e893b646, type: 3}

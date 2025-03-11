@@ -10,8 +10,13 @@ public class FrogAttackModifier : ModifierBase
 
     protected override void ApplyModifier()
     {
-        if (!IsHost) return;
-        LayerMask[] masks = new LayerMask[]{ LayerMask.GetMask("LitEnemy"), LayerMask.GetMask("UnlitEnemy") };
+        DespawnEnemiesServerRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    private void DespawnEnemiesServerRpc()
+    {
+        LayerMask[] masks = new LayerMask[] { LayerMask.GetMask("LitEnemy"), LayerMask.GetMask("UnlitEnemy") };
         List<Collider2D> colliders = VisionSystem.FindNearPosition(transform.position, Radius, masks);
         foreach (Collider2D collider in colliders)
         {

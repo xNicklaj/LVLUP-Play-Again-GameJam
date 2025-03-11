@@ -14,11 +14,14 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(NetworkTransform))]
+[RequireComponent(typeof(AudioSource))]
 public abstract class ModifierBase : NetworkBehaviour
 {
     public ModifierData ModifierData;
 
+
     protected GameObject ModifierTarget;
+    protected AudioSource AudioSource;
 
     private SpriteRenderer _spriteRenderer;
     private float _despawnTimer = 0;
@@ -30,6 +33,7 @@ public abstract class ModifierBase : NetworkBehaviour
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        AudioSource = GetComponent<AudioSource>();
         GetComponent<BoxCollider2D>().isTrigger = true;
         if(_spriteRenderer.sprite == null) _spriteRenderer.sprite = ModifierData.Sprite;
     }
@@ -136,6 +140,8 @@ public abstract class ModifierBase : NetworkBehaviour
             }
         }
         ApplyModifier();
+        AudioSource.clip = ModifierData.AppliedClip;
+        AudioSource.Play();
         StartCoroutine(WaitForDuration());
     }
 
@@ -143,6 +149,8 @@ public abstract class ModifierBase : NetworkBehaviour
     {
         yield return new WaitForSeconds(ModifierData.Duration);
         DisposeModifier();
+        AudioSource.clip = ModifierData.DisposedClip;
+        AudioSource.Play();
         DespawnAndDestroyServerRpc();
     }
 
