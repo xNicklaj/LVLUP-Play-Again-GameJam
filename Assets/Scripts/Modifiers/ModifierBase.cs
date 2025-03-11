@@ -27,6 +27,7 @@ public abstract class ModifierBase : NetworkBehaviour
     private float _despawnTimer = 0;
     private bool _isDespawning = false;
 
+
     protected abstract void ApplyModifier();
     protected abstract void DisposeModifier();
 
@@ -35,7 +36,7 @@ public abstract class ModifierBase : NetworkBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         AudioSource = GetComponent<AudioSource>();
         GetComponent<BoxCollider2D>().isTrigger = true;
-        if(_spriteRenderer.sprite == null) _spriteRenderer.sprite = ModifierData.Sprite;
+        if (_spriteRenderer.sprite == null) _spriteRenderer.sprite = ModifierData.Sprite;
     }
 
     public override void OnNetworkSpawn()
@@ -92,7 +93,7 @@ public abstract class ModifierBase : NetworkBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if((ModifierData.TargetObject == null && collider.CompareTag("Player")) || collider.gameObject == ModifierTarget || (ModifierData.TargetObject != null && collider.gameObject.name.Replace("(Clone)", "") == ModifierData.TargetObject.name))
+        if ((ModifierData.TargetObject == null && collider.CompareTag("Player")) || collider.gameObject == ModifierTarget || (ModifierData.TargetObject != null && collider.gameObject.name.Replace("(Clone)", "") == ModifierData.TargetObject.name))
         {
             ModifierTarget = collider.gameObject;
             OnPickupClientRpc(RpcTarget.Single(ModifierTarget.GetComponent<NetworkObject>().OwnerClientId, RpcTargetUse.Temp));
@@ -131,7 +132,8 @@ public abstract class ModifierBase : NetworkBehaviour
     [Rpc(SendTo.SpecifiedInParams)]
     private void OnPickupClientRpc(RpcParams rpcParams)
     {
-        if(ModifierData.TargetObject != null)
+        AbortDespawningClientRpc();
+        if (ModifierData.TargetObject != null)
         {
             if (ModifierTarget == null) ModifierTarget = GameObject.Find(ModifierData.TargetName + "(Clone)");
             if (ModifierTarget == null)
@@ -142,15 +144,28 @@ public abstract class ModifierBase : NetworkBehaviour
         ApplyModifier();
         AudioSource.clip = ModifierData.AppliedClip;
         AudioSource.Play();
+        // Debug.Log("starting coroutine to remove the effect...");
+
         StartCoroutine(WaitForDuration());
+    }
+
+    [ContextMenu("Stopping Despawning")]
+    [Rpc(SendTo.ClientsAndHost)]
+    private void AbortDespawningClientRpc()
+    {
+        // Debug.Log("pickupped, so not despawning anymore");
+        _isDespawning = false;
     }
 
     private IEnumerator WaitForDuration()
     {
+        // Debug.Log("coroutine running");
         yield return new WaitForSeconds(ModifierData.Duration);
+        // Debug.Log("coroutine ended, disposing");
         DisposeModifier();
         AudioSource.clip = ModifierData.DisposedClip;
         AudioSource.Play();
+        // Debug.Log("disposed, now despawning");
         DespawnAndDestroyServerRpc();
     }
 
