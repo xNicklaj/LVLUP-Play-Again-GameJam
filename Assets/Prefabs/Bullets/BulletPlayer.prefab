@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 5720754505623613542}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.75, y: 0.03, z: 0}
-  m_LocalScale: {x: 1.8654985, y: 1.8654985, z: 1.8654985}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0420437, y: 1.0420437, z: 1.0420437}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   defaults: {fileID: 11400000, guid: db080913d50a57f41ae78fbff26b356a, type: 2}
   DustPrefab: {fileID: 7202564344661159500, guid: 87c97e1711975964189e9892c3571147, type: 3}
-  maxFlyTimeMult: 1
+  maxTraveledDistanceMult: 1
   initialVelocityMult: 1
   isHoming: 0
   damageMult:

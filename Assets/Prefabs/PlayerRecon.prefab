@@ -185,8 +185,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeedMult: 1
+  MoveSpeed: 7
+  MoveSpeedInAction: 7
   RotationSpeed: 10
+  isInAction: 0
   _playerInput: {fileID: 2374953380649715109}
   _rigidbody: {fileID: 0}
   _networkObject: {fileID: 0}
@@ -580,8 +582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145399ec54b86fe4091f2223cd9e43c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torchRange: 3
-  torchAngle: 45
+  torchRange: 5.5
+  torchAngle: 48
   torchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.34117648}
   playerNetwork: {fileID: 5745209932382111420}
 --- !u!212 &362485238975546751

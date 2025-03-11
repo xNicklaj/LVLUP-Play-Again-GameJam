@@ -87,7 +87,7 @@ public class Bullet : NetworkBehaviour
         float initialVelocity = defaults.initialVelocity * initialVelocityMult;
         float maxFlyTime = defaults.maxTraveledDistance * maxTraveledDistanceMult / initialVelocity;
         // Handling: bullet disappears after "timeBeforeDestroy" seconds after it stopped moving.
-        Debug.Log($"{currentTime / maxFlyTime}, maxFlyTime = {maxFlyTime}");
+        //Debug.Log($"{currentTime / maxFlyTime}, maxFlyTime = {maxFlyTime}");
         if (currentTime >= maxFlyTime + defaults.timeBeforeDestroy)
         {
             // Debug.Log("Destroying bullet after Timeout!");

@@ -9,7 +9,12 @@ public class PlaySceneLoader : NetworkBehaviour
     [SerializeField] private GameObject _attackPrefab;
     [SerializeField] private GameObject _shieldPrefab;
     [SerializeField] private SpawnPointsScriptable _spawnPointsScriptable;
-    private Vector3 _sessionSpawnPoint;
+    private NetworkVariable<Vector3> _sessionSpawnPoint = new NetworkVariable<Vector3>();
+
+    private void Awake()
+    {
+        _sessionSpawnPoint.Value = _spawnPointsScriptable.list[Random.Range(0, _spawnPointsScriptable.list.Count)];
+    }
 
     private void Start()
     {
@@ -56,13 +61,13 @@ public class PlaySceneLoader : NetworkBehaviour
         switch (prefabId)
         {
             case (int)PlayerType.King:
-                newPlayer = (GameObject)Instantiate(_kingPrefab, GetRandomPointAround(_sessionSpawnPoint, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
+                newPlayer = (GameObject)Instantiate(_kingPrefab, GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
                 break;
             case (int)PlayerType.Attack:
-                newPlayer = (GameObject)Instantiate(_attackPrefab, GetRandomPointAround(_sessionSpawnPoint, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
+                newPlayer = (GameObject)Instantiate(_attackPrefab, GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
                 break;
             case (int)PlayerType.Shielder:
-                newPlayer = (GameObject)Instantiate(_shieldPrefab, GetRandomPointAround(_sessionSpawnPoint, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
+                newPlayer = (GameObject)Instantiate(_shieldPrefab, GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
                 break;
         }
 

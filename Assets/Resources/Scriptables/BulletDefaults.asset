@@ -12,11 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc80d60d6ed17943af3e8d0b815307a, type: 3}
   m_Name: BulletDefaults
   m_EditorClassIdentifier: 
-  maxFlyTime: 5
-  timeBeforeDestroy: 2
+  maxTraveledDistance: 60
+  timeBeforeDestroy: 0
   initialVelocity: 10
   damage: 1
   velocityOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  scaleOverTime:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -31,7 +55,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.5116873
       value: 1
-      inSlope: -0
+      inSlope: 0
       outSlope: -10.7671385
       tangentMode: 69
       weightedMode: 0

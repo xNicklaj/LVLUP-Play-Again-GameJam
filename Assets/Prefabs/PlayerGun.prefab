@@ -317,8 +317,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeedMult: 15
+  MoveSpeed: 6
+  MoveSpeedInAction: 3
   RotationSpeed: 10
+  isInAction: 0
   _playerInput: {fileID: 2374953380649715109}
   _rigidbody: {fileID: 0}
   _networkObject: {fileID: 0}
@@ -562,7 +564,6 @@ MonoBehaviour:
     shotsPerSlot: 1
     pauseSlotsNumber: 2
   bulletColor: {r: 1, g: 1, b: 1, a: 1}
-  speedWhileShootingMult: 0.2
   amIenemy: 0
 --- !u!114 &7925609793374688971
 MonoBehaviour:
