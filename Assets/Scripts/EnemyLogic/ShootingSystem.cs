@@ -242,7 +242,7 @@ public class ShootingSystem : NetworkBehaviour
             bullet.direction = targetDirection;
             bullet.color = bulletColor;
             bullet.isHoming = modifiers.homing;
-            bullet.maxFlyTimeMult = modifiers.rangeMult;
+            bullet.maxTraveledDistanceMult = modifiers.rangeMult;
             bullet.damageMult.Value = modifiers.damageMult;
             bullet.isFromEnemy = amIenemy;
         }
