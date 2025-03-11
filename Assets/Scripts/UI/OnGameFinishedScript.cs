@@ -23,6 +23,9 @@ public class OnGameFinishedScript : MonoBehaviour
     private Label _csLabel;
     private Label _hsLabel;
 
+    private float _ogMusicVolume;
+    private float _ogSFXVolume;
+
     public GameState state = GameState.GameFinished;
 
     void Awake()
@@ -43,6 +46,9 @@ public class OnGameFinishedScript : MonoBehaviour
         {
             GameManager_v2.Instance.OnGameFinish.AddListener(Show);
         }
+
+        _audioMixer.GetFloat("MusicVolume", out _ogMusicVolume);
+        _audioMixer.GetFloat("SFXVolume", out _ogSFXVolume);
     }
 
     private void Show()
@@ -71,6 +77,9 @@ public class OnGameFinishedScript : MonoBehaviour
 
         NetworkManager.Singleton.Shutdown(); // Properly shut down the network
         yield return new WaitForSeconds(1);  // Small delay for proper cleanup
+
+        _audioMixer.SetFloat("MusicVolume", _ogMusicVolume);
+        _audioMixer.SetFloat("SFXVolume", _ogSFXVolume);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         yield return new WaitForSeconds(1);  // Wait for scene load
