@@ -157,12 +157,4 @@ public class ShieldSystem : MonoBehaviour
         //transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
         
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Shield hit");
-        if (!collision.gameObject.name.Contains("Bullet")) return;
-        if (!collision.gameObject.GetComponent<Bullet>().isFromEnemy) return;
-        collision.gameObject.GetComponent<Bullet>().damageMult.Value = 0;
-    }
 }

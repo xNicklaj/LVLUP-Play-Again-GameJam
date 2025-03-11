@@ -28,10 +28,9 @@ public class HealthManager : NetworkSingleton<HealthManager>
     {
         if (!IsOwner && !IsHost) return;
         if (GameManager_v2.Instance.GameStarted == false) return;
-        if (collision.gameObject.name.Contains("Bullet"))
-        {
-            TakeDamageServerRpc();
-        }
+        if (!collision.gameObject.name.Contains("Bullet")) return;
+        if (!(collision.gameObject.GetComponent<Bullet>().damageMult.Value > 0)) return;
+        TakeDamageServerRpc();
     }
 
     [Rpc(SendTo.ClientsAndHost)]
