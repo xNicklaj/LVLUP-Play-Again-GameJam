@@ -19,6 +19,7 @@ public class ShieldSystem : MonoBehaviour
     private InputAction _look;   
     private SpriteRenderer spriteRenderer;
     private PolygonCollider2D polygonCollider;
+    private Animator _animator;
     private Vector3 _startPosition;
   
     private Vector3 sideOffset = new Vector3(0, -0.5f, 0);
@@ -29,6 +30,7 @@ public class ShieldSystem : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         spriteRenderer.color = shieldColor;
         frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
 
@@ -51,6 +53,13 @@ public class ShieldSystem : MonoBehaviour
     private void Update()
     {
         UpdateShieldTransform();
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        _animator.SetFloat("Horizontal", playerNetwork.rightStickAxis.Value.x);
+        _animator.SetFloat("Vertical", playerNetwork.rightStickAxis.Value.y);
     }
     
     private void UpdateShieldTransform()

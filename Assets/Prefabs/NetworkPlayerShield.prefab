@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 121532454455656921}
   - component: {fileID: 5669493443339747844}
   - component: {fileID: 7301649408084816393}
+  - component: {fileID: 4091641953770893280}
   m_Layer: 12
   m_Name: Shield
   m_TagString: Untagged
@@ -46,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06445742947ab344e8e436357fc09059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldRange: 1
+  shieldRange: 0.6
   shieldWidth: 2
   shieldHeight: 0.2
   shieldAngle: 90
@@ -153,6 +154,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4091641953770893280
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407139288171587651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5479a7623612cb438451c2b781660cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3363042218499496334
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeedMult: 0.9
+  MoveSpeedMult: 1.5
   RotationSpeed: 10
   _playerInput: {fileID: 2374953380649715109}
   _rigidbody: {fileID: 0}
