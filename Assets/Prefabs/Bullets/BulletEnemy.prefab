@@ -137,7 +137,8 @@ MonoBehaviour:
   maxFlyTimeMult: 1
   initialVelocityMult: 0.6
   isHoming: 0
-  damageMult: 1
+  damageMult:
+    m_InternalValue: 1
   isFromEnemy: 0
   direction: {x: 1, y: 0}
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -176,7 +177,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 3328
+    m_Bits: 27904
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
