@@ -246,7 +246,7 @@ public class ShootingSystem : NetworkBehaviour
             bullet.color = bulletColor;
             bullet.isHoming = modifiers.homing;
             bullet.maxFlyTimeMult = modifiers.rangeMult;
-            bullet.damageMult = modifiers.damageMult;
+            bullet.damageMult.Value = modifiers.damageMult;
             bullet.isFromEnemy = amIenemy;
         }
     }

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shield_Front
+  m_Name: Shield_Back
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -6698019933948680670, guid: 9fdabd40d345c18458ab8b3e6da853f8, type: 3}
+      value: {fileID: 278059716705724265, guid: cdecacbadd89b3247af44041269ad332, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,7 +44,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -6698019933948680670, guid: 9fdabd40d345c18458ab8b3e6da853f8, type: 3}
+    - {fileID: 278059716705724265, guid: cdecacbadd89b3247af44041269ad332, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -17,6 +17,7 @@ public class ChangePointsOnHit : MonoBehaviour
     {
         if (!collision.gameObject.name.Contains("Bullet") || collision.gameObject.GetComponent<Bullet>() == null)
             return;
+        if (collision.gameObject.GetComponent<Bullet>().damageMult.Value <= 0) return;
         PointManager.Instance.AddScoreServerRpc(Settings.Amount);
         if (!Settings.DestroyOnHit) return;
         DestroyThisObjectServerRpc();

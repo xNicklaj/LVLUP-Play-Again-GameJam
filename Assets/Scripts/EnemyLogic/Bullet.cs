@@ -15,7 +15,7 @@ public class Bullet : NetworkBehaviour
     public float maxFlyTimeMult = 1.0f;
     public float initialVelocityMult = 1.0f;
     public bool isHoming = false;
-    public float damageMult = 1.0f;
+    public NetworkVariable<float> damageMult = new NetworkVariable<float>(1.0f);
     public bool isFromEnemy;
 
     public Vector2 direction = new Vector2(1, 1); // modifiable for Homing, visible in Inspector for traps
