@@ -10,11 +10,18 @@ public class InGameUISelector : MonoBehaviour
 
     private void Start()
     {
+        NetworkManager.Singleton.OnClientConnectedCallback -= (ulong e) => { SelectUI(); };
         NetworkManager.Singleton.OnClientConnectedCallback += (ulong e) => { SelectUI(); };
     }
 
     void SelectUI()
     {
+        if (this == null || gameObject == null)
+        {
+            Debug.LogWarning("SelectUI was destroyed but OnClientConnection was still called. Ignoring.");
+            return;
+        }
+
         if (!NetworkManager.Singleton.IsClient) return;
         if(NetworkManager.Singleton.LocalClientId == 0)
         {

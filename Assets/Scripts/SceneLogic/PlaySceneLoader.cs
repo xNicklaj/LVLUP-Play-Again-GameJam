@@ -1,6 +1,5 @@
 using System.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlaySceneLoader : NetworkBehaviour
@@ -13,37 +12,47 @@ public class PlaySceneLoader : NetworkBehaviour
 
     private void Awake()
     {
-        _sessionSpawnPoint.Value = _spawnPointsScriptable.list[Random.Range(0, _spawnPointsScriptable.list.Count)];
     }
 
-    private void Start()
-    {
-        if (!NetworkManager.Singleton.IsServer) return;
-        NetworkManager.Singleton.DisconnectClient(1);
-        NetworkManager.Singleton.Shutdown();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()
-    {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnection;
-    }
-
-    private void OnClientConnection(ulong localClientId)
     {
         if (IsServer)
         {
-            switch (localClientId)
-            {
-                case 0:
-                    SpawnClientServerRpc(localClientId, (int)PlayerType.King);
-                    break;
-                case 1:
-                    SpawnClientServerRpc(localClientId, (int)PlayerType.Attack);
-                    SpawnClientServerRpc(localClientId, (int)PlayerType.Shielder);
-                    StartCoroutine(StartGame());
-                    break;
-            }
+            _sessionSpawnPoint.Value = _spawnPointsScriptable.list[Random.Range(0, _spawnPointsScriptable.list.Count)];
+
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnection;
+
+            // Subscribe the new instance
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnection;
+        }
+    }
+
+    private void OnClientConnection(ulong clientId)
+    {
+        if (this == null || gameObject == null)
+        {
+            Debug.LogWarning("PlaySceneLoader was destroyed but OnClientConnection was still called. Ignoring.");
+            return;
+        }
+
+        if (!IsServer) return;
+
+        Debug.Log($"Client {clientId} connected. Spawning their player.");
+
+        // Assign roles based on connection order
+        if (NetworkManager.Singleton.ConnectedClientsList.Count == 1)
+        {
+            SpawnPlayer(clientId, PlayerType.King);
+        }
+        else if (NetworkManager.Singleton.ConnectedClientsList.Count == 2)
+        {
+            SpawnPlayer(clientId, PlayerType.Attack);
+            SpawnPlayer(clientId, PlayerType.Shielder);
+        }
+
+        if (NetworkManager.Singleton.ConnectedClientsList.Count >= 2)
+        {
+            StartCoroutine(StartGame());
         }
     }
 
@@ -53,27 +62,29 @@ public class PlaySceneLoader : NetworkBehaviour
         GameManager_v2.Instance.OnGameStart.Invoke();
     }
 
-    [Rpc(SendTo.Server)]
-    private void SpawnClientServerRpc(ulong clientId, int prefabId)
+    private void SpawnPlayer(ulong clientId, PlayerType type)
     {
-        GameObject newPlayer = null;
-
-        switch (prefabId)
+        GameObject prefab = type switch
         {
-            case (int)PlayerType.King:
-                newPlayer = (GameObject)Instantiate(_kingPrefab, GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
-                break;
-            case (int)PlayerType.Attack:
-                newPlayer = (GameObject)Instantiate(_attackPrefab, GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
-                break;
-            case (int)PlayerType.Shielder:
-                newPlayer = (GameObject)Instantiate(_shieldPrefab, GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius), Quaternion.identity);
-                break;
-        }
+            PlayerType.King => _kingPrefab,
+            PlayerType.Attack => _attackPrefab,
+            PlayerType.Shielder => _shieldPrefab,
+            _ => null
+        };
 
-        if (newPlayer == null) return;
-        newPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+        if (prefab == null) return;
+
+        Vector3 spawnPos = GetRandomPointAround(_sessionSpawnPoint.Value, _spawnPointsScriptable.spawnRadius);
+        GameObject newPlayer = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+        // Make sure it's a networked object and assign it to the correct player
+        NetworkObject netObj = newPlayer.GetComponent<NetworkObject>();
+        if (netObj != null)
+        {
+            netObj.SpawnAsPlayerObject(clientId, true);
+        }
     }
+
     public static Vector3 GetRandomPointAround(Vector3 origin, float radius)
     {
         Vector3 randomDirection = Random.insideUnitSphere.normalized;

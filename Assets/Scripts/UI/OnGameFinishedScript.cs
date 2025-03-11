@@ -24,8 +24,7 @@ public class OnGameFinishedScript : MonoBehaviour
     private Label _hsLabel;
 
     public GameState state = GameState.GameFinished;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Awake()
     {
         _root = GetComponent<UIDocument>().rootVisualElement;
@@ -36,23 +35,16 @@ public class OnGameFinishedScript : MonoBehaviour
         _hsLabel = _root.Q<Label>("HSLabel");
         _HighScoreElement.visible = false;
 
-
-        if (state == GameState.GameLost) 
+        if (state == GameState.GameLost)
         {
-            GameManager_v2.Instance.OnGameLost.AddListener(() =>
-            {
-                Show();
-            });
-        }else
-        {
-            GameManager_v2.Instance.OnGameFinish.AddListener(() =>
-            {
-                Show();
-            });
+            GameManager_v2.Instance.OnGameLost.AddListener(Show);
         }
-        
+        else
+        {
+            GameManager_v2.Instance.OnGameFinish.AddListener(Show);
+        }
     }
-    
+
     private void Show()
     {
         _audioMixer.SetFloat("MusicVolume", -90);
@@ -72,13 +64,28 @@ public class OnGameFinishedScript : MonoBehaviour
 
     private IEnumerator DisconnectAndReset()
     {
-        if(!NetworkManager.Singleton.IsServer) yield break;
-        yield return new WaitForSeconds(5);
-        NetworkManager.Singleton.SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-        // TODO: needs more fixing
+        yield return new WaitForSeconds(5);  // delay before main menu
+
+        bool wasClient = NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsHost;
+        bool wasHost = NetworkManager.Singleton.IsHost;
+
+        NetworkManager.Singleton.Shutdown(); // Properly shut down the network
+        yield return new WaitForSeconds(1);  // Small delay for proper cleanup
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        yield return new WaitForSeconds(1);  // Wait for scene load
+
+        // Restart network based on previous state
+        if (wasHost)
+        {
+            NetworkManager.Singleton.StartHost();
+        }
+        else if (wasClient)
+        {
+            NetworkManager.Singleton.StartClient();
+        }
+        else {
+            Debug.LogWarning("sa solo quello che non era.");
+        }
     }
-
-
-
-
 }
