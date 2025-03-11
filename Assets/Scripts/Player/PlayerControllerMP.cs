@@ -16,9 +16,10 @@ using UnityEngine.Assertions.Must;
 [RequireComponent(typeof(ClientNetworkTransform))]
 public class PlayerControllerMP : NetworkBehaviour
 {
-    public float MoveSpeedMult = 1.0f;
-    public readonly float MoveSpeed = 5f;
+    public float MoveSpeed = 5f;
+    public float MoveSpeedInAction = 1f;
     public float RotationSpeed = 10f;
+    public bool isInAction = false;
 
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private InputDevice _device;
@@ -30,7 +31,9 @@ public class PlayerControllerMP : NetworkBehaviour
     private InputAction _look;
     private Vector2 directionInput;
     private Rigidbody2D rb;
-    
+    private float currSpeed;
+
+
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -53,11 +56,15 @@ public class PlayerControllerMP : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        checkInAction();
+        currSpeed = isInAction ? MoveSpeedInAction : MoveSpeed;
+
         Vector2 axis = _movement.ReadValue<Vector2>();
         Vector2 lookAxis = _look.ReadValue<Vector2>();
-        _rigidbody.MovePosition(_rigidbody.position + (MoveSpeed * MoveSpeedMult * Time.deltaTime * axis));
 
-        if(lookAxis.magnitude > 0.1)
+        _rigidbody.MovePosition(_rigidbody.position + (currSpeed * Time.deltaTime * axis));
+
+        if (lookAxis.magnitude > 0.1)
             UpdateAnimator(lookAxis.x, lookAxis.y, axis.magnitude);
         else
             UpdateAnimator(axis.x, axis.y, axis.magnitude);
@@ -79,7 +86,7 @@ public class PlayerControllerMP : NetworkBehaviour
         if (!IsOwner) return;
         NetworkObject no = this.GetComponent<NetworkObject>();
         print(no);
-        if(no && no.IsSpawned) no.Despawn();
+        if (no && no.IsSpawned) no.Despawn();
         base.OnDestroy();
     }
 
@@ -93,5 +100,12 @@ public class PlayerControllerMP : NetworkBehaviour
         _animator.SetFloat("Horizontal", horizontal);
         _animator.SetFloat("Vertical", vertical);
         _animator.SetFloat("Speed", speed);
+    }
+
+    private void checkInAction()
+    {
+        PlayerInput input = GetComponent<PlayerInput>();
+        Vector2 targetDirection = input.actions.FindAction("Direction").ReadValue<Vector2>().normalized;
+        isInAction = targetDirection.magnitude > 0;
     }
 }

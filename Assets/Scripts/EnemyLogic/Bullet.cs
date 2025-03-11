@@ -12,7 +12,7 @@ public class Bullet : NetworkBehaviour
     #endregion
 
     #region OverrideVariables
-    public float maxFlyTimeMult = 1.0f;
+    public float maxTraveledDistanceMult = 1.0f;
     public float initialVelocityMult = 1.0f;
     public bool isHoming = false;
     public NetworkVariable<float> damageMult = new NetworkVariable<float>(1.0f);
@@ -29,6 +29,7 @@ public class Bullet : NetworkBehaviour
     #region LagCompensation
     private bool hasHit = false;
     private bool canDestroy = false;
+    private Vector3 originalScale;
     #endregion
 
 
@@ -38,6 +39,8 @@ public class Bullet : NetworkBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
         Debug.Assert(spriteRenderer != null, "spriteRenderer component missing");
+
+        originalScale = transform.localScale;
 
         // Add VisionComponent only if the bullet is homing
         if (isHoming)
@@ -80,15 +83,15 @@ public class Bullet : NetworkBehaviour
         if (!IsOwner || !IsServer) return;
         // server only logic from now on
         currentTime += Time.deltaTime;
-        AnimationCurve velocityOverTime = defaults.velocityOverTime;
-        float maxFlyTime = defaults.maxFlyTime * maxFlyTimeMult;
-        float initialVelocity = defaults.initialVelocity * initialVelocityMult;
 
+        float initialVelocity = defaults.initialVelocity * initialVelocityMult;
+        float maxFlyTime = defaults.maxTraveledDistance * maxTraveledDistanceMult / initialVelocity;
         // Handling: bullet disappears after "timeBeforeDestroy" seconds after it stopped moving.
+        Debug.Log($"{currentTime / maxFlyTime}, maxFlyTime = {maxFlyTime}");
         if (currentTime >= maxFlyTime + defaults.timeBeforeDestroy)
         {
             // Debug.Log("Destroying bullet after Timeout!");
-            this.GetComponent<NetworkObject>().Despawn();
+            GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
             return;
         }
@@ -100,14 +103,20 @@ public class Bullet : NetworkBehaviour
 
         // if here: still flying! ----------------------
 
-        // Calculate velocity based on fly time
+        // Calculate velocity and bullet size based on fly time
+        AnimationCurve velocityOverTime = defaults.velocityOverTime;
+        AnimationCurve scaleOverTime = defaults.scaleOverTime;
+
         float velocityFactor = velocityOverTime.Evaluate(currentTime / maxFlyTime); // Normalize input
+        float scaleFactor = scaleOverTime.Evaluate(currentTime / maxFlyTime); // Normalize input
         // Debug.Log(velocityFactor);
         float velocity = velocityFactor * initialVelocity;
 
         // Move bullet
         Vector3 movement = (Vector3)direction.normalized * velocity * Time.deltaTime;
         transform.position += movement;
+        // Scale bullet
+        transform.localScale = originalScale * scaleFactor;
 
         // Handling homing behaviour: should follow the player by changing its direction matching the player's position 
         if (isHoming)

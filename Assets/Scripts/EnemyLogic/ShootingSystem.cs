@@ -61,7 +61,6 @@ public class ShootingSystem : NetworkBehaviour
     // ---------------
 
     public Color bulletColor = Color.white;
-    public float speedWhileShootingMult = 0.20f;
     private float nextSlot;
     private float nextSubslot;
     private int slotCounter;
@@ -191,7 +190,6 @@ public class ShootingSystem : NetworkBehaviour
 
             if (!IsShooting)
             {
-                if (!amIenemy) pContr.MoveSpeedMult = 1.0f;
                 return;
             }
 
@@ -203,7 +201,6 @@ public class ShootingSystem : NetworkBehaviour
             {
                 if (targetDirection.magnitude > 0)
                 {
-                    pContr.MoveSpeedMult = speedWhileShootingMult;
                     ExecuteSubslot(targetDirection, modifiers);
                 }
             }
@@ -245,7 +242,7 @@ public class ShootingSystem : NetworkBehaviour
             bullet.direction = targetDirection;
             bullet.color = bulletColor;
             bullet.isHoming = modifiers.homing;
-            bullet.maxFlyTimeMult = modifiers.rangeMult;
+            bullet.maxTraveledDistanceMult = modifiers.rangeMult;
             bullet.damageMult.Value = modifiers.damageMult;
             bullet.isFromEnemy = amIenemy;
         }
