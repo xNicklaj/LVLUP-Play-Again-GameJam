@@ -114,6 +114,8 @@ public class SpawnerSystem : NetworkBehaviour
             mustNotTouchLayers
         );
 
+        isActive = true;
+
         if (Time.time >= nextSubslot)
         {
             // Debug.Log("Subslot started");
@@ -199,14 +201,14 @@ public class SpawnerSystem : NetworkBehaviour
 
             if (!isActive) return;
 
-            ExecuteSubslot(spawnPosition, objectPrefab, prefabId);
-            spawnedCounter++;
             if (deactivateIf != 0 && (deactivateIf & SpawnerDeactivateMechanism.AFTER_N_SPAWNS) == deactivateIf && spawnedCounter >= spawnsBeforeDeactivation)
             {
                 // TODO: destroy or not?
                 isActive = false;
                 // Destroy(gameObject);
             }
+            ExecuteSubslot(spawnPosition, objectPrefab, prefabId);
+            spawnedCounter++;
         }
     }
 
@@ -215,6 +217,9 @@ public class SpawnerSystem : NetworkBehaviour
         if (!IsOwner) return;
 
         if (!random.Happens("Spawn"))
+            return;
+
+        if (!isActive)
             return;
 
         GameObject objInstance = Instantiate(objectPrefab, spawnPosition, new Quaternion(0, 0, 0, 0));
