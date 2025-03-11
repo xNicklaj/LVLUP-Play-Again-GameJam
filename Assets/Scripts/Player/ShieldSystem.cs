@@ -18,7 +18,7 @@ public class ShieldSystem : MonoBehaviour
     private PlayerInput _playerInput;
     private InputAction _look;   
     private SpriteRenderer spriteRenderer;
-    private PolygonCollider2D polygonCollider;
+    private Collider2D polygonCollider;
     private Animator _animator;
     private Vector3 _startPosition;
   
@@ -34,7 +34,7 @@ public class ShieldSystem : MonoBehaviour
         spriteRenderer.color = shieldColor;
         frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
 
-        polygonCollider = GetComponent<PolygonCollider2D>();
+        polygonCollider = GetComponent<Collider2D>();
         if (polygonCollider)
         {
             polygonCollider.isTrigger = true;
@@ -73,6 +73,8 @@ public class ShieldSystem : MonoBehaviour
 
         if (dir.sqrMagnitude > 0.001f)
         {
+            spriteRenderer.enabled = true;
+            polygonCollider.enabled = true;
             
             float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             
@@ -87,6 +89,8 @@ public class ShieldSystem : MonoBehaviour
         else
         {
             transform.localPosition = _startPosition;
+            spriteRenderer.enabled = false;
+            polygonCollider.enabled = false;
         }
         //transform.localEulerAngles = new Vector3(0, 0, angleZ);
         // transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
