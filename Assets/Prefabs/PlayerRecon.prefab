@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 7507603311242465298}
   - component: {fileID: 5745209932382111420}
   m_Layer: 7
-  m_Name: NetworkPlayer
+  m_Name: PlayerRecon
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,15 +204,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 0
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
   SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0

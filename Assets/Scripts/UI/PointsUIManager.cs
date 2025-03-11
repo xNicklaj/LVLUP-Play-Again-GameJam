@@ -30,6 +30,7 @@ public class PointsUIManager : MonoBehaviour
         GameManager_v2.Instance.OnUISelected.AddListener(OnUISelected);
         GameManager_v2.Instance.OnPointsUpdated.AddListener(OnPointsUpdated);
         GameManager_v2.Instance.OnGameLost.AddListener(() => { _document.rootVisualElement.visible = false; });
+        GameManager_v2.Instance.OnGameFinish.AddListener(() => { _document.rootVisualElement.visible = false; });
     }
 
     private void OnUISelected()
