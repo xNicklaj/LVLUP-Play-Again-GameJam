@@ -316,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   MoveSpeed: 10
-  MoveSpeedInAction: 2
+  MoveSpeedInAction: 3
   RotationSpeed: 10
   isInAction: 0
   _playerInput: {fileID: 2374953380649715109}
@@ -596,7 +596,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
