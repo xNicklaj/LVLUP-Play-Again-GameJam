@@ -18157,12 +18157,12 @@ TextureImporter:
       name: 2D_TopDown_Tileset_Casino_640x512_813
       rect:
         serializedVersion: 2
-        x: 592
+        x: 596
         y: 176
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.33, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -18203,10 +18203,10 @@ TextureImporter:
         serializedVersion: 2
         x: 624
         y: 176
-        width: 16
+        width: 12
         height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.66, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
