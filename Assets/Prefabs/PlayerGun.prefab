@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeed: 1.6
+  MoveSpeed: 2.2
   MoveSpeedInAction: 0.7
   RotationSpeed: 10
   isInAction: 0

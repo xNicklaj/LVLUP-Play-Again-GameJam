@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8735917940747672418}
   - component: {fileID: 8672321237338360865}
   - component: {fileID: 3547994965172944593}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ModMinigun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

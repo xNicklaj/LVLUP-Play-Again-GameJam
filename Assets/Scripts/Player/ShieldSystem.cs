@@ -42,10 +42,6 @@ public class ShieldSystem : MonoBehaviour
         frontOffset = new Vector3(shieldRange + 0.5f, 0, 0);
 
         polygonCollider = GetComponent<Collider2D>();
-        if (polygonCollider)
-        {
-            polygonCollider.isTrigger = true;
-        }
         _playerInput = GetComponentInParent<PlayerInput>();
         if (_playerInput)
         {

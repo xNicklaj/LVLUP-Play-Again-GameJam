@@ -43,7 +43,7 @@ public class PointManager : NetworkSingleton<PointManager>
         if (score < 0) score = 0;
         if (score > _localHighScore)
         {
-            if(score % SoundThreshold > _localHighScore % SoundThreshold)
+            if(((int)score) / ((int)SoundThreshold) > ((int)_localHighScore) / ((int)SoundThreshold))
             {
                 GetComponent<AudioSource>().time = 0;
                 GetComponent<AudioSource>().Play();
