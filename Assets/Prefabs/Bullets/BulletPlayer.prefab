@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1848544609699106091}
   - component: {fileID: -6806312056077152571}
   - component: {fileID: -4824969592660007233}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BulletPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 24704
+    m_Bits: 25216
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

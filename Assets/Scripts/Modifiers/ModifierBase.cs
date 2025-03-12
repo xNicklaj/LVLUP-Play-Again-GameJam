@@ -165,7 +165,14 @@ public abstract class ModifierBase : NetworkBehaviour
         DisposeModifier();
         AudioSource.clip = ModifierData.DisposedClip;
         AudioSource.Play();
+        StartCoroutine(WaitForAudioFinish());
         // Debug.Log("disposed, now despawning");
+
+    }
+
+    private IEnumerator WaitForAudioFinish()
+    {
+        yield return new WaitForSeconds(AudioSource.clip.length+.3f);
         DespawnAndDestroyServerRpc();
     }
 

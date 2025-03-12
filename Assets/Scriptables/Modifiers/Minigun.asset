@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adda58dd50ead3f42a6a8458712476b5, type: 3}
-  m_Name: Terminator
+  m_Name: Minigun
   m_EditorClassIdentifier: 
-  Name: Terminator
-  Sprite: {fileID: -427217279332321711, guid: 1e6c2025f0e27424585597d1d240cf01, type: 3}
+  Name: Minigun
+  Sprite: {fileID: -7672087129735864097, guid: d6c8355a0681379469e8c944d73f001b, type: 3}
   TargetObject: {fileID: 3363042218499496334, guid: 1034878e995536143a360d03f149d9bd, type: 3}
-  TargetName: PlayerGun
   DespawnFrequencyCurve:
     serializedVersion: 2
     m_Curve:
@@ -40,8 +39,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  DespawnTimeoutDuration: 5
-  TimeBeforeDespawn: 5
-  Duration: 5
+  DespawnTimeoutDuration: 10
+  TimeBeforeDespawn: 10
+  Duration: 10
   AppliedClip: {fileID: 8300000, guid: 89a52681692d6194c806cbd40606aad8, type: 3}
   DisposedClip: {fileID: 8300000, guid: f9345aad9fbb7f94588a860617d68f48, type: 3}
