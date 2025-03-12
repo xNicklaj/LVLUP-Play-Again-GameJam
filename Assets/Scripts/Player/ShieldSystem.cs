@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +15,7 @@ public class ShieldSystem : MonoBehaviour
     /*private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private Mesh shieldMesh;*/
-    private bool isFront = false;
+    private bool isFront = false; //todo: not used?
     private PlayerInput _playerInput;
     private InputAction _look;   
     private SpriteRenderer spriteRenderer;
@@ -24,6 +25,11 @@ public class ShieldSystem : MonoBehaviour
   
     private Vector3 sideOffset = new Vector3(0, -0.5f, 0);
     private Vector3 frontOffset;
+    
+    [Header("Extra Shields")]
+    public GameObject shieldPrefab;
+    private List<GameObject> extraShields = new List<GameObject>();
+    private bool moreShield = false;
     
     [SerializeField] private InstrumentNetworkController playerNetwork;
 
@@ -85,15 +91,82 @@ public class ShieldSystem : MonoBehaviour
             float posY = -Mathf.Cos(rad) * shieldRange;
 
             transform.localPosition = new Vector3(posX, posY, _startPosition.z);
+
+            if (moreShield)
+            {
+                UpdateOtherShield(transform.localPosition);
+            }
         }
         else
         {
             transform.localPosition = _startPosition;
             spriteRenderer.enabled = false;
             polygonCollider.enabled = false;
+
+            if (moreShield)
+            {
+                foreach (GameObject shield in extraShields)
+                {
+                    shield.transform.localPosition = _startPosition;
+                    shield.GetComponent<Renderer>().enabled = false;
+                    shield.GetComponent<Collider2D>().enabled = false;
+                }
+            }
         }
         //transform.localEulerAngles = new Vector3(0, 0, angleZ);
         // transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
+    }
+
+    private void SpawnOtherShields()
+    {
+        if (moreShield) return;
+        Transform parent = transform.parent;
+
+        Vector3 pos = new Vector3(-parent.position.x, parent.position.y, parent.position.z);
+        GameObject newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+        extraShields.Add(newShieldObj);
+        pos = new Vector3(-parent.position.x, -parent.position.y, parent.position.z);
+        newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+        extraShields.Add(newShieldObj);
+        pos = new Vector3(parent.position.x, -parent.position.y, parent.position.z);
+        newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+        extraShields.Add(newShieldObj);
+        
+        moreShield = true;
+    }
+
+    private void DeSpawnOtherShields()
+    {
+        if (!moreShield) return;
+        foreach (GameObject shield in extraShields)
+        {
+            Destroy(shield);
+        }
+        moreShield = false;
+    }
+    private void UpdateOtherShield(Vector3 mainPosition)
+    {
+        float dist = mainPosition.magnitude;
+        float angleRad = Mathf.Atan2(mainPosition.y, mainPosition.x);
+        
+        foreach (GameObject shield in extraShields)
+        {
+            shield.GetComponent<Renderer>().enabled = true;
+            shield.GetComponent<Collider2D>().enabled = true;
+            
+            float offsetRad = 90f * Mathf.Deg2Rad;
+            angleRad += offsetRad;
+
+            float newX = dist * Mathf.Cos(angleRad);
+            float newY = dist * Mathf.Sin(angleRad);
+            
+            shield.transform.localPosition = new Vector3(newX,newY,mainPosition.z);
+            
+            Animator anim = shield.GetComponent<Animator>();
+            anim.SetFloat("Horizontal", newX);
+            anim.SetFloat("Vertical", newY);
+        }
+        
     }
 
     public void OnClassAction(InputValue value)

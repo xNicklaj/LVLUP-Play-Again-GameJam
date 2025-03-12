@@ -52,6 +52,7 @@ MonoBehaviour:
   shieldHeight: 0.2
   shieldAngle: 90
   shieldColor: {r: 1, g: 1, b: 1, a: 1}
+  shieldPrefab: {fileID: 1951902003206740678, guid: 78c450590b1b5844985f06d64e2211f0, type: 3}
   playerNetwork: {fileID: 761803759560668389}
 --- !u!61 &5669493443339747844
 BoxCollider2D:
