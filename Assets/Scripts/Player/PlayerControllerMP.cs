@@ -56,19 +56,26 @@ public class PlayerControllerMP : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        checkInAction();
-        currSpeed = isInAction ? MoveSpeedInAction : MoveSpeed;
+
 
         Vector2 axis = _movement.ReadValue<Vector2>();
         Vector2 lookAxis = _look.ReadValue<Vector2>();
-
-        _rigidbody.MovePosition(_rigidbody.position + (currSpeed * Time.deltaTime * axis));
 
         if (lookAxis.magnitude > 0.1)
             UpdateAnimator(lookAxis.x, lookAxis.y, axis.magnitude);
         else
             UpdateAnimator(axis.x, axis.y, axis.magnitude);
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsOwner) return;
+        checkInAction();
+        currSpeed = isInAction ? MoveSpeedInAction : MoveSpeed;
+
+        Vector2 axis = _movement.ReadValue<Vector2>();
+        _rigidbody.MovePosition(_rigidbody.position + (currSpeed * Time.fixedDeltaTime * axis));
     }
 
     public override void OnNetworkSpawn()

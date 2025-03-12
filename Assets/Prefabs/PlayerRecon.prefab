@@ -185,9 +185,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeed: 8
-  MoveSpeedInAction: 10
-  RotationSpeed: 10
+  MoveSpeed: 2.2
+  MoveSpeedInAction: 2.2
+  RotationSpeed: 5
   isInAction: 0
   _playerInput: {fileID: 2374953380649715109}
   _rigidbody: {fileID: 0}
