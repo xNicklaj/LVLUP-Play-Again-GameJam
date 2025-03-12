@@ -117,7 +117,7 @@ public class ShieldSystem : MonoBehaviour
         // transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
     }
 
-    private void SpawnOtherShields()
+    public void SpawnOtherShields()
     {
         if (moreShield) return;
         Transform parent = transform.parent;
@@ -135,7 +135,7 @@ public class ShieldSystem : MonoBehaviour
         moreShield = true;
     }
 
-    private void DeSpawnOtherShields()
+    public void DespawnOtherShields()
     {
         if (!moreShield) return;
         foreach (GameObject shield in extraShields)
