@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4840613333492675756}
   - component: {fileID: -8334500474782161132}
   - component: {fileID: -2272306712212748321}
+  - component: {fileID: 683258920727184329}
   m_Layer: 11
   m_Name: BulletEnemy
   m_TagString: Untagged
@@ -294,3 +295,30 @@ MonoBehaviour:
   TestVisibility: {fileID: 11400000, guid: 9d75188b57e1fcf46880c1cf3dc00bc5, type: 2}
   litLayerName: LitEnemy
   unlitLayerName: UnlitEnemy
+--- !u!50 &683258920727184329
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720754505623613542}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
