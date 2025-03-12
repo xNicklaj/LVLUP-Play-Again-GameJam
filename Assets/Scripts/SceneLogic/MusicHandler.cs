@@ -37,6 +37,7 @@ public class MusicHandler : Singleton<MusicHandler>
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.M))
+            GetComponent<AudioSource>().mute = !GetComponent<AudioSource>().mute;
     }
 }

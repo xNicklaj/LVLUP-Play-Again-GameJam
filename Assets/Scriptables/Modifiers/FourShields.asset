@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adda58dd50ead3f42a6a8458712476b5, type: 3}
-  m_Name: Sharpshooter
+  m_Name: FourShields
   m_EditorClassIdentifier: 
-  Name: Sharpshooter
-  Sprite: {fileID: 7274894703305251895, guid: 1e6c2025f0e27424585597d1d240cf01, type: 3}
-  TargetObject: {fileID: 3363042218499496334, guid: 1034878e995536143a360d03f149d9bd, type: 3}
+  Name: FourShields
+  Sprite: {fileID: 0}
+  TargetObject: {fileID: 3363042218499496334, guid: 0a15a20b2caf7cf459764bf5f11080a8, type: 3}
   DespawnFrequencyCurve:
     serializedVersion: 2
     m_Curve:

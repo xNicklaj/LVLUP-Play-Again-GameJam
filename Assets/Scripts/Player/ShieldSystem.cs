@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -54,6 +55,20 @@ public class ShieldSystem : MonoBehaviour
         _startPosition = transform.localPosition;
 
         UpdateShieldTransform();
+    }
+
+    private void Start()
+    {
+        this.playerNetwork.UseMultipleShields.AddListener(UseMultipleShields);
+    }
+
+    private void UseMultipleShields(bool arg0)
+    {
+        Debug.Log(arg0);
+        if (arg0)
+            SpawnOtherShields();
+        else
+            DespawnOtherShields();
     }
 
     private void Update()
@@ -142,6 +157,7 @@ public class ShieldSystem : MonoBehaviour
         {
             Destroy(shield);
         }
+        extraShields = new List<GameObject>();
         moreShield = false;
     }
     private void UpdateOtherShield(Vector3 mainPosition)
@@ -229,5 +245,10 @@ public class ShieldSystem : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, 0, shieldAngle);
         //transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
         
+    }
+
+    private void OnDestroy()
+    {
+        this.playerNetwork.UseMultipleShields.RemoveListener(UseMultipleShields);
     }
 }

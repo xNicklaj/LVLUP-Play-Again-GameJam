@@ -15,7 +15,6 @@ MonoBehaviour:
   Name: Multitasker
   Sprite: {fileID: -2198111635386248919, guid: 1e6c2025f0e27424585597d1d240cf01, type: 3}
   TargetObject: {fileID: 3363042218499496334, guid: 1034878e995536143a360d03f149d9bd, type: 3}
-  TargetName: PlayerGun
   DespawnFrequencyCurve:
     serializedVersion: 2
     m_Curve:
@@ -44,4 +43,4 @@ MonoBehaviour:
   TimeBeforeDespawn: 10
   Duration: 15
   AppliedClip: {fileID: 8300000, guid: 89a52681692d6194c806cbd40606aad8, type: 3}
-  DisposedClip: {fileID: 8300000, guid: f9345aad9fbb7f94588a860617d68f48, type: 3}
+  DisposedClip: {fileID: 8300000, guid: cb1e1d957f9198d4c9c6687059c41c31, type: 3}

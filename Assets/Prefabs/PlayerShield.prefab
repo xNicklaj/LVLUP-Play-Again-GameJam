@@ -527,6 +527,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  UseMultipleShields:
+    m_PersistentCalls:
+      m_Calls: []
   rightStickAxis:
     m_InternalValue: {x: 0, y: 0}
 --- !u!1 &8550134888312982908
@@ -601,7 +604,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 6143
+    m_Bits: 38911
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
