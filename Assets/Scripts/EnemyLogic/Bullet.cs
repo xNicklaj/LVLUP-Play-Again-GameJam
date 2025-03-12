@@ -28,7 +28,6 @@ public class Bullet : NetworkBehaviour
 
     #region LagCompensation
     private bool hasHit = false;
-    private bool canDestroy = false;
     private Vector3 originalScale;
     #endregion
 
@@ -64,24 +63,17 @@ public class Bullet : NetworkBehaviour
 
     private void Update()
     {
-
-        if (hasHit && !canDestroy) // master and slave both enter this, but only once
-        {
-            // client has not yet played the effects
-            if (IsClient)
-            {
-                PlayHitEffects();
-            }
-            else if (canDestroy)
-            {
-                GetComponent<NetworkObject>().Despawn();
-                Destroy(gameObject);
-                return;
-            }
-        }
-
         if (!IsOwner || !IsServer) return;
         // server only logic from now on
+
+        if (hasHit) // master and slave both enter this, but only once
+        {
+            // Debug.Log("SERVER: received hit confirmation by the client, proceeding to despawn");
+            GetComponent<NetworkObject>().Despawn();
+            Destroy(gameObject);
+            return;
+        }
+
         currentTime += Time.deltaTime;
 
         float initialVelocity = defaults.initialVelocity * initialVelocityMult;
@@ -130,15 +122,30 @@ public class Bullet : NetworkBehaviour
         // Debug.Log(currentTime / maxFlyTime);
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    private void AskToDespawnServerRpc()
+    {
+        if (!IsServer)
+            return;
+        
+        // Debug.Log("SERVER: hey, got permission to despawn!");
+
+        hasHit = true;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (IsServer)
-            PlayHitEffects();
+            // Debug.Log("SERVER: detected collision, playing effects");
+        if (IsClient && !IsServer)
+            // Debug.Log("CLIENT: detected collision, playing effects");
 
-        if (IsClient)
+        PlayHitEffects(); // both do this
+
+        if (IsClient && !IsServer)
         {
-            hasHit = true;
-            return;
+            // Debug.Log("CLIENT: Granting permission to despawn the bullet");
+            AskToDespawnServerRpc(); // grant permission to despawn the bullet only after the client sees it hitting
         }
 
         //isHoming = false; // so the bullet won't follow the player after it collided with something
@@ -196,14 +203,5 @@ public class Bullet : NetworkBehaviour
 
         // if (IsServer)
         //     dust.GetComponent<NetworkObject>().Spawn();
-        NullDamageServerRpc();
-        if (IsClient)
-            canDestroy = true;
-    }
-
-    [Rpc(SendTo.Server)]
-    private void NullDamageServerRpc()
-    {
-        this.damageMult.Value = 0;
     }
 }
