@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(VisionSystem))]
 [RequireComponent(typeof(ChanceSystem))]
@@ -60,6 +61,7 @@ public class SpawnerSystem : NetworkBehaviour
 
     public int spawnsBeforeDeactivation = 10; // to be set in inspector
     public int cyclesBeforeDeactivation = 10; // to be set in inspector 
+    public int minimumRadialDistanceFromPlayers = 2; // to be set in inspector 
     // ---------------
 
     public LayerMask mustTouchLayers;
@@ -106,13 +108,6 @@ public class SpawnerSystem : NetworkBehaviour
 
         int subslotsInSlot = (int)(timeslotsConfig.slotDuration / (timeslotsConfig.slotDuration / timeslotsConfig.spawnsPerSlot));
         int totalSlotsInCycle = 1 + timeslotsConfig.pauseSlotsNumber;
-
-        // update isActive and get positions
-
-        Vector3 spawnPosition = vision.GetValidPointAroundMe(
-            mustTouchLayers,
-            mustNotTouchLayers
-        );
 
         isActive = true;
 
@@ -207,6 +202,16 @@ public class SpawnerSystem : NetworkBehaviour
                 isActive = false;
                 // Destroy(gameObject);
             }
+
+            // get spawn point for this subslot
+            // Debug.Log(prefabId);
+            Vector2 spawnPosition = transform.position;
+
+            if (prefabId == SpawnableIdentifier.POWERUP)
+                spawnPosition = vision.GetValidPointAroundMe(mustTouchLayers, mustNotTouchLayers);
+            else if (prefabId == SpawnableIdentifier.ENEMY)
+                spawnPosition = TryGetGoodSpawnPoint();
+
             ExecuteSubslot(spawnPosition, objectPrefab, prefabId);
             spawnedCounter++;
         }
@@ -243,7 +248,54 @@ public class SpawnerSystem : NetworkBehaviour
                     break;
             }
         }
+    }
 
+    private Vector2 TryGetGoodSpawnPoint()
+    {
+        /* 
+         * Valid spawn point := spawn point which is touching the right layers and not touching the wrong layers (eg. on ground, not on obstacles)
+         * Good spawn point := spawn point which is valid and is far enough from any player in the area to not be a jumpscare
+         *
+         * If no good point is found, but a valid point is found, returns the valid point
+         * If no valid point is found either, returns the origin (the spawner's transform.position itself)
+         */
+
+        Vector2 spawnPoint = transform.position; // initially set to origin
+
+        bool isItGood = false;
+        for (int i = 0; i < 3; i++) // 3 max attempts to find a good spawn point; else, still returns a valid point, but not ideal
+        {
+            spawnPoint = vision.GetValidPointAroundMe(mustTouchLayers, mustNotTouchLayers); // does N attempts in finding a valid random point for the spawn (default 3)
+            if (spawnPoint.Equals(transform.position))
+            {
+                // no valid point was found. We don't care if origin is far enough from players,
+                // it's already not a valid point, so we cannot hope for anything better. Let's break here and return the origin.
+                break;
+            }
+
+            List<Collider2D> collidersOfNearbyPlayers = VisionSystem.FindNearPosition(spawnPoint, minimumRadialDistanceFromPlayers, new LayerMask[] { vision.defaults.playerLayer });
+
+
+            // good spawn point is a valid spawn point which is distant enough from any player in the area (and is not origin)
+            isItGood = true;
+            foreach (var coll in collidersOfNearbyPlayers)
+            {
+                Vector2 vectorSpawnPointToPlayer = (Vector2)coll.gameObject.transform.position - spawnPoint;
+                if (vectorSpawnPointToPlayer.magnitude >= minimumRadialDistanceFromPlayers)
+                {
+                    isItGood = false;
+                    break;
+                }
+            }
+
+            if (isItGood)
+                break; // we found a Good Spawn Point, no need to continue in the loop
+        }
+
+        if (!isItGood)
+            Debug.LogWarning("Good spawn points were not found for this subslot. Returning a not ideal position.");
+
+        return spawnPoint;
     }
 
     public enum SpawnableIdentifier

@@ -230,6 +230,8 @@ public class VisionSystem : MonoBehaviour
         }
 
         // If no valid point is found, return the origin (or handle it differently)
+        Debug.LogWarning("Valid points not found near this origin and within the given radius. Returning the origin.");
+
         return origin;
     }
 
