@@ -63,7 +63,7 @@ public class PointManager : NetworkSingleton<PointManager>
     }
 
     [Rpc(SendTo.Server)]
-    public void StopCounting()
+    public void StopCountingServerRpc()
     {
         _isCounting = false;
     }
