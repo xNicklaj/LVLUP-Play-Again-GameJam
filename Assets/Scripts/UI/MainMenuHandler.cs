@@ -86,12 +86,13 @@ public class MainMenuHandler : MonoBehaviour
         _quitButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
         #endregion
 
-        if (PlayerPrefs.HasKey("latestIp"))
-        {
-            _ipField.value = PlayerPrefs.GetString("latestIp");
-            if (ValidateIPv4(_ipField.value))
-                NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = _ipField.value;
-        }
+        string testString = "";
+        if(PlayerPrefs.HasKey("latestIp")) 
+            testString = PlayerPrefs.GetString("latestIp");
+        if(ValidateIPv4(testString))
+            _ipField.value = testString;
+        if (ValidateIPv4(_ipField.value))
+            NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = _ipField.value;
             
 
         _coinButton.Focus();
