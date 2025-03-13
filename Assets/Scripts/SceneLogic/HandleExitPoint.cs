@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class HandleExitPoint : NetworkBehaviour
 {
+    public int ScoreAmount = 3000;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +21,7 @@ public class HandleExitPoint : NetworkBehaviour
     {
         if (!collision.gameObject.name.Contains("PlayerRecon")) return;
         if (GameManager_v2.Instance.GameStarted == false) return;
+        PointManager.Instance.AddScoreServerRpc(ScoreAmount);
         FinishGameClientRpc();
     }
 

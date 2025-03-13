@@ -13,6 +13,7 @@ public class PointManager : NetworkSingleton<PointManager>
     public int SoundThreshold = 1000;
     private float Timer = 0;
     private int _localHighScore;
+    private bool _isCounting = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnNetworkSpawn()
@@ -40,6 +41,7 @@ public class PointManager : NetworkSingleton<PointManager>
     [Rpc(SendTo.Server)]
     public void SetScoreServerRpc(int score)
     {
+        if (!_isCounting) return;
         if (score < 0) score = 0;
         if (score > _localHighScore)
         {
@@ -58,6 +60,12 @@ public class PointManager : NetworkSingleton<PointManager>
     public void AddScoreServerRpc(int score)
     {
         SetScoreServerRpc(CurrentScore.Value + score);
+    }
+
+    [Rpc(SendTo.Server)]
+    public void StopCounting()
+    {
+        _isCounting = false;
     }
 
     private float GetNextDelay()

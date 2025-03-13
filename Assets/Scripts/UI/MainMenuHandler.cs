@@ -86,6 +86,14 @@ public class MainMenuHandler : MonoBehaviour
         _quitButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
         #endregion
 
+        if (PlayerPrefs.HasKey("latestIp"))
+        {
+            _ipField.value = PlayerPrefs.GetString("latestIp");
+            if (ValidateIPv4(_ipField.value))
+                NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = _ipField.value;
+        }
+            
+
         _coinButton.Focus();
         StartCoroutine(VisibilityLoop());
         StartCoroutine(GameTitleOpacityHandler());
@@ -185,6 +193,7 @@ public class MainMenuHandler : MonoBehaviour
         NetworkManager.Singleton.StartClient();
         GameManager_v2.Instance.IsSessionHost = true;
         StopCoroutine(GameTitleOpacityHandler());
+        PlayerPrefs.SetString("latestIp", _ipField.value);
         GameManager_v2.Instance.OnMainMenuExit.Invoke();
         GetComponent<UIDocument>().rootVisualElement.visible = false;
     }

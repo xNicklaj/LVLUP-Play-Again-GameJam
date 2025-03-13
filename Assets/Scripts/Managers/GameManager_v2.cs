@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +21,12 @@ class GameManager_v2 : Singleton<GameManager_v2>
         OnGameStart.AddListener(HandleOnGameStart);
         OnPointsUpdated.AddListener(HandlePointsUpdated);
         OnGameLost.AddListener(HandleGameLost);
+        OnGameFinish.AddListener(HandleGameFinish);
+    }
+
+    private void HandleGameFinish()
+    {
+        PointManager.Instance.StopCounting();
     }
 
     private void HandleOnGameStart()
@@ -37,5 +44,6 @@ class GameManager_v2 : Singleton<GameManager_v2>
     private void HandleGameLost()
     {
         GameStarted = false;
+        PointManager.Instance.StopCounting();
     }
 }

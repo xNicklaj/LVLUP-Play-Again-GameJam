@@ -32,12 +32,12 @@ public class FrogMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(_isJumping) _rb.MovePosition((Vector2)(transform.position) + (MoveSpeed * _direction * Time.deltaTime));
         if (_isShrinking)
         {
-            _shrinkTimer += Time.deltaTime;
+            _shrinkTimer += Time.fixedDeltaTime;
             float shrinkFactor = ShrinkCurve.Evaluate(_shrinkTimer);
             _sprite.transform.localScale = new Vector3(1 - shrinkFactor, 1 - shrinkFactor, 1);
             if (_shrinkTimer >= 1)
