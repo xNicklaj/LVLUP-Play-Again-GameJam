@@ -30,7 +30,7 @@ public class ShieldSystem : MonoBehaviour
     [Header("Extra Shields")]
     public GameObject shieldPrefab;
     private List<GameObject> extraShields = new List<GameObject>();
-    private bool moreShield = false;
+    private int moreShield = 0;
     
     [SerializeField] private InstrumentNetworkController playerNetwork;
 
@@ -58,11 +58,15 @@ public class ShieldSystem : MonoBehaviour
         this.playerNetwork.UseMultipleShields.AddListener(UseMultipleShields);
     }
 
-    private void UseMultipleShields(bool arg0)
+    private void UseMultipleShields(int arg0)
     {
         Debug.Log(arg0);
-        if (arg0)
-            SpawnOtherShields();
+        if (arg0==1)
+            SpawnOtherShields(1);
+        else if (arg0 == 2)
+        {
+            SpawnOtherShields(2);
+        }
         else
             DespawnOtherShields();
     }
@@ -92,9 +96,9 @@ public class ShieldSystem : MonoBehaviour
         {
             spriteRenderer.enabled = true;
             polygonCollider.enabled = true;
-            
+
             float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            
+
             angleZ += shieldAngle;
 
             float rad = angleZ * Mathf.Deg2Rad;
@@ -103,10 +107,7 @@ public class ShieldSystem : MonoBehaviour
 
             transform.localPosition = new Vector3(posX, posY, _startPosition.z);
 
-            if (moreShield)
-            {
-                UpdateOtherShield(transform.localPosition);
-            }
+            UpdateOtherShield(transform.localPosition, moreShield);
         }
         else
         {
@@ -114,7 +115,7 @@ public class ShieldSystem : MonoBehaviour
             spriteRenderer.enabled = false;
             polygonCollider.enabled = false;
 
-            if (moreShield)
+            if (moreShield>0)
             {
                 foreach (GameObject shield in extraShields)
                 {
@@ -128,9 +129,9 @@ public class ShieldSystem : MonoBehaviour
         // transform.localScale = new Vector3(shieldWidth, shieldHeight, 1f);
     }
 
-    public void SpawnOtherShields()
+    public void SpawnOtherShields(int arg0)
     {
-        if (moreShield) return;
+        if (moreShield>0) return;
         Transform parent = transform.parent;
 
         Vector3 pos = new Vector3(-parent.position.x, parent.position.y, parent.position.z);
@@ -142,21 +143,37 @@ public class ShieldSystem : MonoBehaviour
         pos = new Vector3(parent.position.x, -parent.position.y, parent.position.z);
         newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
         extraShields.Add(newShieldObj);
+
+        if (arg0 == 2)
+        {
+            pos = new Vector3(-parent.position.x, parent.position.y, parent.position.z);
+            newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+            extraShields.Add(newShieldObj);
+            pos = new Vector3(-parent.position.x, -parent.position.y, parent.position.z);
+            newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+            extraShields.Add(newShieldObj);
+            pos = new Vector3(parent.position.x, -parent.position.y, parent.position.z);
+            newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+            extraShields.Add(newShieldObj);
+            pos = new Vector3(parent.position.x, -parent.position.y, parent.position.z);
+            newShieldObj = Instantiate(shieldPrefab, pos, transform.rotation, parent);
+            extraShields.Add(newShieldObj);
+        }
         
-        moreShield = true;
+        moreShield = arg0;
     }
 
     public void DespawnOtherShields()
     {
-        if (!moreShield) return;
+        if (moreShield == 0) return;
         foreach (GameObject shield in extraShields)
         {
             Destroy(shield);
         }
         extraShields = new List<GameObject>();
-        moreShield = false;
+        moreShield = 0;
     }
-    private void UpdateOtherShield(Vector3 mainPosition)
+    private void UpdateOtherShield(Vector3 mainPosition, int arg0)
     {
         float dist = mainPosition.magnitude;
         float angleRad = Mathf.Atan2(mainPosition.y, mainPosition.x);
@@ -165,8 +182,14 @@ public class ShieldSystem : MonoBehaviour
         {
             shield.GetComponent<Renderer>().enabled = true;
             shield.GetComponent<Collider2D>().enabled = true;
-            
-            float offsetRad = 90f * Mathf.Deg2Rad;
+
+            float offsetRad = 0;
+            if (arg0==1)
+                offsetRad = 90f * Mathf.Deg2Rad;
+            else
+            {
+                offsetRad = 45f * Mathf.Deg2Rad;
+            }
             angleRad += offsetRad;
 
             float newX = dist * Mathf.Cos(angleRad);

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adda58dd50ead3f42a6a8458712476b5, type: 3}
+  m_Name: EightShields
+  m_EditorClassIdentifier: 
+  Name: EightShields
+  Sprite: {fileID: 0}
+  TargetObject: {fileID: 3363042218499496334, guid: 0a15a20b2caf7cf459764bf5f11080a8, type: 3}
+  DespawnFrequencyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  DespawnTimeoutDuration: 10
+  TimeBeforeDespawn: 10
+  Duration: 15
+  AppliedClip: {fileID: 8300000, guid: 89a52681692d6194c806cbd40606aad8, type: 3}
+  DisposedClip: {fileID: 8300000, guid: cb1e1d957f9198d4c9c6687059c41c31, type: 3}

@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class FourShieldsModifier : ModifierBase
+public class EightShieldsModifier : ModifierBase
 {
     protected override void ApplyModifier()
     {
-        ModifierTarget.GetComponent<InstrumentNetworkController>().UseMultipleShieldsClientRpc(1);
+        ModifierTarget.GetComponent<InstrumentNetworkController>().UseMultipleShieldsClientRpc(2);
     }
 
     protected override void DisposeModifier()
