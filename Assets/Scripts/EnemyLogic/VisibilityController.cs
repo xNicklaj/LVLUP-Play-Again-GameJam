@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,18 +12,30 @@ public class VisibilityController : MonoBehaviour
     [SerializeField] private string litLayerName = "LitEnemy";
     [SerializeField] private string unlitLayerName = "UnlitEnemy";
 
+    [SerializeField] private GameObject child;
 
     private void Awake()
     {
-        SpriteRenderer rendererParent = GetComponentInParent<SpriteRenderer>();
-        SpriteRenderer rendererChild = GetComponentInChildren<SpriteRenderer>();
-        NetworkBehaviour network = GetComponent<NetworkBehaviour>();
-        
-        if (rendererParent && rendererChild && network)
+        SpriteRenderer rendererParent = GetComponent<SpriteRenderer>();
+        SpriteRenderer rendererChild = null;
+        try
         {
-            if (!network.IsHost)
+            rendererChild = child.GetComponent<SpriteRenderer>();
+        }
+        catch (Exception e)
+        {
+            child = transform.GetChild(0).gameObject;
+        }
+        finally
+        {
+            rendererChild = child.GetComponent<SpriteRenderer>();
+        }
+
+        if (rendererParent && rendererChild)
+        {
+            if (!NetworkManager.Singleton.IsHost)
             {
-                rendererParent.enabled = false;
+                rendererChild.enabled = false;
             }
         }
     }
@@ -37,10 +50,13 @@ public class VisibilityController : MonoBehaviour
         if (toLit)
         {
             gameObject.layer = LayerMask.NameToLayer(litLayerName);
+            child.gameObject.layer = LayerMask.NameToLayer(litLayerName);
+
         }
         else
         {
             gameObject.layer = LayerMask.NameToLayer(unlitLayerName);
+            child.gameObject.gameObject.layer = LayerMask.NameToLayer(unlitLayerName);
         }
     }
 }
