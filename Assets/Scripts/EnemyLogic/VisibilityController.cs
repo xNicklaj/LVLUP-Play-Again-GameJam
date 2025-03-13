@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -13,7 +14,17 @@ public class VisibilityController : MonoBehaviour
 
     private void Awake()
     {
+        SpriteRenderer rendererParent = GetComponentInParent<SpriteRenderer>();
+        SpriteRenderer rendererChild = GetComponentInChildren<SpriteRenderer>();
+        NetworkBehaviour network = GetComponent<NetworkBehaviour>();
         
+        if (rendererParent && rendererChild && network)
+        {
+            if (!network.IsHost)
+            {
+                rendererParent.enabled = false;
+            }
+        }
     }
 
 
