@@ -16,10 +16,11 @@ public class FrogAttackModifier : ModifierBase
     [Rpc(SendTo.Server)]
     private void DespawnEnemiesServerRpc()
     {
-        LayerMask[] masks = new LayerMask[] { LayerMask.GetMask("LitEnemy"), LayerMask.GetMask("UnlitEnemy") };
+        LayerMask[] masks = new LayerMask[] { LayerMask.GetMask("Enemy"), LayerMask.GetMask("Bullet") };
         List<Collider2D> colliders = VisionSystem.FindNearPosition(transform.position, Radius, masks);
         foreach (Collider2D collider in colliders)
         {
+            if (collider.name.Contains("Bullet") && !collider.GetComponent<Bullet>().isFromEnemy.Value) return;
             collider.TryGetComponent<NetworkObject>(out NetworkObject no);
             if (no == null) continue;
             if (no.IsSpawned) no.Despawn();
