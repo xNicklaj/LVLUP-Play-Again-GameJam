@@ -2,7 +2,6 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(NetworkObject))]
 public class ChangePointsOnHit : MonoBehaviour
 {
     public ChangePointsOnHitSettings Settings;
@@ -29,7 +28,7 @@ public class ChangePointsOnHit : MonoBehaviour
     {
         if (!NetworkManager.Singleton.IsHost) return;
         Death.Invoke();
-        if (GetComponent<NetworkObject>().IsSpawned) GetComponent<NetworkObject>().Despawn();
+        if (GetComponent<NetworkObject>() != null && GetComponent<NetworkObject>().IsSpawned) GetComponent<NetworkObject>().Despawn();
         Destroy(this);
     }
 }

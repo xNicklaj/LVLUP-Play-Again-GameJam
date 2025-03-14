@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adda58dd50ead3f42a6a8458712476b5, type: 3}
-  m_Name: FrogAttack
+  m_Name: Sonar
   m_EditorClassIdentifier: 
-  Name: Frog Attack
-  Sprite: {fileID: -6981641179300335697, guid: 304bda350c6557243ad034922d9f1354, type: 3}
-  TargetObject: {fileID: 0}
+  Name: Sonar
+  Sprite: {fileID: 6050867643624854935, guid: 8e508ca36b7efd34f9ccbe5dbd023dac, type: 3}
+  TargetObject: {fileID: 3363042218499496334, guid: c755badebcd26224fae8ddc4b75205b7, type: 3}
   DespawnFrequencyCurve:
     serializedVersion: 2
     m_Curve:
@@ -41,6 +41,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   DespawnTimeoutDuration: 10
   TimeBeforeDespawn: 10
-  Duration: 2
-  AppliedClip: {fileID: 8300000, guid: 3c5a743f17a33994aa10993fc1cb79b9, type: 3}
+  Duration: 15
+  AppliedClip: {fileID: 8300000, guid: 8584a18bca454d944b872bbfd71a3ba1, type: 3}
   DisposedClip: {fileID: 0}
