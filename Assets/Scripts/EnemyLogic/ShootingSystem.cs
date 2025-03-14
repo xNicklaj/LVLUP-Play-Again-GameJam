@@ -17,6 +17,7 @@ public class ShootingSystem : NetworkBehaviour
         public float timeslotDurationMult; // minimum should be 1/10 of a second
         public float rangeMult;
         public float damageMult;
+        public float bulletSpeedMult;
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
@@ -25,6 +26,7 @@ public class ShootingSystem : NetworkBehaviour
             serializer.SerializeValue<float>(ref timeslotDurationMult);
             serializer.SerializeValue<float>(ref rangeMult);
             serializer.SerializeValue<float>(ref damageMult);
+            serializer.SerializeValue<float>(ref bulletSpeedMult);
         }
     }
 
@@ -242,6 +244,7 @@ public class ShootingSystem : NetworkBehaviour
         if (bullet != null)
         {
             bullet.direction = targetDirection;
+            bullet.initialVelocityMult = modifiers.bulletSpeedMult;
             bullet.color = bulletColor;
             bullet.isHoming = modifiers.homing;
             bullet.maxTraveledDistanceMult = modifiers.rangeMult;
