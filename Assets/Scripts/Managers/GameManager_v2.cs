@@ -13,6 +13,8 @@ class GameManager_v2 : Singleton<GameManager_v2>
     public UnityEvent OnMainMenuExit = new UnityEvent();
     public UnityEvent<int> HeartsChanged = new UnityEvent<int>();
     public UnityEvent<int> OnPointsUpdated = new UnityEvent<int>();
+    public UnityEvent OnBossEnemySpawn = new UnityEvent();
+    public UnityEvent OnBossEnemyKill = new UnityEvent();
     public bool IsSessionHost = false;
     [SerializeField] public bool GameStarted { get; private set; } = false;
 
@@ -22,6 +24,9 @@ class GameManager_v2 : Singleton<GameManager_v2>
         OnPointsUpdated.AddListener(HandlePointsUpdated);
         OnGameLost.AddListener(HandleGameLost);
         OnGameFinish.AddListener(HandleGameFinish);
+        
+        //OnBossEnemySpawn.AddListener((() => Debug.Log("Spawnato boss")));
+        //OnBossEnemyKill.AddListener((() => Debug.Log("Killato boss")));
     }
 
     private void HandleGameFinish()

@@ -23,7 +23,9 @@ public class EnemyNavigation : MonoBehaviour
     public float waitBeforeStartPatrolling = 5.0f; // inspector
     private Coroutine resetTargetCoroutine;
     private Coroutine patrolCoroutine;
-
+    
+    public bool notifyOnDeath = false;
+    
     private Animator _animator;
 
     void Start()
@@ -134,6 +136,14 @@ public class EnemyNavigation : MonoBehaviour
         {
             StopCoroutine(patrolCoroutine);
             patrolCoroutine = null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (notifyOnDeath)
+        {
+            GameManager_v2.Instance.OnBossEnemyKill.Invoke();
         }
     }
 
