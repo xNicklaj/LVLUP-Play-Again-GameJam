@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -62,6 +63,8 @@ public class SpawnerSystem : NetworkBehaviour
     public int spawnsBeforeDeactivation = 10; // to be set in inspector
     public int cyclesBeforeDeactivation = 10; // to be set in inspector 
     public int minimumRadialDistanceFromPlayers = 2; // to be set in inspector 
+
+    public bool isBossRoom = false;
     // ---------------
 
     public LayerMask mustTouchLayers;
@@ -229,24 +232,26 @@ public class SpawnerSystem : NetworkBehaviour
 
         GameObject objInstance = Instantiate(objectPrefab, spawnPosition, new Quaternion(0, 0, 0, 0));
         objInstance.GetComponent<NetworkObject>().Spawn();
-
-        if (objInstance.TryGetComponent<GameObject>(out var obj))
+        
+        switch (prefabId)
         {
-            switch (prefabId)
-            {
-                case SpawnableIdentifier.ENEMY:
-                    // set stuff internal to the prefab
-                    obj.layer = layerToSpawnIn;
-                    break;
+            case SpawnableIdentifier.ENEMY:
+                // set stuff internal to the prefab
+                objInstance.layer = layerToSpawnIn;
+                //if(isBossRoom){
+                    objInstance.GetComponent<EnemyNavigation>().notifyOnDeath = true;
+                    GameManager_v2.Instance.OnBossEnemySpawn.Invoke();
+                //}
+                //NotifyBossBattle();
+                break;
 
-                case SpawnableIdentifier.POWERUP:
-                    // set stuff internal to the prefab
-                    // obj.layer = LayerMask.GetMask("Powerups");
-                    break;
+            case SpawnableIdentifier.POWERUP:
+                // set stuff internal to the prefab
+                // obj.layer = LayerMask.GetMask("Powerups");
+                break;
 
-                default:
-                    break;
-            }
+            default:
+                break;
         }
     }
 
@@ -297,7 +302,16 @@ public class SpawnerSystem : NetworkBehaviour
 
         return spawnPoint;
     }
-
+    /*public void NotifyBossBattle()
+    {
+        //if (!NetworkManager.Singleton.IsServer)
+        {
+            using FastBufferWriter writer = new FastBufferWriter(sizeof(int), Allocator.Temp);
+            writer.WriteValueSafe(1);
+            Debug.Log("Invio messaggio.......");
+            NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage("SpawnerNotification", NetworkManager.ServerClientId, writer);
+        }
+    }*/
     public enum SpawnableIdentifier
     {
         ENEMY,
