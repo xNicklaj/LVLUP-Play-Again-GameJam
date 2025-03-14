@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -14,7 +12,7 @@ public enum GameState
 }
 
 [RequireComponent(typeof(UIDocument))]
-public class OnGameFinishedScript : MonoBehaviour
+public class OnGameFinishedScript : NetworkBehaviour
 {
     private VisualElement _root;
     [SerializeField] private AudioMixer _audioMixer;
@@ -51,22 +49,45 @@ public class OnGameFinishedScript : MonoBehaviour
         _audioMixer.GetFloat("SFXVolume", out _ogSFXVolume);
     }
 
-    private void Show()
+private void Show()
+{
+    if (!NetworkManager.Singleton.IsServer)
+        return;
+
+    ShowClientRpc(
+        PointManager.Instance.HighScore.Value.ToString(),
+        PointManager.Instance.CurrentScore.Value.ToString()
+    );
+}
+
+[Rpc(SendTo.ClientsAndHost)]
+private void ShowClientRpc(string highScore, string currentScore)
+{
+    Debug.Log("ShowClientRpc received!");
+
+    if (NetworkManager.Singleton.IsServer)
     {
-        _audioMixer.SetFloat("MusicVolume", -90);
-        _audioMixer.SetFloat("SFXVolume", -90);
-        _root.visible = true;
-        _hsLabel.text = PointManager.Instance.HighScore.Value.ToString();
-        _csLabel.text = PointManager.Instance.CurrentScore.Value.ToString();
-
-        if (PointManager.Instance.CurrentScore.Value > PointManager.Instance.HighScore.Value)
-        {
-            PlayerPrefs.SetInt("HighScore", PointManager.Instance.CurrentScore.Value);
-            _HighScoreElement.visible = true;
-        }
-
-        StartCoroutine(DisconnectAndReset());
+        Debug.Log($"SERVER: Showing game over screen - HighScore: {highScore}, CurrentScore: {currentScore}");
     }
+    else
+    {
+        Debug.Log($"CLIENT: Showing game over screen - HighScore: {highScore}, CurrentScore: {currentScore}");
+    }
+
+    _audioMixer.SetFloat("MusicVolume", -90);
+    _audioMixer.SetFloat("SFXVolume", -90);
+    _hsLabel.text = highScore;
+    _csLabel.text = currentScore;
+    _root.visible = true;
+
+    if (int.Parse(currentScore) > int.Parse(highScore))
+    {
+        PlayerPrefs.SetInt("HighScore", int.Parse(currentScore));
+        _HighScoreElement.visible = true;
+    }
+
+    StartCoroutine(DisconnectAndReset());
+}
 
     private IEnumerator DisconnectAndReset()
     {
@@ -93,7 +114,8 @@ public class OnGameFinishedScript : MonoBehaviour
         {
             NetworkManager.Singleton.StartClient();
         }
-        else {
+        else
+        {
             Debug.LogWarning("sa solo quello che non era.");
         }
     }
