@@ -238,10 +238,10 @@ public class SpawnerSystem : NetworkBehaviour
             case SpawnableIdentifier.ENEMY:
                 // set stuff internal to the prefab
                 objInstance.layer = layerToSpawnIn;
-                //if(isBossRoom){
+                if(isBossRoom){
                     objInstance.GetComponent<EnemyNavigation>().notifyOnDeath = true;
                     GameManager_v2.Instance.OnBossEnemySpawn.Invoke();
-                //}
+                }
                 //NotifyBossBattle();
                 break;
 
@@ -302,16 +302,7 @@ public class SpawnerSystem : NetworkBehaviour
 
         return spawnPoint;
     }
-    /*public void NotifyBossBattle()
-    {
-        //if (!NetworkManager.Singleton.IsServer)
-        {
-            using FastBufferWriter writer = new FastBufferWriter(sizeof(int), Allocator.Temp);
-            writer.WriteValueSafe(1);
-            Debug.Log("Invio messaggio.......");
-            NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage("SpawnerNotification", NetworkManager.ServerClientId, writer);
-        }
-    }*/
+
     public enum SpawnableIdentifier
     {
         ENEMY,

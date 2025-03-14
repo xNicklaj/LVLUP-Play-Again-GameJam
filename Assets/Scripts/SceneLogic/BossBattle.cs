@@ -5,7 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class BossBattle : NetworkBehaviour
+public class BossBattle : MonoBehaviour
 {
     [SerializeField] private Tilemap bossGates;
     [SerializeField] private bool isGatesOpen = false;
@@ -15,8 +15,13 @@ public class BossBattle : NetworkBehaviour
 
     private void Start()
     {
+        GameManager_v2.Instance.OnGameStart.AddListener(OnGameStart);
+    }
+
+    private void OnGameStart()
+    {
+        //Debug.Log($"Host: {NetworkManager.Singleton.IsHost} Server: {NetworkManager.Singleton.IsServer} Client: {NetworkManager.Singleton.IsClient}");
         if (!NetworkManager.Singleton.IsHost) return;
-        Debug.Log("Iscrizione ai listner");
         GameManager_v2.Instance.OnBossEnemySpawn.AddListener(AddedEnemy);
         GameManager_v2.Instance.OnBossEnemyKill.AddListener(RemoveEnemy);
         enemySpawned = 0;
@@ -36,11 +41,12 @@ public class BossBattle : NetworkBehaviour
 
     void Update()
     {
+        
     }
 
     private void CheckKill()
     {
-        if (enemySpawned >= maxEnemy && enemyKilled >= maxEnemy)
+        if (enemySpawned >= maxEnemy && enemyKilled >= maxEnemy && !isGatesOpen)
         {
             OpenGates();
         }
@@ -48,6 +54,9 @@ public class BossBattle : NetworkBehaviour
     private void OpenGates()
     {
         bossGates.gameObject.SetActive(false);
-        Debug.Log("BOSS SCONFITTO");
+        isGatesOpen = true;
+        Debug.Log("BOSS DEFEATED");
     }
+
+
 }
