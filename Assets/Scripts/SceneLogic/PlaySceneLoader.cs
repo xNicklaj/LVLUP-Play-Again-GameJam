@@ -10,6 +10,8 @@ public class PlaySceneLoader : NetworkBehaviour
     [SerializeField] private SpawnPointsScriptable _spawnPointsScriptable;
     private NetworkVariable<Vector3> _sessionSpawnPoint = new NetworkVariable<Vector3>();
 
+    public float DelayBeforeStart = 3f;
+
     private void Awake()
     {
     }
@@ -58,7 +60,7 @@ public class PlaySceneLoader : NetworkBehaviour
 
     private IEnumerator StartGame()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(DelayBeforeStart);
         GameManager_v2.Instance.OnGameStart.Invoke();
     }
 
