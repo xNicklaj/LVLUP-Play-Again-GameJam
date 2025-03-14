@@ -25,6 +25,8 @@ public class EnemyNavigation : MonoBehaviour
     private Coroutine patrolCoroutine;
     
     public bool notifyOnDeath = false;
+
+    public bool HasAI = false;
     
     private Animator _animator;
 
@@ -49,9 +51,16 @@ public class EnemyNavigation : MonoBehaviour
         }
     }
 
+    public void EnableAI()
+    {
+        Debug.Log("AI enabled");
+        HasAI = true;
+        GetComponent<VisionSystem>().isBlind = false;
+    }
+
     void Update()
     {
-
+        if(!HasAI) return;
         if (target == null) // Enemy does not know where to go
         {
             // Try to find a player to chase

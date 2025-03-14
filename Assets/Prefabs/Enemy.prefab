@@ -203,7 +203,7 @@ MonoBehaviour:
   sightRadiusMult: 1
   sightAngleMult: 1
   debug: 0
-  isBlind: 0
+  isBlind: 1
   numberOfRaysOverride: 3
   seesThroughWalls: 0
 --- !u!114 &5556522075887205695
@@ -489,6 +489,7 @@ MonoBehaviour:
   randomDirectionWhilePatrollingDelay: 5
   waitBeforeStartPatrolling: 5
   notifyOnDeath: 0
+  HasAI: 0
 --- !u!95 &8516153820871331677
 Animator:
   serializedVersion: 7
