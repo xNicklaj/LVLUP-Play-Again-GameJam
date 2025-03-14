@@ -34,7 +34,7 @@ public class SonarModifier : ModifierBase
         while(_currentPings < Pings)
         {
             if (_currentPings > 0) PlayPingClientRpc();
-            LayerMask[] masks = new LayerMask[] { LayerMask.GetMask("LitEnemy"), LayerMask.GetMask("UnlitEnemy") };
+            LayerMask[] masks = new LayerMask[] { LayerMask.GetMask("Enemy") };
             List<Collider2D> colliders = VisionSystem.FindNearPosition(transform.position, Radius, masks);
             foreach (Collider2D collider in colliders)
             {
