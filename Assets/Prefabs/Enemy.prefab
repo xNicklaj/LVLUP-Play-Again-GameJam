@@ -229,6 +229,7 @@ MonoBehaviour:
     timeslotDurationMult: 1
     rangeMult: 1
     damageMult: 1
+    bulletSpeedMult: 1
   timeslotsConfig:
     slotDuration: 1
     shotsPerSlot: 3
@@ -487,6 +488,7 @@ MonoBehaviour:
   resetTargetAfterLosingSightDelay: 3
   randomDirectionWhilePatrollingDelay: 5
   waitBeforeStartPatrolling: 5
+  notifyOnDeath: 0
 --- !u!95 &8516153820871331677
 Animator:
   serializedVersion: 7

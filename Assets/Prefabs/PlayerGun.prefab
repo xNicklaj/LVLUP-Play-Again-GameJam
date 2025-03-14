@@ -383,6 +383,7 @@ MonoBehaviour:
     timeslotDurationMult: 1
     rangeMult: 1
     damageMult: 1
+    bulletSpeedMult: 1
   timeslotsConfig:
     slotDuration: 0.1
     shotsPerSlot: 1

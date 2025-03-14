@@ -11,6 +11,7 @@ public class ShootingSystemDefaults : ScriptableObject
         timeslotDurationMult = 1.0f,
         rangeMult = 1.0f,
         damageMult = 1.0f,
+        bulletSpeedMult = 1.0f,
     };
 
     public ShootingSystem.SlotsConfig timeslotsConfig = new ShootingSystem.SlotsConfig
