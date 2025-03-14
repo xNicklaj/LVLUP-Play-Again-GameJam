@@ -10,15 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 4796925885443238466}
   - component: {fileID: 2313831455434752508}
-  - component: {fileID: 4739324240755162697}
   - component: {fileID: 1075126181683998175}
+  - component: {fileID: 2861831010232841214}
+  - component: {fileID: 4739324240755162697}
   - component: {fileID: 3913380068256249572}
   - component: {fileID: 5556522075887205695}
   - component: {fileID: 3003147968555755053}
   - component: {fileID: 5545293855660438119}
   - component: {fileID: -7316355371788943160}
   - component: {fileID: 8321123762949088387}
-  - component: {fileID: 2861831010232841214}
   - component: {fileID: 5398635116190739017}
   - component: {fileID: -1592513661587911385}
   - component: {fileID: 8557155032160907739}
@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 8516153820871331677}
   - component: {fileID: 7753951395520002480}
   - component: {fileID: 6918384977884206740}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -103,6 +103,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1075126181683998175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918623692585558999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2232679582
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &2861831010232841214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918623692585558999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b276305499e4644392b54c723155791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!61 &4739324240755162697
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,31 +187,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.43436193, y: 0.5363554}
   m_EdgeRadius: 0
---- !u!114 &1075126181683998175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4918623692585558999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2232679582
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &3913380068256249572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +234,6 @@ MonoBehaviour:
     shotsPerSlot: 3
     pauseSlotsNumber: 1
   bulletColor: {r: 1, g: 1, b: 1, a: 1}
-  speedWhileShootingMult: 0.75
   amIenemy: 1
 --- !u!50 &3003147968555755053
 Rigidbody2D:
@@ -397,21 +409,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &2861831010232841214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4918623692585558999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b276305499e4644392b54c723155791, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TestVisibility: {fileID: 11400000, guid: 9d75188b57e1fcf46880c1cf3dc00bc5, type: 2}
-  litLayerName: LitEnemy
-  unlitLayerName: UnlitEnemy
 --- !u!114 &5398635116190739017
 MonoBehaviour:
   m_ObjectHideFlags: 0

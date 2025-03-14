@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8e508ca36b7efd34f9ccbe5dbd023dac
+guid: 2018c7666ba2f5e4f9409304052f4b58
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6050867643624854935
-    second: Sonar_0
+      213: 7657941846120552495
+    second: Multitasker_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sonar_0
+      name: Multitasker_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7951a21201009f350800000000000000
-      internalID: 6050867643624854935
+      spriteID: f285d981989764a60800000000000000
+      internalID: 7657941846120552495
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sonar_0: 6050867643624854935
+      Multitasker_0: 7657941846120552495
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

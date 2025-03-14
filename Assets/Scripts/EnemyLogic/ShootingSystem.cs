@@ -244,7 +244,7 @@ public class ShootingSystem : NetworkBehaviour
             bullet.isHoming = modifiers.homing;
             bullet.maxTraveledDistanceMult = modifiers.rangeMult;
             bullet.damageMult.Value = modifiers.damageMult;
-            bullet.isFromEnemy = amIenemy;
+            bullet.isFromEnemy.Value = amIenemy;
         }
     }
 }

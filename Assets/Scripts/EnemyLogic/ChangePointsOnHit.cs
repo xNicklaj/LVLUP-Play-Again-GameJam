@@ -17,7 +17,8 @@ public class ChangePointsOnHit : MonoBehaviour
         if (!collision.gameObject.name.Contains("Bullet") || collision.gameObject.GetComponent<Bullet>() == null)
             return;
         if (collision.gameObject.GetComponent<Bullet>().damageMult.Value <= 0) return;
-        if (Settings.AmIPlayer && !collision.gameObject.GetComponent<Bullet>().isFromEnemy) return;
+        if (Settings.AmIPlayer && !collision.gameObject.GetComponent<Bullet>().isFromEnemy.Value) return;
+        Debug.Log($"I am {gameObject.name}, and I was hit by enemy bullet, changing by {Settings.Amount}");
         PointManager.Instance.AddScoreServerRpc(Settings.Amount);
         if (!Settings.DestroyOnHit) return;
         DestroyThisObjectServerRpc();

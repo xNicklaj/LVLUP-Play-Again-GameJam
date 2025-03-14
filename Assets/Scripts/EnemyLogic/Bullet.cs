@@ -16,7 +16,7 @@ public class Bullet : NetworkBehaviour
     public float initialVelocityMult = 1.0f;
     public bool isHoming = false;
     public NetworkVariable<float> damageMult = new NetworkVariable<float>(1.0f);
-    public bool isFromEnemy;
+    public NetworkVariable<bool> isFromEnemy = new NetworkVariable<bool>();
 
     public Vector2 direction = new Vector2(1, 1); // modifiable for Homing, visible in Inspector for traps
     public Color color = Color.white; // we won't really modify the colors of all bullets together so no need to put this in defaults
@@ -166,7 +166,7 @@ public class Bullet : NetworkBehaviour
 
     private void handleHoming()
     {
-        LayerMask[] layersToSearchIn = isFromEnemy ? new LayerMask[] { vision.defaults.playerLayer } : new LayerMask[] { vision.defaults.enemyLayer };
+        LayerMask[] layersToSearchIn = isFromEnemy.Value ? new LayerMask[] { vision.defaults.playerLayer } : new LayerMask[] { vision.defaults.enemyLayer };
         GameObject nearbyTarget = vision.GetClosestInSight(layersToSearchIn);
 
         if (nearbyTarget != null)
