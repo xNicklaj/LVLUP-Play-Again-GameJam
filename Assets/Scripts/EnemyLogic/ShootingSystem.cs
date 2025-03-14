@@ -69,7 +69,7 @@ public class ShootingSystem : NetworkBehaviour
     public bool amIenemy;
 
     public bool IsShooting { get => _isShooting; private set => _isShooting = value; }
-
+    private bool wasShooting = false;
     #endregion
 
     public void Awake()
@@ -84,6 +84,7 @@ public class ShootingSystem : NetworkBehaviour
     {
         if (!IsOwner) return;
         nextSlot = Time.time;
+        nextSubslot = Time.time;
         shooter = gameObject.transform;
         if (amIenemy)
         {
@@ -96,7 +97,7 @@ public class ShootingSystem : NetworkBehaviour
         Debug.Assert(bulletPrefab != null, "Bullet prefab not assigned");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!IsOwner) return;
         int subslotsInSlot = (int)(timeslotsConfig.slotDuration / (timeslotsConfig.slotDuration / timeslotsConfig.shotsPerSlot));
@@ -120,6 +121,17 @@ public class ShootingSystem : NetworkBehaviour
         {
             targetDirection = input.actions.FindAction("Direction").ReadValue<Vector2>().normalized;
             IsShooting = targetDirection.magnitude > 0;
+            if (!wasShooting && IsShooting)
+            {
+                // reset the cycle
+                Debug.Log("resetting");
+                nextSlot = Time.time;
+                nextSubslot = Time.time;
+                subslotCounter = 0;
+                slotCounter = 0;
+                isThisPause = false;
+            }
+
         }
 
         /* TODO: this was just to see the raycasts. The movement script will be the one calling repeatedly the VisionComponent. */
@@ -188,22 +200,12 @@ public class ShootingSystem : NetworkBehaviour
             // anyway, update nextSubslot
             nextSubslot = Time.time + timeslotsConfig.slotDuration * modifiers.timeslotDurationMult / timeslotsConfig.shotsPerSlot;
 
-            if (!IsShooting)
-            {
-                return;
-            }
+            wasShooting = IsShooting;
 
-            if (amIenemy)
-            {
-                ExecuteSubslot(targetDirection, modifiers);
-            }
-            else
-            {
-                if (targetDirection.magnitude > 0)
-                {
-                    ExecuteSubslot(targetDirection, modifiers);
-                }
-            }
+            if (!IsShooting)
+                return;
+
+            ExecuteSubslot(targetDirection, modifiers);
         }
     }
 
