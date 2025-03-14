@@ -2922,11 +2922,15 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape:
-      - - {x: 19, y: 26}
+      - - {x: -14, y: 26}
         - {x: -19, y: 26}
         - {x: -19, y: -25}
         - {x: -18, y: -26}
-        - {x: 19, y: -26}
+        - {x: -14, y: -26}
+      - - {x: 15, y: -25}
+        - {x: 18, y: -25}
+        - {x: 18, y: 26}
+        - {x: 15, y: 26}
       tessellationDetail: 0
       bones: []
       spriteID: 84055918fc79c8fc0800000000000000

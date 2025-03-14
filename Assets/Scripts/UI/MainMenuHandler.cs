@@ -86,18 +86,21 @@ public class MainMenuHandler : MonoBehaviour
         _quitButton.RegisterCallback<FocusEvent>((evt) => PlaySound(FocusSound));
         #endregion
 
-        string testString = "";
-        if(PlayerPrefs.HasKey("latestIp")) 
-            testString = PlayerPrefs.GetString("latestIp");
-        if(ValidateIPv4(testString))
-            _ipField.value = testString;
-        if (ValidateIPv4(_ipField.value))
-            NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = _ipField.value;
-            
-
-        _coinButton.Focus();
         StartCoroutine(VisibilityLoop());
         StartCoroutine(GameTitleOpacityHandler());
+
+        try
+        {
+            string testString = "";
+            if (PlayerPrefs.HasKey("latestIp"))
+                testString = PlayerPrefs.GetString("latestIp");
+            if (ValidateIPv4(testString))
+                _ipField.value = testString;
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     private IEnumerator VisibilityLoop()
@@ -205,6 +208,9 @@ public class MainMenuHandler : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(this.gameObject);
         _hostGameButton.Focus();
         StartCoroutine(StartMusicSignal());
+        if (ValidateIPv4(_ipField.value))
+            NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = _ipField.value;
+        _coinButton.Focus();
     }
 
     // Update is called once per frame
