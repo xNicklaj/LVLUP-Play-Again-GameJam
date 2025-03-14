@@ -126,7 +126,7 @@ public class ShootingSystem : NetworkBehaviour
             if (!wasShooting && IsShooting)
             {
                 // reset the cycle
-                Debug.Log("resetting");
+//                Debug.Log("resetting");
                 nextSlot = Time.time;
                 nextSubslot = Time.time;
                 subslotCounter = 0;

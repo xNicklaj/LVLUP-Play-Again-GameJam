@@ -68,7 +68,7 @@ public class Bullet : NetworkBehaviour
 
         if (hasHit) // master and slave both enter this, but only once
         {
-            Debug.Log("SERVER: received hit confirmation by the client, proceeding to despawn");
+            Debug.Log("SERVER: received hit confirmation by the client, proceeding to despawn"); // DO NOT REMOVE THIS LINE
             GetComponent<NetworkObject>().Despawn();
             Destroy(gameObject);
             return;
@@ -128,7 +128,7 @@ public class Bullet : NetworkBehaviour
         if (!IsServer)
             return;
         
-        Debug.Log("SERVER: hey, got permission to despawn!");
+        Debug.Log("SERVER: hey, got permission to despawn!"); // DO NOT REMOVE THIS LINE
 
         hasHit = true;
     }
@@ -136,15 +136,15 @@ public class Bullet : NetworkBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (IsServer)
-            Debug.Log("SERVER: detected collision, playing effects");
+            Debug.Log("SERVER: detected collision, playing effects"); // DO NOT REMOVE THIS LINE
         if (IsClient && !IsServer)
-            Debug.Log("CLIENT: detected collision, playing effects");
+            Debug.Log("CLIENT: detected collision, playing effects"); // DO NOT REMOVE THIS LINE
 
         PlayHitEffects(); // both do this
 
         if (IsClient && !IsServer)
         {
-            Debug.Log("CLIENT: Granting permission to despawn the bullet");
+            Debug.Log("CLIENT: Granting permission to despawn the bullet"); // DO NOT REMOVE THIS LINE
             AskToDespawnServerRpc(); // grant permission to despawn the bullet only after the client sees it hitting
         }
 
