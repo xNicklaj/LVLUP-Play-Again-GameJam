@@ -1,35 +1,22 @@
+using System;
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class VisibilityController : MonoBehaviour
+public class VisibilityController : NetworkBehaviour
 {
     [Header("TestVisibility")]
-    [SerializeField] private TestVisibilitybyLayer TestVisibility; //TODO: to change
 
-    [Header("Layer Names")]
-    [SerializeField] private string litLayerName = "LitEnemy";
-    [SerializeField] private string unlitLayerName = "UnlitEnemy";
-
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
-        
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-
-    /// <summary>
-    /// Change the layer of the object
-    /// </summary>
-    /// <param name="toLit">Se true, imposta il layer come Lit, altrimenti Unlit</param>
-    public void SetLayer(bool toLit)
+    public override void OnNetworkSpawn()
     {
-        if (toLit)
-        {
-            gameObject.layer = LayerMask.NameToLayer(litLayerName);
-        }
-        else
-        {
-            gameObject.layer = LayerMask.NameToLayer(unlitLayerName);
-        }
+        if(IsServer) return;
+        _spriteRenderer.maskInteraction = NetworkManager.Singleton.LocalClientId == 0 ? SpriteMaskInteraction.None : SpriteMaskInteraction.VisibleInsideMask;
     }
 }
