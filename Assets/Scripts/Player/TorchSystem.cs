@@ -123,25 +123,5 @@ public class TorchSystemSprite : MonoBehaviour
         
         transform.localScale = new Vector3(rangeScale, angleScale, 1);
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        //Debug.Log("Oggetto entrato nel cono di luce: " + other.name);
-        var obj = other.GetComponent<VisibilityController>();
-        if (obj)
-        {
-            obj.SetLayer(true);
-        }
-
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        //Debug.Log("Oggetto uscito dal cono di luce: " + other.name);
-        var obj = other.GetComponent<VisibilityController>();
-        if (obj)
-        {
-            obj.SetLayer(false);
-        }
-    }
     
 }
