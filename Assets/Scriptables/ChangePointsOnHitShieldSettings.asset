@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97679bef693396f4e8c8f8c1e15454d7, type: 3}
   m_Name: ChangePointsOnHitShieldSettings
   m_EditorClassIdentifier: 
-  Amount: 100
+  Amount: 50
   DestroyOnHit: 0
   AmIPlayer: 1
