@@ -12,10 +12,15 @@ public enum GameState
 }
 
 [RequireComponent(typeof(UIDocument))]
+[RequireComponent(typeof(AudioSource))]
 public class OnGameFinishedScript : NetworkBehaviour
 {
     private VisualElement _root;
     [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioSource _audioSource;
+
+    public AudioClip WinSound;
+    public AudioClip LoseSound;
 
     private VisualElement _HighScoreElement;
     private Label _csLabel;
@@ -39,55 +44,58 @@ public class OnGameFinishedScript : NetworkBehaviour
         if (state == GameState.GameLost)
         {
             GameManager_v2.Instance.OnGameLost.AddListener(Show);
+            _audioSource.clip = LoseSound;
         }
         else
         {
             GameManager_v2.Instance.OnGameFinish.AddListener(Show);
+            _audioSource.clip = WinSound;
         }
 
         _audioMixer.GetFloat("MusicVolume", out _ogMusicVolume);
         _audioMixer.GetFloat("SFXVolume", out _ogSFXVolume);
     }
 
-private void Show()
-{
-    if (!NetworkManager.Singleton.IsServer)
-        return;
-
-    ShowClientRpc(
-        PointManager.Instance.HighScore.Value.ToString(),
-        PointManager.Instance.CurrentScore.Value.ToString()
-    );
-}
-
-[Rpc(SendTo.ClientsAndHost)]
-private void ShowClientRpc(string highScore, string currentScore)
-{
-    Debug.Log("ShowClientRpc received!");
-
-    if (NetworkManager.Singleton.IsServer)
+    private void Show()
     {
-        Debug.Log($"SERVER: Showing game over screen - HighScore: {highScore}, CurrentScore: {currentScore}");
-    }
-    else
-    {
-        Debug.Log($"CLIENT: Showing game over screen - HighScore: {highScore}, CurrentScore: {currentScore}");
+        if (!NetworkManager.Singleton.IsServer)
+            return;
+
+        ShowClientRpc(
+            PointManager.Instance.HighScore.Value.ToString(),
+            PointManager.Instance.CurrentScore.Value.ToString()
+        );
     }
 
-    _audioMixer.SetFloat("MusicVolume", -90);
-    _audioMixer.SetFloat("SFXVolume", -90);
-    _hsLabel.text = highScore;
-    _csLabel.text = currentScore;
-    _root.visible = true;
-
-    if (int.Parse(currentScore) > int.Parse(highScore))
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ShowClientRpc(string highScore, string currentScore)
     {
-        PlayerPrefs.SetInt("HighScore", int.Parse(currentScore));
-        _HighScoreElement.visible = true;
-    }
+        Debug.Log("ShowClientRpc received!");
+        _audioSource.Play();
 
-    StartCoroutine(DisconnectAndReset());
-}
+        if (NetworkManager.Singleton.IsServer)
+        {
+            Debug.Log($"SERVER: Showing game over screen - HighScore: {highScore}, CurrentScore: {currentScore}");
+        }
+        else
+        {
+            Debug.Log($"CLIENT: Showing game over screen - HighScore: {highScore}, CurrentScore: {currentScore}");
+        }
+
+        _audioMixer.SetFloat("MusicVolume", -90);
+        _audioMixer.SetFloat("SFXVolume", -90);
+        _hsLabel.text = highScore;
+        _csLabel.text = currentScore;
+        _root.visible = true;
+
+        if (int.Parse(currentScore) > int.Parse(highScore))
+        {
+            PlayerPrefs.SetInt("HighScore", int.Parse(currentScore));
+            _HighScoreElement.visible = true;
+        }
+
+        StartCoroutine(DisconnectAndReset());
+    }
 
     private IEnumerator DisconnectAndReset()
     {

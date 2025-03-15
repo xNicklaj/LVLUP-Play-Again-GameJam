@@ -5,13 +5,15 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class BossBattle : MonoBehaviour
+[RequireComponent(typeof(AudioSource))]
+public class BossBattle : NetworkBehaviour
 {
-    [SerializeField] private Tilemap bossGates;
     [SerializeField] private bool isGatesOpen = false;
     [SerializeField] private int maxEnemy = 5;
     [SerializeField] private int enemySpawned = 0;
     [SerializeField] private int enemyKilled = 0;
+
+    private AudioSource _source;
 
     private void Start()
     {
@@ -48,14 +50,17 @@ public class BossBattle : MonoBehaviour
     {
         if (enemySpawned >= maxEnemy && enemyKilled >= maxEnemy && !isGatesOpen)
         {
-            OpenGates();
+            OpenGatesClientRpc();
         }
     }
-    private void OpenGates()
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void OpenGatesClientRpc()
     {
-        bossGates.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
         isGatesOpen = true;
         Debug.Log("BOSS DEFEATED");
+        _source.Play();
     }
 
 
