@@ -34,6 +34,7 @@ public class OnGameFinishedScript : NetworkBehaviour
     void Awake()
     {
         _root = GetComponent<UIDocument>().rootVisualElement;
+        _audioSource = GetComponent<AudioSource>();
         _root.visible = false;
 
         _HighScoreElement = _root.Q<VisualElement>("HighScoreElement");

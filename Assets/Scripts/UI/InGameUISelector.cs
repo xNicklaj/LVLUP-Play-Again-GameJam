@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 public class InGameUISelector : MonoBehaviour
 {
     [SerializeField] private VisualTreeAsset HostDocument;
-    [SerializeField] private VisualTreeAsset ClientDocument;
+    [SerializeField] private VisualTreeAsset P2ClientDocument;
+    [SerializeField] private VisualTreeAsset P3ClientDocument;
 
     private void Start()
     {
@@ -23,15 +24,19 @@ public class InGameUISelector : MonoBehaviour
         }
 
         if (!NetworkManager.Singleton.IsClient) return;
-        if(NetworkManager.Singleton.LocalClientId == 0)
+
+        switch(NetworkManager.Singleton.LocalClientId)
         {
-            this.GetComponent<UIDocument>().visualTreeAsset = HostDocument;
+            case 0:
+                this.GetComponent<UIDocument>().visualTreeAsset = HostDocument;
+                break;
+            case 1:
+                this.GetComponent<UIDocument>().visualTreeAsset = P2ClientDocument;
+                break;
+            case 2:
+                this.GetComponent<UIDocument>().visualTreeAsset = P3ClientDocument;
+                break;
         }
-        else
-        {
-            this.GetComponent<UIDocument>().visualTreeAsset = ClientDocument;
-        }
-        GameManager_v2.Instance.OnUISelected.Invoke();
     }
 
     // Update is called once per frame
