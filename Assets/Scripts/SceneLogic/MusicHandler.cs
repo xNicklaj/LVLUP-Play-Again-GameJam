@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.Audio;
+using Unity.Netcode;
 
 [RequireComponent(typeof(AudioSource))]
-public class MusicHandler : Singleton<MusicHandler>
+public class MusicHandler : NetworkSingleton<MusicHandler>
 {
     public AudioClip MenuTheme;
     public AudioClip GameTheme;
@@ -17,9 +17,7 @@ public class MusicHandler : Singleton<MusicHandler>
         });
         GameManager_v2.Instance.OnGameStart.AddListener(() =>
         {
-            GetComponent<AudioSource>().clip = GameTheme;
-            GetComponent<AudioSource>().time = 1;
-            GetComponent<AudioSource>().Play();
+            PlayGameMusicClientRpc();
         });
         GameManager_v2.Instance.OnMainMenuExit.AddListener(() =>
         {
@@ -34,4 +32,13 @@ public class MusicHandler : Singleton<MusicHandler>
             GetComponent<AudioSource>().Stop();
         });
     }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void PlayGameMusicClientRpc()
+    {
+        GetComponent<AudioSource>().clip = GameTheme;
+        GetComponent<AudioSource>().time = 1;
+        GetComponent<AudioSource>().Play();
+    }
+
 }
