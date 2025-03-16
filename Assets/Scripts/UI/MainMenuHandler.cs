@@ -216,7 +216,12 @@ public class MainMenuHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene(0);
+        }
+            
     }
 
     private IEnumerator StartMusicSignal()
