@@ -192,7 +192,7 @@ public class MainMenuHandler : MonoBehaviour
 
     private void JoinButtonClicked()
     {
-        _playerInputManager.splitScreen = false;
+        _playerInputManager.splitScreen = true;
         PlaySound(StartSound);
         NetworkManager.Singleton.StartClient();
         GameManager_v2.Instance.IsSessionHost = true;

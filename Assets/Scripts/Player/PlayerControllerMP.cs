@@ -27,6 +27,7 @@ public class PlayerControllerMP : NetworkBehaviour
     [SerializeField] private NetworkObject _networkObject;
     [SerializeField] private Animator _animator;
 
+
     private InputAction _movement;
     private InputAction _look;
     private Vector2 directionInput;
@@ -81,12 +82,11 @@ public class PlayerControllerMP : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        if (IsOwner)
-        {
-            _playerInput.enabled = true;
-            //_playerInput.uiInputModule = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputSystemUIInputModule>();
-        }
+        _playerInput.enabled = IsOwner;
+        _playerInput.camera.gameObject.SetActive(IsOwner);
+        Debug.Log($"Spawning {this.name} am I owner? {IsOwner}");
     }
+    
 
     public override void OnDestroy()
     {
